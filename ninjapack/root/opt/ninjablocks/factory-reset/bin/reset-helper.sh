@@ -12,7 +12,9 @@ progress() {
 # setup the recovery environment. look for an environment far on the image partition and use it, if it exists.
 setup() {
 	RECOVERY_IMAGE_DEVICE=${RECOVERY_IMAGE_DEVICE:-/dev/mmcblk0p4}
-	RECOVERY_SETUP_ASSISTANT=${RECOVERY_SETUP_ASSISTANT:-/opt/ninjablocks/factory-reset/bin/sphere-setup-assistant-iw29}
+	RECOVERY_FACTORY_RESET=${RECOVERY_FACTORY_RESET:-$(cd "$(dirname "$0")/.."; pwd)}
+	RECOVERY_SETUP_IMAGES=${RECOVERY_SETUP_IMAGES:-${RECOVERY_FACTORY_RESET}/images}
+	RECOVERY_SETUP_ASSISTANT=${RECOVERY_SETUP_ASSISTANT:-${RECOVERY_FACTORY_RESET}/bin/sphere-setup-assistant-iw29}
 
 	if mountpoint=$(mount_helper require-mounted "${RECOVERY_IMAGE_DEVICE}" /tmp/image); then
 		if test -f "$mountpoint/recovery.env.sh"; then
@@ -222,6 +224,10 @@ interfaces() {
 	esac
 }
 
+factory_setup_assistant() {
+	PATH=${RECOVERY_FACTORY_RESET}/bin:$PATH sphere_installDirectory=/tmp "${RECOVERY_SETUP_ASSISTANT}" --factory-reset --images "${RECOVERY_SETUP_IMAGES}" "$@"
+}
+
 # initiate the factory reset
 factory_reset() {
 	# check_time
@@ -265,7 +271,7 @@ factory_reset() {
 
 	while ! (attempt); do
 		// try to configure the network
-		sphere_installDirectory=/tmp ${RECOVERY_SETUP_ASSISTANT} --factory-reset
+		factory_setup_assistant
 	done
 }
 
@@ -313,6 +319,10 @@ main()
 	url)
 		shift 1
 		url "$@"
+	;;
+	factory-setup-assistant)
+		shift 1
+		factory_setup_assistant "$@"
 	;;
 	patch)
 		shift 1
