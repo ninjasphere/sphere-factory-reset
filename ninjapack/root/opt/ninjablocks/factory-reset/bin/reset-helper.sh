@@ -15,6 +15,7 @@ setup() {
 	RECOVERY_FACTORY_RESET=${RECOVERY_FACTORY_RESET:-$(cd "$(dirname "$0")/.."; pwd)}
 	RECOVERY_SETUP_IMAGES=${RECOVERY_SETUP_IMAGES:-${RECOVERY_FACTORY_RESET}/images}
 	RECOVERY_SETUP_ASSISTANT=${RECOVERY_SETUP_ASSISTANT:-${RECOVERY_FACTORY_RESET}/bin/sphere-setup-assistant-iw29}
+	RECOVERY_REBOOT=${RECOVERY_REBOOT:-reboot}
 
 	if mountpoint=$(mount_helper require-mounted "${RECOVERY_IMAGE_DEVICE}" /tmp/image); then
 		if test -f "$mountpoint/recovery.env.sh"; then
@@ -271,6 +272,8 @@ factory_reset() {
 	while ! (attempt); do
 		factory_setup_assistant
 	done
+
+	${RECOVERY_REBOOT}
 }
 
 main()
