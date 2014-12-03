@@ -58,6 +58,24 @@ src varsomam33 http://osbuilder01.ci.ninjablocks.co/yocto/deploy/ipk/varsomam33
 EOF
 		fi
 	;;
+	nand)
+mount -oremount,rw / &&
+mkdir -p /opt/ninjablocks/factory-reset &&
+(
+		cd /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset;
+		tar -cf - . ) |
+(
+		cd /opt/ninjablocks/factory-reset;
+		tar -xf -) &&
+		/opt/ninjablocks/factory-reset/bin/recovery.sh generate-env ubuntu_armhf_trusty_norelease_sphere-unstable http://odroid:8000/latest > /var/volatile/run/media/mmcblk0p4/recovery.env.sh &&
+		if ! test -L /etc/wpa_supplicant.conf; then
+			mkdir -p /var/volatile/etc &&
+			cp /etc/wpa_supplicant.conf /var/volatile/etc &&
+			ln -sf /var/volatile/etc/wpa_supplicant.conf /etc/wpa_supplicant.conf
+		fi &&
+		mount -oremount,ro / &&
+		echo ok || echo failed
+	;;
 	*)
 		die "unsupported patch: $type"
 	;;
