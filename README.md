@@ -37,7 +37,6 @@ This step assumes you have up to date SD card
     mount -oremount,rw / ;
     mkdir -p /opt/ninjablocks/factory-reset ;
     (cd /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset; tar -cf - .) | (cd /opt/ninjablocks/factory-reset; tar -xf -) ;
-
     cat >/var/volatile/run/media/mmcblk0p4/recovery.env.sh <<EOF
     export RECOVERY_IMAGE=ubuntu_armhf_trusty_norelease_sphere-unstable
     export RECOVERY_PREFIX=http://odroid:8000/{image-name}
@@ -47,19 +46,20 @@ START A WEB SERVER ON ODROID TO SERVE THE IMAGES
 -------------------------------------------------
 1. Login to odroid, and run:
 
-	cd /images/sphere-unstable
-	python -m SimpleHTTPServer
+
+    cd /images/sphere-unstable
+    python -m SimpleHTTPServer
 
 RUN FACTORY RESET
 -----------------
 If the webserver is not available, then copy:
 
-	ubuntu_armhf_trusty_norelease_sphere-unstable-recovery.tar.sha1
-	ubuntu_armhf_trusty_norelease_sphere-unstable-recovery.tar
+    ubuntu_armhf_trusty_norelease_sphere-unstable-recovery.tar.sha1
+    ubuntu_armhf_trusty_norelease_sphere-unstable-recovery.tar
 
 into /var/volatile/run/media/mmcblk0p4. Otherwise, run:
 
-	rm /var/volatile/run/media/mmcblk0p4/*.tar
+    rm /var/volatile/run/media/mmcblk0p4/*.tar
 
 Then run:
 
