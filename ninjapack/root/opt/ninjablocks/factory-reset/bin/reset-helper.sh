@@ -97,7 +97,7 @@ main()
 	;;
 	factory-reset)
 		shift 1
-		$(dirname "$0")/recovery.sh factory_reset "$@"
+		$(dirname "$0")/recovery.sh factory-reset "$@"
 	;;
 	patch)
 		shift 1
