@@ -37,7 +37,7 @@ patch() {
 	wpa)
 		ssid=$1
 		password=$2
-	cat >/etc/wpa_supplicant.conf <<EOF
+	cat >/var/run/wpa_supplicant.conf <<EOF
 ctrl_interface=/var/run/wpa_supplicant
 update_config=1
 
@@ -48,6 +48,7 @@ network={
        key_mgmt=WPA-PSK
 }
 EOF
+	ln -sf /var/run/wpa_supplicant.conf /etc
 	;;
 	opkg)
 		if ! grep "src all http://osbuilder01.ci.ninjablocks.co/yocto/deploy/ipk/all" /etc/opkg/opkg.conf > /dev/null 2>&1; then
@@ -68,6 +69,9 @@ mkdir -p /opt/ninjablocks/factory-reset &&
 		cd /opt/ninjablocks/factory-reset;
 		tar -xf -) &&
 		/opt/ninjablocks/factory-reset/bin/recovery.sh generate-env ubuntu_armhf_trusty_norelease_sphere-unstable http://odroid:8000/latest > /var/volatile/run/media/mmcblk0p4/recovery.env.sh &&
+		if ! test -e /etc/wpa_supplicant.conf; then
+			patch wpa
+		fi
 		if ! test -L /etc/wpa_supplicant.conf; then
 			cp /etc/wpa_supplicant.conf /var/run &&
 			ln -sf /var/run/wpa_supplicant.conf /etc/wpa_supplicant.conf
@@ -229,6 +233,9 @@ image_from_mount_point() {
 interfaces() {
 	case "$1" in
 	up)
+		if ! test -e /var/run/wpa_supplicant.conf; then
+			patch wpa
+		fi
 		if ! ifconfig | grep ^wlan0 >/dev/null; then
 				ifup wlan0
 		fi
