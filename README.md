@@ -32,7 +32,8 @@ This step assumes you have up to date SD card
 
 1. Start a screen session to the usb tty device.
 1. Login as root (no password).
-1. Run the following commands
+
+Run the following commands:
 
     mount -oremount,rw / ;
     mkdir -p /opt/ninjablocks/factory-reset ;
@@ -44,8 +45,7 @@ This step assumes you have up to date SD card
 
 START A WEB SERVER ON ODROID TO SERVE THE IMAGES
 -------------------------------------------------
-1. Login to odroid, and run:
-
+Login to odroid, and run:
 
     cd /images/sphere-unstable
     python -m SimpleHTTPServer
