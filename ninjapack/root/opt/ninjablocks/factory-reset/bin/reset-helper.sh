@@ -40,6 +40,10 @@ patch() {
 	cat >/var/run/wpa_supplicant.conf <<EOF
 ctrl_interface=/var/run/wpa_supplicant
 update_config=1
+EOF
+
+if test -n "$password"; then
+	cat >>/var/run/wpa_supplicant.conf <<EOF
 
 network={
        ssid="$ssid"
@@ -48,6 +52,7 @@ network={
        key_mgmt=WPA-PSK
 }
 EOF
+fi
 	ln -sf /var/run/wpa_supplicant.conf /etc
 	;;
 	opkg)
