@@ -34,11 +34,21 @@ This step assumes you have up to date SD card
 1. Login as root (no password).
 1. Run the following commands
 
-    mount -oremount,rw /
-    mkdir -p /opt/ninjablocks/factory-reset
-    (cd /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset; tar -cf - .) | (cd /opt/ninjablocks/factory-reset; tar -xf -)
+    mount -oremount,rw / ;
+    mkdir -p /opt/ninjablocks/factory-reset ;
+    (cd /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset; tar -cf - .) | (cd /opt/ninjablocks/factory-reset; tar -xf -) ;
+
+    cat >/var/volatile/run/media/mmcblk0p4/recovery.env.sh <<EOF
     export RECOVERY_IMAGE=ubuntu_armhf_trusty_norelease_sphere-unstable
-    export RECOVERY_PREFIX=http://{local-webserver-with-image-files}/latest
+    export RECOVERY_PREFIX=http://odroid:8000/{image-name}
+    EOF
+
+START A WEB SERVER ON ODROID TO SERVE THE IMAGES
+-------------------------------------------------
+1. Login to odroid, and run:
+
+	cd /images/sphere-unstable
+	python -m SimpleHTTPServer
 
 RUN FACTORY RESET
 -----------------
@@ -47,11 +57,17 @@ If the webserver is not available, then copy:
 	ubuntu_armhf_trusty_norelease_sphere-unstable-recovery.tar.sha1
 	ubuntu_armhf_trusty_norelease_sphere-unstable-recovery.tar
 
-into /var/volatile/run/media/mmcblk0p4/
+into /var/volatile/run/media/mmcblk0p4. Otherwise, run:
+
+	rm /var/volatile/run/media/mmcblk0p4/*.tar
 
 Then run:
 
     /opt/ninjablocks/factory-reset/bin/reset-helper.sh factory-reset
+
+Disconnect the mini USB cable.
+
+Reboot the sphere.
 
 RESERVED NAMESPACE
 ==================
