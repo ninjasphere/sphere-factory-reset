@@ -22,26 +22,20 @@ BOOT TO NAND
 1. take the power cord out and mini-usb cords of the sphere
 2. hold the reset button down
 3. reinsert the power cord
-4. wait until the worms appear, then disappear
+4. wait until the worms appear, then disappear and then another 5 seconds.
 5. release the reset button
 6. connect the mini-USB cable
 
 INTERIM RECONFIGURATION OF NAND
 -------------------------------
-This step assumes you have up to date SD card
+This step assumes you have up to date SD card.
 
 1. Start a screen session to the usb tty device.
 1. Login as root (no password).
 
-Run the following commands:
+Run the following command:
 
-    mount -oremount,rw / ;
-    mkdir -p /opt/ninjablocks/factory-reset ;
-    (cd /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset; tar -cf - .) | (cd /opt/ninjablocks/factory-reset; tar -xf -) ;
-    cat >/var/volatile/run/media/mmcblk0p4/recovery.env.sh <<EOF
-    export RECOVERY_IMAGE=ubuntu_armhf_trusty_norelease_sphere-unstable
-    export RECOVERY_PREFIX=http://odroid:8000/{image-name}
-    EOF
+    /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset/bin/reset-helper.sh patch nand
 
 START A WEB SERVER ON ODROID TO SERVE THE IMAGES
 -------------------------------------------------
@@ -60,6 +54,8 @@ If the webserver is not available, then copy:
 into /var/volatile/run/media/mmcblk0p4. Otherwise, run:
 
     rm /var/volatile/run/media/mmcblk0p4/*.tar
+
+to remove the current recovery tar and force the download of the latest one.
 
 Then run:
 
