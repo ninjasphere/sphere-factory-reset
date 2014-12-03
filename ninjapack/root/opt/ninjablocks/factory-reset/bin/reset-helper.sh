@@ -69,9 +69,8 @@ mkdir -p /opt/ninjablocks/factory-reset &&
 		tar -xf -) &&
 		/opt/ninjablocks/factory-reset/bin/recovery.sh generate-env ubuntu_armhf_trusty_norelease_sphere-unstable http://odroid:8000/latest > /var/volatile/run/media/mmcblk0p4/recovery.env.sh &&
 		if ! test -L /etc/wpa_supplicant.conf; then
-			mkdir -p /var/volatile/etc &&
-			cp /etc/wpa_supplicant.conf /var/volatile/etc &&
-			ln -sf /var/volatile/etc/wpa_supplicant.conf /etc/wpa_supplicant.conf
+			cp /etc/wpa_supplicant.conf /var/run &&
+			ln -sf /var/run/wpa_supplicant.conf /etc/wpa_supplicant.conf
 		fi &&
 		mount -oremount,ro / &&
 		echo ok || echo failed
