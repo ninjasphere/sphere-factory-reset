@@ -225,6 +225,7 @@ interfaces() {
 }
 
 factory_setup_assistant() {
+	interfaces up
 	PATH=${RECOVERY_FACTORY_RESET}/bin:$PATH sphere_installDirectory=/tmp "${RECOVERY_SETUP_ASSISTANT}" --factory-reset --images "${RECOVERY_SETUP_IMAGES}" "$@"
 }
 
@@ -267,10 +268,7 @@ factory_reset() {
 		fi
 	}
 
-	interfaces up
-
 	while ! (attempt); do
-		// try to configure the network
 		factory_setup_assistant
 	done
 }
