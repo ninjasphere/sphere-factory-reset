@@ -12,6 +12,15 @@ The contents of this package are fed into the yocto NAND image build process usi
 FACTORY RESET FROM NAND
 =======================
 
+START A WEB SERVER ON ODROID TO SERVE THE IMAGES
+-------------------------------------------------
+Login to odroid, and run:
+
+    cd /images/sphere-unstable
+    python -m SimpleHTTPServer
+
+This will run on port 8000 of odroid.
+
 FLASH NAND
 ----------
 1. follow steps in https://github.com/ninjablocks/factory-scripts/blob/master/factory-boot-som/README.md and
@@ -35,14 +44,7 @@ This step assumes you have up to date SD card.
 
 Run the following command:
 
-    /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset/bin/reset-helper.sh patch nand
-
-START A WEB SERVER ON ODROID TO SERVE THE IMAGES
--------------------------------------------------
-Login to odroid, and run:
-
-    cd /images/sphere-unstable
-    python -m SimpleHTTPServer
+    /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset/bin/recovery.sh patch nand
 
 RUN FACTORY RESET
 -----------------
@@ -59,7 +61,7 @@ to remove the current recovery tar and force the download of the latest one.
 
 Then run:
 
-    /opt/ninjablocks/factory-reset/bin/reset-helper.sh factory-reset
+    /opt/ninjablocks/factory-reset/bin/recovery.sh factory-reset
 
 Disconnect the mini USB cable.
 
