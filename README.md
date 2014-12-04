@@ -42,9 +42,23 @@ This step assumes you have up to date SD card.
 1. Start a screen session to the usb tty device.
 1. Login as root (no password).
 
-Run the following command:
+Run the following commands:
 
+	/var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset/bin/recovery.sh patch wpa {SSID} {passphrase}
+	ifup wlan0
     /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset/bin/recovery.sh patch nand
+
+To change the image or pull location, run:
+
+	eval $(/opt/ninjablocks/factory-reset/bin/recovery.sh generate-env \
+		 ubuntu_armhf_trusty_norelease_sphere-unstable \
+		 http://odroid:8000/latest)
+
+Note: if you are using hamachi to get to odroid, you can use a reverse proxy like the one in https://github.com/ninjasphere/sphere-factory-reset/tree/master/image-server to access odroid via the Hamachi VPN running on your OSX host.
+
+	e.g. http://{your-host}:1080/odroid/latest
+
+where 1080 is the port your OSX host's reverse proxy is running on.
 
 RUN FACTORY RESET
 -----------------
