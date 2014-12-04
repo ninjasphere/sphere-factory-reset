@@ -43,8 +43,8 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
-	location /odroid/latest {
-    	proxy_pass http://odroid:8000/latest;
+	location /odroid/ {
+    	proxy_pass http://odroid:8000/;
 	}
 
 	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
