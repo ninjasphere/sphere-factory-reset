@@ -8,7 +8,6 @@ die() {
 factory_reset() {
 	service spheramid stop
 	service ledcontroller stop
-	service sphere-setup-assistant stop
 	"$(dirname "$0")/recovery.sh" factory-reset "$@"
 }
 
@@ -36,9 +35,10 @@ main()
 		/sbin/reboot
 	;;
 	reset-root)
-		# TBD: write scripts that will reset the root partition
 		shift 1
-		factory_reset "$@"
+		# in this phase, we just exit with 0
+		# the setup assistant binary will exit with 168 which will cause
+		# it's wrapper script to start a factory reset
 	;;
 	factory-reset)
 		shift 1
