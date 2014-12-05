@@ -6,6 +6,9 @@ die() {
 }
 
 factory_reset() {
+	service spheramid stop
+	service ledcontroller stop
+	service sphere-setup-assistant stop
 	"$(dirname "$0")/recovery.sh" factory-reset "$@"
 }
 
@@ -34,8 +37,8 @@ main()
 	;;
 	reset-root)
 		# TBD: write scripts that will reset the root partition
-		sphere-reset --reset-setup
-		/sbin/reboot
+		shift 1
+		factory_reset "$@"
 	;;
 	factory-reset)
 		shift 1
