@@ -37,9 +37,12 @@ BOOT TO NAND
 
 INTERIM RECONFIGURATION OF NAND
 -------------------------------
-This step assumes you have up to date SD card.
+This step needs to be done once to configure the NAND and assumes you have an SD card that has been flashed with an image
+built on 6 Dec 2014 or later.
 
-1. Start a screen session to the usb tty device.
+On subsequent factory resets, you should be able to re-use the configuration done by this process.
+
+1. Start a screen session to the mini-USB tty device.
 1. Login as root (no password).
 
 Run the following commands:
@@ -48,38 +51,15 @@ Run the following commands:
 	ifup wlan0
     /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset/bin/recovery.sh patch nand
 
-To change the image or pull location, run:
-
-	eval $(/opt/ninjablocks/factory-reset/bin/recovery.sh generate-env \
-		 ubuntu_armhf_trusty_norelease_sphere-unstable \
-		 http://odroid:8000/latest)
-
-Note: if you are using hamachi to get to odroid, you can use a reverse proxy like the one in https://github.com/ninjasphere/sphere-factory-reset/tree/master/image-server to access odroid via the Hamachi VPN running on your OSX host.
-
-	e.g. http://{your-host}:1080/odroid/latest
-
-where 1080 is the port your OSX host's reverse proxy is running on.
-
-RUN FACTORY RESET
------------------
-If the webserver is not available, then copy:
-
-    ubuntu_armhf_trusty_norelease_sphere-unstable-recovery.tar.sha1
-    ubuntu_armhf_trusty_norelease_sphere-unstable-recovery.tar
-
-into /var/volatile/run/media/mmcblk0p4. Otherwise, run:
-
-    rm /var/volatile/run/media/mmcblk0p4/*.tar
-
-to remove the current recovery tar and force the download of the latest one.
-
-Then run:
-
-    /opt/ninjablocks/factory-reset/bin/recovery.sh factory-reset
-
-Disconnect the mini USB cable.
-
-Reboot the sphere.
+INITIATE FACTORY RESET
+----------------------
+1. Boot the sphere with current SD card
+2. After boot is complete, hold down the reset button until the led matrix turns RED
+3. Release the reset button
+4. In this phase, the sphere will do any necessary network downloads and then nuke the boot partition to force a NAND boot
+5. After the NAND boot has completed screen to the sphere via the mini-USB port
+6. login as root
+7. Run /opt/ninjablocks/factory-reset/bin/recovery.sh factory-reset to complete the process.
 
 RESERVED NAMESPACE
 ==================
