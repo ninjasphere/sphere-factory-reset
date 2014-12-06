@@ -68,7 +68,7 @@ NAND only reset
 ---------------
 1. Boot to NAND as per "BOOT TO NAND"
 2. Run /opt/ninjablocks/factory-reset/bin/recovery.sh factory-reset
-3. Use app to provide network credtials, when prompted.
+3. Use app to provide network credentials, when prompted.
 
 Forcing latest recovery image
 -----------------------------
