@@ -38,18 +38,19 @@ BOOT TO NAND
 INTERIM RECONFIGURATION OF NAND
 -------------------------------
 This step needs to be done once to configure the NAND and assumes you have an SD card that has been flashed with an image
-built on 6 Dec 2014 or later.
-
-On subsequent factory resets, you should be able to re-use the configuration done by this process.
+built on 6 Dec 2014 or later. This stepp will not be required once the factory reset logic is burned into the NAND.
 
 1. Start a screen session to the mini-USB tty device.
 1. Login as root (no password).
 
 Run the following commands:
 
-	/var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset/bin/recovery.sh patch wpa {SSID} {passphrase}
+	export PATH=/var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset/bin:$PATH
+	recovery.sh patch wpa {SSID} {passphrase}
 	ifup wlan0
-    /var/volatile/run/media/mmcblk0p2/opt/ninjablocks/factory-reset/bin/recovery.sh patch nand
+    recovery.sh patch nand
+
+On subsequent factory resets, you won't need to repeat the above steps.
 
 INITIATE FACTORY RESET
 ----------------------
@@ -60,6 +61,41 @@ INITIATE FACTORY RESET
 5. After the NAND boot has completed screen to the sphere via the mini-USB port
 6. login as root
 7. Run /opt/ninjablocks/factory-reset/bin/recovery.sh factory-reset to complete the process.
+
+VARIANTS
+========
+NAND only reset
+---------------
+1. Boot to NAND as per "BOOT TO NAND"
+2. Run /opt/ninjablocks/factory-reset/bin/recovery.sh factory-reset
+3. Use app to provide network credtials, when prompted.
+
+Forcing latest recovery image
+-----------------------------
+During NAND only resets, the system will use an available recovery tar if there is one. To force it to use a network
+download to fetch the latest one, run the following commands:
+
+	mkdir -p /tmp/image
+	mount /dev/mmcblk0p4 /tmp/image
+	rm /tmp/image/*.tar
+
+To change the network location
+------------------------------
+Configure the URL prefix for the recovery media:
+
+	mkdir -p /tmp/image
+	mount /dev/mmcblk0p4 /tmp/image
+
+	echo "ecport RECOVERY_PREFIX={the-url-prefix};" >> /tmp/image/recovery.env.sh
+
+To change the name of the recovery image
+------------------------------
+Configure the name of the recovery image:
+
+	mkdir -p /tmp/image
+	mount /dev/mmcblk0p4 /tmp/image
+
+	echo "ecport RECOVERY_IMAGE=ubuntu_armhf_trusty_norelease_sphere-unstable;" >> /tmp/image/recovery.env.sh
 
 RESERVED NAMESPACE
 ==================
