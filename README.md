@@ -86,7 +86,7 @@ Configure the URL prefix for the recovery media:
 	mkdir -p /tmp/image
 	mount /dev/mmcblk0p4 /tmp/image
 
-	echo "ecport RECOVERY_PREFIX={the-url-prefix};" >> /tmp/image/recovery.env.sh
+	echo "export RECOVERY_PREFIX={the-url-prefix};" >> /tmp/image/recovery.env.sh
 
 To change the name of the recovery image
 ------------------------------
@@ -95,7 +95,7 @@ Configure the name of the recovery image:
 	mkdir -p /tmp/image
 	mount /dev/mmcblk0p4 /tmp/image
 
-	echo "ecport RECOVERY_IMAGE=ubuntu_armhf_trusty_norelease_sphere-unstable;" >> /tmp/image/recovery.env.sh
+	echo "export RECOVERY_IMAGE=ubuntu_armhf_trusty_norelease_sphere-unstable;" >> /tmp/image/recovery.env.sh
 
 RESERVED NAMESPACE
 ==================
