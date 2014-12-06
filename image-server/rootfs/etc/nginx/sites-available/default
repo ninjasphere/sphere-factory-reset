@@ -47,6 +47,10 @@ server {
     	proxy_pass http://odroid:8000/;
 	}
 
+	location /github/ {
+    	proxy_pass https://raw.githubusercontent.com/;
+	}
+
 	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
 	#
 	#location ~ \.php$ {
