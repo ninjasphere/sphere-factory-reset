@@ -17,6 +17,7 @@ deps:
 	cd $(GOPATH)/src/github.com/ninjasphere/sphere-factory-test/sphere-io && go install
 	go get -d github.com/ninjasphere/sphere-setup-assistant
 	cd $(GOPATH)/src/github.com/ninjasphere/sphere-setup-assistant && make iwlib29
+	cd $(GOPATH)/src/github.com/ninjasphere/sphere-setup-assistant && make
 	go get -d github.com/ninjablocks/sphere-utils
 	cd $(GOPATH)/src/github.com/ninjablocks/sphere-utils/tools/sphere-go-serial && go install
 
