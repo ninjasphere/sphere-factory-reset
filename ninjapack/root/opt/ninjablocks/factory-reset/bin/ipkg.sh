@@ -21,7 +21,21 @@ repack() {
 	ar x $(basename $deb) &&
 	find . &&
 	xz -d ./data.tar.xz &&
-	gzip data.tar &&
+	gzip -d ./control.tar.gz &&
+	mkdir data &&
+	mkdir control &&
+	tar -C data -xf data.tar &&
+	tar -C control -xf control.tar &&
+	unpack=$(RECOVERY_UNPACK_TMP_DIR=/tmp data/opt/ninjablocks/bin/recovery.sh unpack) &&
+	mkdir data/opt/ninjablocks/factory-reset/ &&
+	rsync -rav $unpack/ data/opt/ninjablocks/factory-reset/ &&
+	( cd data ; find . -type f | while read f; do
+		f=${f#./}
+		md5sum "$f"
+	done ) > control/md5sums &&
+	sed -i "s/^Architecture:.*/Architecture: varsomam33/" control/control &&
+	tar -C data -czf data.tar.gz . &&
+	tar -C control -czf control.tar.gz . &&
 	tar -cvzf ${package}.ipk ./debian-binary ./data.tar.gz ./control.tar.gz &&
 	popd &&
 	cp $work/${package}.ipk . &&
