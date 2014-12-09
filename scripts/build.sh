@@ -15,7 +15,7 @@ GIT_COMMIT="$(git rev-parse HEAD)"
 GIT_DIRTY="$(test -n "`git status --porcelain`" && echo "+CHANGES" || true)"
 VERSION="$(grep "const Version " version.go | sed -E 's/.*"(.+)"$/\1/' )"
 
-PRIVATE_PKG="ninjasphere/go-ninja ninjasphere/sphere-setup-assistant ninjasphere/sphere-go-led-controller ninjasphere/driver-go-blecombined ninjasphere/sphere-factory-test ninjablocks/linux-rootfs-scripts ninjablocks/sphere-utils"
+PRIVATE_PKG="ninjasphere/go-ninja ninjasphere/sphere-setup-assistant ninjasphere/sphere-go-led-controller ninjasphere/bluetooth-smart-binaries ninjasphere/sphere-factory-test ninjablocks/linux-rootfs-scripts ninjablocks/sphere-utils"
 
 # remove working build
 # rm -rf .gopath
