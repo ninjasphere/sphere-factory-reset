@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 die() {
 	echo "$*" 1>&2
@@ -12,12 +12,16 @@ repack() {
 
 	package=$(basename $deb .deb)
 	work=/tmp/ipkg.work.$$
+	mkdir -p "$work"
 
 	trap "rm -rf $work" EXIT
 
 	cp $deb $work &&
-	pushd $work &&
+	pushd "$work" &&
 	ar x $(basename $deb) &&
+	find . &&
+	xz -d ./data.tar.xz &&
+	gzip data.tar &&
 	tar -cvzf ${package}.ipk ./debian-binary ./data.tar.gz ./control.tar.gz &&
 	popd &&
 	cp $work/${package}.ipk . &&
@@ -33,7 +37,7 @@ main() {
 	*)
 		die "usage: repack .deb"
 	;;
-	easc
+	esac
 }
 
 main "$@"
