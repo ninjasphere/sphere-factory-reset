@@ -36,7 +36,7 @@ repack() {
 	sed -i "s/^Architecture:.*/Architecture: varsomam33/" control/control &&
 	tar -C data -czf data.tar.gz . &&
 	tar -C control -czf control.tar.gz . &&
-	tar -cvzf ${package}.ipk ./debian-binary ./data.tar.gz ./control.tar.gz &&
+	ar r ${package}.ipk ./debian-binary ./data.tar.gz ./control.tar.gz &&
 	popd &&
 	cp $work/${package}.ipk . &&
 	echo $(pwd)/${package}.ipk
