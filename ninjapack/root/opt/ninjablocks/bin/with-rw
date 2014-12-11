@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# this script will run the remaining arguments as a command iff the root file system is or can be mounted
+# read-write.
+#
+# it will then restore the mount state of the file system to the read-only state iff the
+# root file system was in this state when the command was invoked.
+rc=0 &&
+mode=$(cat /proc/self/mounts | grep ^/dev/root | cut -f4 -d' ' | cut -f1 -d,) &&
+test "$mode" = "rw" || mount -oremount,rw / &&
+"$@" || rc=$?
+! test "$mode" = "ro" || mount -oremount,ro / && exit $rc
