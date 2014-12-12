@@ -1,1 +1,4 @@
+stop sphere-director || true
 start sphere-firmware
+sleep 1
+start sphere-director || true
