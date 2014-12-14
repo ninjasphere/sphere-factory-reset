@@ -5,8 +5,12 @@
 #
 # it will then restore the mount state of the file system to the read-only state iff the
 # root file system was in this state when the command was invoked.
-rc=0 &&
-mode=$(cat /proc/self/mounts | grep ^/dev/root | cut -f4 -d' ' | cut -f1 -d,) &&
-test "$mode" = "rw" || mount -oremount,rw / &&
-"$@" || rc=$?
-! test "$mode" = "ro" || mount -oremount,ro / && exit $rc
+
+if 	rc=0 &&
+	mode="$(cat /proc/self/mounts | egrep "^/dev/root|^ubi:rootfs" | cut -f4 -d' ' | cut -f1 -d,)" &&
+	test "$mode" = "ro"; then
+	mount -oremount,rw / &&	"$@" || rc=$?
+	mount -oremount,ro / && exit $rc
+else
+	exec "$@"
+fi
