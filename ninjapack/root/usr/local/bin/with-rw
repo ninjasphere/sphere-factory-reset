@@ -7,7 +7,7 @@
 # root file system was in this state when the command was invoked.
 
 if 	rc=0 &&
-	mode="$(cat /proc/self/mounts | egrep "^/dev/root|^ubi:rootfs" | cut -f4 -d' ' | cut -f1 -d,)" &&
+	mode="$(cat /proc/self/mounts | egrep "^/dev/root|^ubi0:rootfs" | cut -f4 -d' ' | cut -f1 -d,)" &&
 	test "$mode" = "ro"; then
 	mount -oremount,rw / &&	"$@" || rc=$?
 	mount -oremount,ro / && exit $rc
