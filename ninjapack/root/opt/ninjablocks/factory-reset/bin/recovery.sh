@@ -1025,6 +1025,42 @@ require() {
 	esac
 }
 
+varname() {
+	var=$1
+
+	case "$var" in
+	image)
+		echo RECOVERY_IMAGE
+	;;
+	prefix)
+		echo RECOVERY_PREFIX
+	;;
+	github)
+		echo RECOVERY_GITHUB
+	;;
+	enable-script-phases)
+		echo RECOVERY_ENABLE_SCRIPT_PHASES
+	;;
+	enable-factory-reset-io)
+		echo RECOVERY_ENABLE_SPHERE_IO_FACTORY_RESET
+	;;
+	enable-sphere-io)
+		echo RECOVERY_ENABLE_SPHERE_IO
+	;;
+	enable-reboot-on-repartitioning)
+		echo RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING
+	;;
+	enable-reboot)
+		echo RECOVERY_REBOOT
+	;;
+	*)
+		echo ""
+		return 1
+	;;
+	esac
+
+}
+
 _set() {
 	var=$1
 	value=$2
@@ -1042,30 +1078,6 @@ _set() {
 	fi
 
 	case "$var" in
-	image)
-		varname=RECOVERY_IMAGE
-	;;
-	prefix)
-		varname=RECOVERY_PREFIX
-	;;
-	github)
-		varname=RECOVERY_GITHUB
-	;;
-	enable-script-phases)
-		varname=RECOVERY_ENABLE_SCRIPT_PHASES
-	;;
-	enable-factory-reset-io)
-		varname=RECOVERY_ENABLE_SPHERE_IO_FACTORY_RESET
-	;;
-	enable-sphere-io)
-		varname=RECOVERY_ENABLE_SPHERE_IO
-	;;
-	enable-reboot-on-repartitioning)
-		varname=RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING
-	;;
-	enable-reboot)
-		varname=RECOVERY_REBOOT
-	;;
 	wpa-psk)
 		shift 1
 		test $# -eq 2 || die "ERR486: usage: set wpa-psk {ssid} {psk}"
@@ -1073,7 +1085,8 @@ _set() {
 		return 0
 	;;
 	*)
-		die "ERR485: usage:
+		varname=$(varname "$var")
+		test -n "$varname" || die "ERR485: usage:
 set {varname} {value...}
 
 where {varname} {value...} is one of:
