@@ -1,0 +1,1 @@
+ninjapack/root/opt/ninjablocks/factory-reset/bin/recovery.sh
