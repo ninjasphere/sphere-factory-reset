@@ -1053,6 +1053,9 @@ varname() {
 	enable-reboot)
 		echo RECOVERY_REBOOT
 	;;
+	RECOVERY_*)
+		echo "$var"
+	;;
 	*)
 		echo ""
 		return 1
@@ -1204,6 +1207,18 @@ EOF
 		die "ERR493: usage: patch opkg|wpa [{ssid} {psk}]|nand"
 	;;
 	esac
+}
+
+get() {
+	var=$1
+	test -n "$var" || die "ERR497: usage get {var}"
+	if varname=$(varname "$var"); then
+		env | sed -n "s/^${varname}=//p"
+	fi
+}
+
+_env() {
+	env | sed -n "/^RECOVERY/p" | sort
 }
 
 patch() {
@@ -1549,6 +1564,14 @@ main() {
 		shift 1
 		setup
 		with "$@"
+	;;
+	get)
+		shift 1
+		get "$@"
+	;;
+	env)
+		shift 1
+		_env "$@"
 	;;
 	*)
 		usage
