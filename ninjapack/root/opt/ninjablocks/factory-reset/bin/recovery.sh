@@ -326,7 +326,13 @@ untar() {
 	progress "0600" "Reimaging '$block_device$partition'..."
 	format_partitions "$block_device" "$partition"
 	mountpoint=$(require mounted $block_device$partition ${RECOVERY_MEDIA}/$(basename $block_device$partition)) || exit $?
-	tar -O -xf "$tar" "$file" | gzip -dc | (cd $mountpoint; tar -xf -) || die "ERR532: Failed to extract '$tar' to '$block_device$partition'."
+	progress "0602" "Extraction of tar '$tar' begins..."
+	if tar -O -xf "$tar" "$file" | gzip -dc | (cd $mountpoint; tar -xf -); then
+		progress "0607" "Extraction of tar '$tar' begins..."
+	else
+		progress "0606" "Extraction of tar '$tar' failed."
+	 	die "ERR532: Failed to extract '$tar' to '$block_device$partition'."
+	fi
 	sync
 	mountpoint=$(require unmounted "$block_device$partition") || exit $?
 	progress "0699" "Reimaging of '$block_device$partition' has completed successfully."
