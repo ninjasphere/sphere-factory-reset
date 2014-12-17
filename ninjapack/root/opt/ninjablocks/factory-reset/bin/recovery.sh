@@ -946,8 +946,10 @@ factory_reset() {
 	attempt() {
 		if downloaded=$(download recovery-script) && test -f "$downloaded"; then
 			progress 1010 "Launching recovery script '$downloaded'..."
+			chmod ugo+x "$downloaded" &&
 			unpacked=$($downloaded unpack) &&
-			recovery_script=$unpacked/bin/recovery.sh &&
+			recovery_script="$unpacked/bin/recovery.sh" &&
+			test -f "$recovery_script" &&
 			exec sh $(choose_script "$recovery_script") recovery-with-network
 		else
 			progress 1011 "Failed to download recovery script."
