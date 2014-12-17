@@ -21,6 +21,7 @@ export RECOVERY_ENABLE_SCRIPT_PHASES=${RECOVERY_ENABLE_SCRIPT_PHASES:-true}
 export RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING=${RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING:-true}
 export RECOVERY_ARCHIVE_DELEGATION_RULE=${RECOVERY_ARCHIVE_DELEGATION_RULE:-more-recent}
 export RECOVERY_CHROOT=${RECOVERY_CHROOT:-false}
+export RECOVERY_SPHERE_IO_BAUD=${RECOVERY_SPHERE_IO_BAUD:-230400}
 
 die() {
 	msg="$*"
@@ -30,7 +31,7 @@ die() {
 	echo "$msg" 1>&2
 	code=$(echo "$msg" | sed -n "s/^ERR\([0-9]*\):.*/\1/p")
 	if test -n "$code"; then
-		sphere_io --timeout-color=red --timeout=1 --disable-gestic=true --test="$code" --disable-mouse=true
+		sphere_io --baud ${RECOVERY_SPHERE_IO_BAUD} --timeout-color=red --timeout=1 --disable-gestic=true --test="$code" --disable-mouse=true
 	fi
 	exit 1
 }
@@ -73,7 +74,7 @@ progress() {
 	echo "STATUS$code: $*" 1>&2
 	code=$(echo "$code" | sed -n "s/^\([0-9]*\).*/\1/p")
 	if test -n "$code"; then
-		io sphere_io --timeout-color=blue --timeout=1 --disable-gestic=true --test="$code" || true
+		io sphere_io --baud ${RECOVERY_SPHERE_IO_BAUD} --timeout-color=blue --timeout=1 --disable-gestic=true --test="$code" || true
 	fi
 }
 
@@ -361,7 +362,16 @@ recovery_without_network() {
 
 		progress "9200" "Reimaging of root partition begins..."
 		untar "$tar" root.tgz $(sdcard) p2
-		progress "9299" "Reimaging of root is complete."
+		progress "9250" "Reimaging of root is complete."
+
+		progress "9251" "Removing factory flash settings..."
+		block() {
+			if test -f /etc/factory.env.sh; then
+				rm /etc/factory.env.sh;
+			fi
+		}
+		( with_rw block ) ; rc=$?
+		progress "9252" "Removing factory flash settings has completed - $rc."
 
 		progress "9300" "Reimaging of boot partition begins..."
 		untar "$tar" boot.tgz $(sdcard) p1
@@ -968,7 +978,7 @@ factory_reset() {
 			test -f $rootdir/etc/.recovered
 		then
 			progress "1002" "The boot partition is ok. Checking for user reset indication..."
-			if sphere_io --test="zap" --color=red --ok=TapCenter --timeout=5; then
+			if sphere_io --baud ${RECOVERY_SPHERE_IO_BAUD} --test="zap" --color=red --ok=TapCenter --timeout=5; then
 				progress "1003" "The user has requested a reset."
 			else
 				progress "1999" "The user has not requested a reset. Aborting reset."
@@ -1520,7 +1530,10 @@ main() {
 		imagedir=$(require image-mounted) &&
 		if test -f "${imagedir}/recovery.env.sh"; then
 			 . "${imagedir}/recovery.env.sh" || true
-		fi ||
+		fi &&
+		if test -f "/etc/factory.env.sh"; then
+			 . "${imagedir}/factory.env.sh" || true
+		fi	||
 		die "ERR501: Unable to mount large temp device - abandon all hope, ye who enter here!"
 	fi
 
