@@ -1532,7 +1532,7 @@ main() {
 			 . "${imagedir}/recovery.env.sh" || true
 		fi &&
 		if test -f "/etc/factory.env.sh"; then
-			 . "${imagedir}/factory.env.sh" || true
+			 . "/etc/factory.env.sh" || true
 		fi	||
 		die "ERR501: Unable to mount large temp device - abandon all hope, ye who enter here!"
 	fi
