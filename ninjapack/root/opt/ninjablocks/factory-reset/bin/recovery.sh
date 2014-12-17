@@ -889,7 +889,7 @@ choose_script() {
 	script=$1
 	if ${RECOVERY_ENABLE_SCRIPT_PHASES}; then
 		self=$(recovery_sh_timestamp) # our own timestamp
-		other=$(sh script recovery-sh-timestamp) # the potential delegate's timestamp
+		other=$(sh $script recovery-sh-timestamp) # the potential delegate's timestamp
 		resolution=$(resolve_delegation "$self" "$other" "${RECOVERY_ARCHIVE_DELEGATION_RULE}") # the resolved timestamp
 		if test "$resolution" = "$self"; then
 			progress "3603" "Found other script ('$other') but continuing with ('$self') because of rule ('${RECOVERY_ARCHIVE_DELEGATION_RULE}')"
