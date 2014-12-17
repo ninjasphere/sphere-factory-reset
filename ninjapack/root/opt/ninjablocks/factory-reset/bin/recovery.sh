@@ -901,7 +901,7 @@ run_on_large_device() {
 		umount $imagedir/$dir
 	}
 
-	dirs="var proc usr lib bin"
+	dirs="var proc usr lib bin dev"
 
 	for d in $dirs; do
 		m $d
