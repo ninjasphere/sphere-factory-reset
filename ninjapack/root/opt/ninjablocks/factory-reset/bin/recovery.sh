@@ -875,7 +875,7 @@ check_time() {
 
 # answer the timestamp of the current script or 19991231T000000 if the script does not have one.
 recovery_sh_timestamp() {
-	file_ts=$(cat "${FACTORY_RESET}/etc/timestamp")
+	file_ts=$(test -f "${RECOVERY_FACTORY_RESET}/etc/timestamp" && cat "${RECOVERY_FACTORY_RESET}/etc/timestamp")
 	if test -z "$file_ts"; then
 		# a script without a timestamp, is probably borked.
 		echo "19991231T000000"
@@ -888,14 +888,22 @@ choose_script() {
 
 	script=$1
 	if ${RECOVERY_ENABLE_SCRIPT_PHASES}; then
-		self=$(recovery_sh_timestamp) # our own timestamp
-		other=$(sh script recovery-sh-timestamp) # the potential delegate's timestamp
-		resolution=$(resolve_delegation "$self" "$other" "${RECOVERY_ARCHIVE_DELEGATION_RULE}") # the resolved timestamp
+		resolution=$0 && #failsafe
+		self=$(recovery_sh_timestamp) && # our own timestamp
+		other=$(
+			other_home=$(cd $(dirname "$script")/..; pwd) &&
+			test -f "${other_home}/etc/timestamp" &&
+			other_timestamp=$(cat "${other_home}/etc/timestamp") &&
+			echo "$script"
+		) &&		 # the potential delegate's times
+		resolution=$(resolve_delegation "$self" "$other" "${RECOVERY_ARCHIVE_DELEGATION_RULE}") && # the resolved timestamp
 		if test "$resolution" = "$self"; then
 			progress "3603" "Found other script ('$other') but continuing with ('$self') because of rule ('${RECOVERY_ARCHIVE_DELEGATION_RULE}')"
+			resolution="$0"
 		else
+			resolution="$script"
 			progress "3609" "Delegating to alternative script '$script'."
-		fi
+		fi &&
 		echo "$resolution"
 	else
 		progress "3602" "Script phases are disabled by RECOVERY_ENABLE_SCRIPT_PHASES. Using '$0' instead of '$script'."
