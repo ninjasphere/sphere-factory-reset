@@ -1118,6 +1118,9 @@ varname() {
 	enable-reboot)
 		echo RECOVERY_REBOOT
 	;;
+	archive-delegation-rule)
+		echo RECOVERY_ARCHIVE_DELEGATION_RULE
+	;;
 	RECOVERY_*)
 		echo "$var"
 	;;
