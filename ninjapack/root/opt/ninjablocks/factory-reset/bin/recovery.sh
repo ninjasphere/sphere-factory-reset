@@ -645,10 +645,12 @@ resolve_delegation() {
 	if test -z "$delegatee"; then
 		if test -n "$delegator"; then
 			echo "$delegator"
+			return 0
 		fi
 	else
 		if test -z "$delegator"; then
 			echo "$delegatee"
+			return 0
 		fi
 	fi
 
@@ -1664,6 +1666,10 @@ main() {
 	recovery-sh-timestamp)
 		shift 1
 		recovery_sh_timestamp "$@"
+	;;
+	resolve-delegation)
+		shift 1
+		resolve_delegation "$@"
 	;;
 	*)
 		usage
