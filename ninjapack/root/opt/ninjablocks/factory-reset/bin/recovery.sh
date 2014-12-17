@@ -30,7 +30,7 @@ die() {
 	echo "$msg" 1>&2
 	code=$(echo "$msg" | sed -n "s/^ERR\([0-9]*\):.*/\1/p")
 	if test -n "$code"; then
-		sphere_io --timeout-color=red --timeout=1 --disable-gestic=true --test="$code" --disable-mouse=true
+		sphere_io --baud 115200 --timeout-color=red --timeout=1 --disable-gestic=true --test="$code" --disable-mouse=true
 	fi
 	exit 1
 }
@@ -73,7 +73,7 @@ progress() {
 	echo "STATUS$code: $*" 1>&2
 	code=$(echo "$code" | sed -n "s/^\([0-9]*\).*/\1/p")
 	if test -n "$code"; then
-		io sphere_io --timeout-color=blue --timeout=1 --disable-gestic=true --test="$code" || true
+		io sphere_io --baud 115200 --timeout-color=blue --timeout=1 --disable-gestic=true --test="$code" || true
 	fi
 }
 
@@ -968,7 +968,7 @@ factory_reset() {
 			test -f $rootdir/etc/.recovered
 		then
 			progress "1002" "The boot partition is ok. Checking for user reset indication..."
-			if sphere_io --test="zap" --color=red --ok=TapCenter --timeout=5; then
+			if sphere_io --baud 115200 --test="zap" --color=red --ok=TapCenter --timeout=5; then
 				progress "1003" "The user has requested a reset."
 			else
 				progress "1999" "The user has not requested a reset. Aborting reset."
