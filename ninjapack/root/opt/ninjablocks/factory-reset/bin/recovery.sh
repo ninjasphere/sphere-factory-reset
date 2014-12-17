@@ -886,6 +886,38 @@ recovery_sh_timestamp() {
 	fi
 }
 
+run_on_large_device() {
+
+	imagedir=$(require image-mounted) || exit $?
+
+	m() {
+		dir=$1 &&
+		mkdir -p $imagedir/$dir &&
+		mount -o bind $dir $imagedir/$dir
+	}
+
+	u() {
+		dir=$1 &&
+		umount $imagedir/$dir
+	}
+
+	dirs="var proc usr lib bin"
+
+	for d in $dirs; do
+		m $d
+	done
+
+	chroot $imagedir "$@"
+	rc=$?
+
+	for d in $dirs; do
+		u $d
+	done
+
+	test $rc -eq 0 || exit $?
+
+}
+
 choose_script() {
 
 	script=$1
