@@ -873,6 +873,17 @@ check_time() {
 	test "$year" -ge 2014 || die "ERR320: The clock has a date in the past: $(date "+%Y-%m-%d %H:%M:%S")."
 }
 
+# answer the timestamp of the current script or 19991231T000000 if the script does not have one.
+recovery_sh_timestamp() {
+	file_ts=$(cat "${FACTORY_RESET}/etc/timestamp")
+	if test -z "$file_ts"; then
+		# a script without a timestamp, is probably borked.
+		echo "19991231T000000"
+	else
+		echo "${file_ts}"
+	fi
+}
+
 choose_script() {
 	script=$1
 	if ${RECOVERY_ENABLE_SCRIPT_PHASES}; then
@@ -1626,6 +1637,10 @@ main() {
 	env)
 		shift 1
 		_env "$@"
+	;;
+	recovery-sh-timestamp)
+		shift 1
+		recovery_sh_timestamp "$@"
 	;;
 	*)
 		usage
