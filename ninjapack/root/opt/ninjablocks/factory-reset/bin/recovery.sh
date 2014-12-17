@@ -1707,6 +1707,10 @@ main() {
 		shift 1
 		resolve_delegation "$@"
 	;;
+	run-on-large-device)
+		shift 1
+		run_on_large_device "$@"
+	;;
 	*)
 		usage
 	;;
