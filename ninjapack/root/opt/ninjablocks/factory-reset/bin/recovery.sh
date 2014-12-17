@@ -612,7 +612,7 @@ recovery_with_network() {
 		if tar -C ${TMPDIR} -xf "$imagetar" $(url image)$(url suffix .sh); then
 			if test -x "${TMPDIR}/$(url image)$(url suffix .sh)"; then
 				progress "8105" "Extracted executeble recovery script."
-				if unpacked=$(sh ${TMPDIR}/$(url image)$(url suffix .sh) unpack); then
+				if unpacked=$(run_on_large_device sh ${TMPDIR}/$(url image)$(url suffix .sh) unpack); then
 					progress "8107" "Unpacked recovery script to '$unpacked'."
 					script_to_run="$unpacked/bin/recovery.sh"
 				else
@@ -981,7 +981,7 @@ factory_reset() {
 		if downloaded=$(download recovery-script) && test -f "$downloaded"; then
 			progress 1010 "Launching recovery script '$downloaded'..."
 			chmod ugo+x "$downloaded" &&
-			unpacked=$($downloaded unpack) &&
+			unpacked=$(run_on_large_device $downloaded unpack) &&
 			recovery_script="$unpacked/bin/recovery.sh" &&
 			test -f "$recovery_script" &&
 			exec sh $(choose_script "$recovery_script") recovery-with-network
@@ -1454,7 +1454,7 @@ choose_latest() {
 	if root=$(require mounted $(sdcard)p2 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p2); then
 		if test -x $root/opt/ninjablocks/bin/recovery.sh; then
 			progress "0913" "Found executeable script in /opt/ninjablocks/bin of $(sdcard)p2"
-			found=$(sh $root/opt/ninjablocks/bin/recovery.sh unpack)
+			found=$(run_on_large_device sh $root/opt/ninjablocks/bin/recovery.sh unpack)
 			progress "0915" "Unpacked recovery script as '$found' ($(cat "$found/etc/timestamp"))."
 		else
 			progress "0912" "Could not find executeable script in /opt/ninjablocks/bin of $(sdcard)p2"
@@ -1470,7 +1470,7 @@ choose_latest() {
 		script="${image}$(url suffix .sh)"
 		if tar -C ${TMPDIR} -xf "${tar}" "${script}" ; then
 			progress "0924" "Extraction of '$script' from '${tar}' was successful."
-			found=$("${TMPDIR}/${script}" unpack)
+			found=$(run_on_large_device "${TMPDIR}/${script}" unpack)
 			progress "0925" "Unpacked recovery script as '$found' ($(cat "$found/etc/timestamp"))."
 		else
 			progress "0922" "Extraction of '${script}' from '${tar}' was unsuccessful."
