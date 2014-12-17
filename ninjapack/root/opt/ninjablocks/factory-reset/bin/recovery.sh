@@ -20,6 +20,7 @@ export RECOVERY_ENABLE_TMP_CLEANUP=${RECOVERY_ENABLE_TMP_CLEANUP:-false}
 export RECOVERY_ENABLE_SCRIPT_PHASES=${RECOVERY_ENABLE_SCRIPT_PHASES:-true}
 export RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING=${RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING:-true}
 export RECOVERY_ARCHIVE_DELEGATION_RULE=${RECOVERY_ARCHIVE_DELEGATION_RULE:-more-recent}
+export RECOVERY_CHROOT=${RECOVERY_CHROOT:-false}
 
 die() {
 	msg="$*"
@@ -907,7 +908,7 @@ run_on_large_device() {
 		m $d
 	done
 
-	chroot $imagedir "$@"
+	RECOVERY_CHROOT=true chroot $imagedir "$@"
 	rc=$?
 
 	for d in $dirs; do
@@ -1511,7 +1512,8 @@ main() {
 	mkdir -p ${RECOVERY_MEDIA}
 
 	if "$(on_nand)" &&
-		test "$(tmp_device)" = "tmpfs";
+		test "$(tmp_device)" = "tmpfs" &&
+		! {RECOVERY_CHROOT};
 	then
 		export TMPDIR=$(require large-tmp) &&
 		imagedir=$(require image-mounted) &&
