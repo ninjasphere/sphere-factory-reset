@@ -20,6 +20,7 @@ export RECOVERY_ENABLE_TMP_CLEANUP=${RECOVERY_ENABLE_TMP_CLEANUP:-false}
 export RECOVERY_ENABLE_SCRIPT_PHASES=${RECOVERY_ENABLE_SCRIPT_PHASES:-true}
 export RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING=${RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING:-true}
 export RECOVERY_ARCHIVE_DELEGATION_RULE=${RECOVERY_ARCHIVE_DELEGATION_RULE:-more-recent}
+export RECOVERY_CHROOT=${RECOVERY_CHROOT:-false}
 
 die() {
 	msg="$*"
@@ -886,6 +887,39 @@ recovery_sh_timestamp() {
 	fi
 }
 
+run_on_large_device() {
+
+	imagedir=$(require image-mounted) || exit $?
+
+	m() {
+		dir=$1 &&
+		mkdir -p $imagedir/$dir &&
+		mount -o bind /$dir $imagedir/$dir
+	}
+
+	u() {
+		dir=$1 &&
+		umount $imagedir/$dir &&
+		rmdir $imagedir/$dir
+	}
+
+	dirs="proc usr lib bin dev ${RECOVERY_MEDIA#/}/${RECOVERY_SDCARD}p4"
+
+	for d in $dirs; do
+		m $d
+	done
+
+	RECOVERY_CHROOT=true chroot $imagedir "$@"
+	rc=$?
+
+	for d in $dirs; do
+		u $d
+	done
+
+	test $rc -eq 0 || exit $?
+
+}
+
 choose_script() {
 
 	script=$1
@@ -1479,7 +1513,8 @@ main() {
 	mkdir -p ${RECOVERY_MEDIA}
 
 	if "$(on_nand)" &&
-		test "$(tmp_device)" = "tmpfs";
+		test "$(tmp_device)" = "tmpfs" &&
+		! ${RECOVERY_CHROOT};
 	then
 		export TMPDIR=$(require large-tmp) &&
 		imagedir=$(require image-mounted) &&
@@ -1674,6 +1709,10 @@ main() {
 	resolve-delegation)
 		shift 1
 		resolve_delegation "$@"
+	;;
+	run-on-large-device)
+		shift 1
+		run_on_large_device "$@"
 	;;
 	*)
 		usage
