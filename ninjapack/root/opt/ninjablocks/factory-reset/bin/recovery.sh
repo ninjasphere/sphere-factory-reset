@@ -1514,7 +1514,7 @@ main() {
 
 	if "$(on_nand)" &&
 		test "$(tmp_device)" = "tmpfs" &&
-		! {RECOVERY_CHROOT};
+		! ${RECOVERY_CHROOT};
 	then
 		export TMPDIR=$(require large-tmp) &&
 		imagedir=$(require image-mounted) &&
