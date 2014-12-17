@@ -19,6 +19,7 @@ export RECOVERY_PREFIX_DEFAULT=${RECOVERY_PREFIX_DEFAULT:-https://firmware.spher
 export RECOVERY_ENABLE_TMP_CLEANUP=${RECOVERY_ENABLE_TMP_CLEANUP:-false}
 export RECOVERY_ENABLE_SCRIPT_PHASES=${RECOVERY_ENABLE_SCRIPT_PHASES:-true}
 export RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING=${RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING:-true}
+export RECOVERY_ARCHIVE_DELEGATION_RULE=${RECOVERY_ARCHIVE_DELEGATION_RULE:-more-recent}
 
 die() {
 	msg="$*"
@@ -631,6 +632,59 @@ recovery_with_network() {
 		die "ERR564: The required recovery archive does not exist: '$imagetar'."
 	fi
 }
+
+resolve_delegation() {
+	delegator=$1
+	delegatee=$2
+	rule=${3:-${RECOVERY_ARCHIVE_DELEGATION_RULE}}
+
+	test -n "$rule" &&
+	test -n "$delegator" ||
+	die "usage: resolve_delegation {rule} {delegator} [{delegatee}]"
+
+	if test -z "$delegatee"; then
+		if test -n "$delegator"; then
+			echo "$delegator"
+		fi
+	else
+		if test -z "$delegator"; then
+			echo "$delegatee"
+		fi
+	fi
+
+	unsorted=$(
+cat <<EOF
+$delegator
+$delegatee
+EOF
+)
+
+	sorted=$(
+sort <<EOF
+$delegator
+$delegatee
+EOF
+)
+
+	case "$rule" in
+	always)
+		test -n "$delegatee" && echo "$delegatee"
+	;;
+	never)
+		test -n "$delegator" && echo "$delegator"
+	;;
+	more-recent)
+		if test "$sorted" = "$unsorted"; then
+			echo "$delegatee"
+		else
+			echo "$delegator"
+		fi
+	;;
+	*)
+		die "rule '$rule' is not supported"
+	esac
+}
+
 
 check() {
 	case "$1" in
