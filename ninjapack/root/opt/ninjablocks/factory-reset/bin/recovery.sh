@@ -875,7 +875,7 @@ check_time() {
 
 # answer the timestamp of the current script or 19991231T000000 if the script does not have one.
 recovery_sh_timestamp() {
-	file_ts=$(cat "${FACTORY_RESET}/etc/timestamp")
+	file_ts=$(cat "${RECOVERY_FACTORY_RESET}/etc/timestamp")
 	if test -z "$file_ts"; then
 		# a script without a timestamp, is probably borked.
 		echo "19991231T000000"
