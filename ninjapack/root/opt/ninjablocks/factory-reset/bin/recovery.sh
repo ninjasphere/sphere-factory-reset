@@ -1620,6 +1620,10 @@ main() {
 		shift 1
 		choose_latest "$@"
 	;;
+	choose-script)
+		shift 1
+		choose_script "$@"
+	;;
 	sdcard)
 		shift 1
 		sdcard "$@"
