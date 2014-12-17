@@ -946,7 +946,7 @@ factory_reset() {
 	attempt() {
 		if downloaded=$(download recovery-script) && test -f "$downloaded"; then
 			progress 1010 "Launching recovery script '$downloaded'..."
-			unpacked=$(downloaded unpack) &&
+			unpacked=$($downloaded unpack) &&
 			recovery_script=$unpacked/bin/recovery.sh &&
 			exec sh $(choose_script "$recovery_script") recovery-with-network
 		else
