@@ -893,7 +893,7 @@ run_on_large_device() {
 	m() {
 		dir=$1 &&
 		mkdir -p $imagedir/$dir &&
-		mount -o bind $dir $imagedir/$dir
+		mount -o bind /$dir $imagedir/$dir
 	}
 
 	u() {
