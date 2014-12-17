@@ -903,7 +903,7 @@ run_on_large_device() {
 		rmdir $imagedir/$dir
 	}
 
-	dirs="proc usr lib bin dev ${RECOVERY_MEDIA#/}${RECOVERY_SDCARD}p4"
+	dirs="proc usr lib bin dev ${RECOVERY_MEDIA#/}/${RECOVERY_SDCARD}p4"
 
 	for d in $dirs; do
 		m $d
