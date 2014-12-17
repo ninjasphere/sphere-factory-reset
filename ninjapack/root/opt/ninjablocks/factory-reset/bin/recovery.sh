@@ -899,10 +899,11 @@ run_on_large_device() {
 
 	u() {
 		dir=$1 &&
-		umount $imagedir/$dir
+		umount $imagedir/$dir &&
+		rmdir $imagedir/$dir
 	}
 
-	dirs="var proc usr lib bin dev"
+	dirs="proc usr lib bin dev ${RECOVERY_MEDIA#/}${RECOVERY_SDCARD}p4"
 
 	for d in $dirs; do
 		m $d
