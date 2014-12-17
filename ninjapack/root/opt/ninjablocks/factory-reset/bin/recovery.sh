@@ -361,7 +361,16 @@ recovery_without_network() {
 
 		progress "9200" "Reimaging of root partition begins..."
 		untar "$tar" root.tgz $(sdcard) p2
-		progress "9299" "Reimaging of root is complete."
+		progress "9250" "Reimaging of root is complete."
+
+		progress "9251" "Removing factory flash settings..."
+		block() {
+			if test -f /etc/factory.env.sh; then
+				rm /etc/factory.env.sh;
+			fi
+		}
+		( with_rw block ) ; rc=$?
+		progress "9252" "Removing factory flash settings has completed - $rc."
 
 		progress "9300" "Reimaging of boot partition begins..."
 		untar "$tar" boot.tgz $(sdcard) p1
@@ -1520,7 +1529,10 @@ main() {
 		imagedir=$(require image-mounted) &&
 		if test -f "${imagedir}/recovery.env.sh"; then
 			 . "${imagedir}/recovery.env.sh" || true
-		fi ||
+		fi &&
+		if test -f "/etc/factory.env.sh"; then
+			 . "${imagedir}/factory.env.sh" || true
+		fi	||
 		die "ERR501: Unable to mount large temp device - abandon all hope, ye who enter here!"
 	fi
 
