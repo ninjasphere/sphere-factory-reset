@@ -20,6 +20,7 @@ export RECOVERY_ENABLE_TMP_CLEANUP=${RECOVERY_ENABLE_TMP_CLEANUP:-false}
 export RECOVERY_ENABLE_SCRIPT_PHASES=${RECOVERY_ENABLE_SCRIPT_PHASES:-true}
 export RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING=${RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING:-true}
 export RECOVERY_ARCHIVE_DELEGATION_RULE=${RECOVERY_ARCHIVE_DELEGATION_RULE:-more-recent}
+export RECOVERY_CHROOT=${RECOVERY_CHROOT:-false}
 
 die() {
 	msg="$*"
@@ -611,7 +612,7 @@ recovery_with_network() {
 		if tar -C ${TMPDIR} -xf "$imagetar" $(url image)$(url suffix .sh); then
 			if test -x "${TMPDIR}/$(url image)$(url suffix .sh)"; then
 				progress "8105" "Extracted executeble recovery script."
-				if unpacked=$(sh ${TMPDIR}/$(url image)$(url suffix .sh) unpack); then
+				if unpacked=$(run_on_large_device sh ${TMPDIR}/$(url image)$(url suffix .sh) unpack); then
 					progress "8107" "Unpacked recovery script to '$unpacked'."
 					script_to_run="$unpacked/bin/recovery.sh"
 				else
@@ -886,6 +887,39 @@ recovery_sh_timestamp() {
 	fi
 }
 
+run_on_large_device() {
+
+	imagedir=$(require image-mounted) || exit $?
+
+	m() {
+		dir=$1 &&
+		mkdir -p $imagedir/$dir &&
+		mount -o bind /$dir $imagedir/$dir
+	}
+
+	u() {
+		dir=$1 &&
+		umount $imagedir/$dir &&
+		rmdir $imagedir/$dir
+	}
+
+	dirs="proc usr lib bin dev ${RECOVERY_MEDIA#/}/${RECOVERY_SDCARD}p4"
+
+	for d in $dirs; do
+		m $d
+	done
+
+	RECOVERY_CHROOT=true chroot $imagedir "$@"
+	rc=$?
+
+	for d in $dirs; do
+		u $d
+	done
+
+	test $rc -eq 0 || exit $?
+
+}
+
 choose_script() {
 
 	script=$1
@@ -944,8 +978,12 @@ factory_reset() {
 	fi
 
 	attempt() {
-		if recovery_script=$(download recovery-script) && test -f "$recovery_script"; then
-			progress 1010 "Launching recovery script '$recovery_script'..."
+		if downloaded=$(download recovery-script) && test -f "$downloaded"; then
+			progress 1010 "Launching recovery script '$downloaded'..."
+			chmod ugo+x "$downloaded" &&
+			unpacked=$(run_on_large_device $downloaded unpack) &&
+			recovery_script="$unpacked/bin/recovery.sh" &&
+			test -f "$recovery_script" &&
 			exec sh $(choose_script "$recovery_script") recovery-with-network
 		else
 			progress 1011 "Failed to download recovery script."
@@ -1416,7 +1454,7 @@ choose_latest() {
 	if root=$(require mounted $(sdcard)p2 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p2); then
 		if test -x $root/opt/ninjablocks/bin/recovery.sh; then
 			progress "0913" "Found executeable script in /opt/ninjablocks/bin of $(sdcard)p2"
-			found=$(sh $root/opt/ninjablocks/bin/recovery.sh unpack)
+			found=$(run_on_large_device sh $root/opt/ninjablocks/bin/recovery.sh unpack)
 			progress "0915" "Unpacked recovery script as '$found' ($(cat "$found/etc/timestamp"))."
 		else
 			progress "0912" "Could not find executeable script in /opt/ninjablocks/bin of $(sdcard)p2"
@@ -1432,7 +1470,7 @@ choose_latest() {
 		script="${image}$(url suffix .sh)"
 		if tar -C ${TMPDIR} -xf "${tar}" "${script}" ; then
 			progress "0924" "Extraction of '$script' from '${tar}' was successful."
-			found=$("${TMPDIR}/${script}" unpack)
+			found=$(run_on_large_device "${TMPDIR}/${script}" unpack)
 			progress "0925" "Unpacked recovery script as '$found' ($(cat "$found/etc/timestamp"))."
 		else
 			progress "0922" "Extraction of '${script}' from '${tar}' was unsuccessful."
@@ -1475,7 +1513,8 @@ main() {
 	mkdir -p ${RECOVERY_MEDIA}
 
 	if "$(on_nand)" &&
-		test "$(tmp_device)" = "tmpfs";
+		test "$(tmp_device)" = "tmpfs" &&
+		! ${RECOVERY_CHROOT};
 	then
 		export TMPDIR=$(require large-tmp) &&
 		imagedir=$(require image-mounted) &&
@@ -1670,6 +1709,10 @@ main() {
 	resolve-delegation)
 		shift 1
 		resolve_delegation "$@"
+	;;
+	run-on-large-device)
+		shift 1
+		run_on_large_device "$@"
 	;;
 	*)
 		usage
