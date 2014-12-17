@@ -885,10 +885,18 @@ recovery_sh_timestamp() {
 }
 
 choose_script() {
+
 	script=$1
 	if ${RECOVERY_ENABLE_SCRIPT_PHASES}; then
-		progress "3601" "Delegating to alternative script '$script'."
-		echo "$script"
+		self=$(recovery_sh_timestamp) # our own timestamp
+		other=$(sh script recovery-sh-timestamp) # the potential delegate's timestamp
+		resolution=$(resolve_delegation "$self" "$other" "${RECOVERY_ARCHIVE_DELEGATION_RULE}") # the resolved timestamp
+		if test "$resolution" = "$self"; then
+			progress "3603" "Found other script ('$other') but continuing with ('$self') because of rule ('${RECOVERY_ARCHIVE_DELEGATION_RULE}')"
+		else
+			progress "3609" "Delegating to alternative script '$script'."
+		fi
+		echo "$resolution"
 	else
 		progress "3602" "Script phases are disabled by RECOVERY_ENABLE_SCRIPT_PHASES. Using '$0' instead of '$script'."
 		# When debugging it can be confusing if the script keeps changing.
