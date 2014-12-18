@@ -1,6 +1,9 @@
 RELEASE NOTES
 =============
 
+1.0.4.218 - [2185973c9e33fd24f4819ecb5aac1a599cc29094](https://firmware.sphere.ninja/latest/nand-2185973c9e33fd24f4819ecb5aac1a599cc29094.tgz) - 2014/12/18
+	* Reverted early patching of eth2 in 1.0.4.df5 since this seemed to cause a kernel panic
+
 1.0.4.df5 - [df53059d53807f63ed39581d25c83719a809340e](https://firmware.sphere.ninja/latest/nand-df53059d53807f63ed39581d25c83719a809340e.tgz) - 2014/12/18
 	* Points at https://firmware.ninja.sphere/latest.
     * Is slightly gentler to udev during initialization to allow time for serial gadget to connect.
