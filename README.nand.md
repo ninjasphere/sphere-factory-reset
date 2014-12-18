@@ -1,6 +1,12 @@
 RELEASE NOTES
 =============
 
+1.0.4.df5 - [df53059d53807f63ed39581d25c83719a809340e](https://firmware.sphere.ninja/latest/nand-df53059d53807f63ed39581d25c83719a809340e.tgz) - 2014/12/18
+	* Points at https://firmware.ninja.sphere/latest.
+    * Is slightly gentler to udev during initialization to allow time for serial gadget to connect.
+
+1.0.4.ac1 - [ac165667652bac90be03e6dc6e32b0d7a0b1cd73](https://firmware.sphere.ninja/latest/nand-ac165667652bac90be03e6dc6e32b0d7a0b1cd73.tgz) - 2014/12/18
+
 1.0.3 - [59adcff69fdcea27a747009e141494cb5206bca2](https://firmware.sphere.ninja/latest/nand-59adcff69fdcea27a747009e141494cb5206bca2.tgz) - 2014/12/17
 
 	This version ensures that a recovery script only delegates to recovery scripts that are younger than itself. This allows the
