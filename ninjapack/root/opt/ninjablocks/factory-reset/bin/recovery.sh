@@ -1569,7 +1569,7 @@ expose_subshell() {
 }
 
 intercept_io() {
-	"\$@"
+	die "ERR408: Unexpected IO during unit test:$(printf " %q" "$@")"
 }
 
 unit_test_script() {
