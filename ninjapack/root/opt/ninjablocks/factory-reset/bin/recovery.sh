@@ -1529,15 +1529,18 @@ main() {
 		test "$(tmp_device)" = "tmpfs" &&
 		! ${RECOVERY_CHROOT};
 	then
-		export TMPDIR=$(require large-tmp) &&
+		export TMPDIR=$(require large-tmp) ||
+		die "ERR501: Unable to mount large temp device - abandon all hope, ye who enter here!"
+	fi
+
+	if "$(on_nand)"; then
 		imagedir=$(require image-mounted) &&
 		if test -f "${imagedir}/recovery.env.sh"; then
 			 . "${imagedir}/recovery.env.sh" || true
 		fi &&
 		if test -f "/etc/factory.env.sh"; then
 			 . "/etc/factory.env.sh" || true
-		fi	||
-		die "ERR501: Unable to mount large temp device - abandon all hope, ye who enter here!"
+		fi
 	fi
 
 	cmd=$1
