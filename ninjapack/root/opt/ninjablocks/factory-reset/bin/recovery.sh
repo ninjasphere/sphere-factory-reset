@@ -186,6 +186,25 @@ on_nand() {
 	fi
 }
 
+on_sdcard() {
+	if test "$(mount_point /dev/mmcblk0p2)" = "/"; then
+		echo true;
+	else
+		echo false;
+		return 1
+	fi
+}
+
+on_sphere() {
+	if $(on_nand) || $(on_sdcard); then
+		echo true;
+	else
+		echo false;
+		return 1
+	fi
+}
+
+
 generate_env() {
 	image="${1:-${RECOVERY_IMAGE_DEFAULT}}"
 	prefix="${2:-${RECOVERY_PREFIX_DEFAULT}}"
@@ -1576,7 +1595,9 @@ EOF
 main() {
 
 	mkdir -p ${TMPDIR}
-	mkdir -p ${RECOVERY_MEDIA}
+	if "$(on_sphere)"; then
+		mkdir -p ${RECOVERY_MEDIA}
+	fi
 
 	if "$(on_nand)" &&
 		test "$(tmp_device)" = "tmpfs" &&
@@ -1789,6 +1810,14 @@ main() {
 	unit-test)
 		shift 1
 		unit_test "$@"
+	;;
+	on-sphere)
+		shift 1
+		on_sphere "$@"
+	;;
+	on-sdcard)
+		shift 1
+		on_sdcard "$@"
 	;;
 	*)
 		usage
