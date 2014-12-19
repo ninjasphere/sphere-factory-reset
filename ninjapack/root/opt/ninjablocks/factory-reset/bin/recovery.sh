@@ -1080,7 +1080,7 @@ require() {
 
 		if test -z "$current"; then
 			progress "0300" "Mounting '$device'..."
-			test -d "$mountpoint" || mkdir -p "$mountpoint" &&
+			io test -d "$mountpoint" || io mkdir -p "$mountpoint" &&
 			io /bin/mount "$device" "$mountpoint" &&
 			current=$(mount_point "$device")
 		fi
