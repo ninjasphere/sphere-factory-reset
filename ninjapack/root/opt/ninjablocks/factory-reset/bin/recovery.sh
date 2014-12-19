@@ -489,7 +489,7 @@ url() {
 check_file() {
 	file=$1
 	test -n "$file" || die "ERR460: usage: check_file {filename}"
-	test -f "$file" || die "ERR301: The specified '$file' does not exist."
+	test -f "$file" || die "ERR301: The specified file '$file' does not exist."
 	filesum="$(sha1 < "${file}")"
 	progress "0100" "Verifying checksum of '$file'..."
 	checksum="$(cat "${file}.sha1")"
