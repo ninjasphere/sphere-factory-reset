@@ -1423,6 +1423,7 @@ with() {
 		"$@"
 	;;
 	io-trace)
+		shift 1
 		(
 				RECOVERY_IO_REDIRECT=trace_io${RECOVERY_IO_REDIRECT:+ }${RECOVERY_IO_REDIRECT}
 				"$@"
