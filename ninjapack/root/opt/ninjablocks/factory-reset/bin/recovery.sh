@@ -1542,11 +1542,11 @@ tmp_device() {
 }
 
 with_rw() {
-        rc=0 &&
-        mode=$(cat /proc/self/mounts | egrep "^(/dev/root|ubi0:rootfs)" | cut -f4 -d' ' | cut -f1 -d,) &&
-        test "$mode" = "rw" || mount -oremount,rw / &&
-        "$@" || rc=$?
-        ! test "$mode" = "ro" || mount -oremount,ro / && exit $rc
+	rc=0 &&
+	mode=$(cat /proc/self/mounts | egrep "^(/dev/root|ubi0:rootfs)" | cut -f4 -d' ' | cut -f1 -d,) &&
+	test "$mode" = "rw" || mount -oremount,rw / &&
+	"$@" || rc=$?
+	! test "$mode" = "ro" || mount -oremount,ro / && exit $rc
 }
 
 main() {
