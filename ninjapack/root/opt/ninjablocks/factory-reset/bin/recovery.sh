@@ -624,7 +624,7 @@ recovery_with_network() {
 		if tar -C ${TMPDIR} -xf "$imagetar" $(url image)$(url suffix .sh); then
 			if test -x "${TMPDIR}/$(url image)$(url suffix .sh)"; then
 				progress "8105" "Extracted executeble recovery script."
-				if unpacked=$(run_on_large_device sh ${TMPDIR}/$(url image)$(url suffix .sh) unpack); then
+				if unpacked=$(with large-tmp sh ${TMPDIR}/$(url image)$(url suffix .sh) unpack); then
 					progress "8107" "Unpacked recovery script to '$unpacked'."
 					script_to_run="$unpacked/bin/recovery.sh"
 				else
@@ -899,38 +899,6 @@ recovery_sh_timestamp() {
 	fi
 }
 
-run_on_large_device() {
-
-	imagedir=$(require image-mounted) || exit $?
-
-	m() {
-		dir=$1 &&
-		mkdir -p $imagedir/$dir &&
-		mount -o bind /$dir $imagedir/$dir
-	}
-
-	u() {
-		dir=$1 &&
-		umount $imagedir/$dir &&
-		rmdir $imagedir/$dir
-	}
-
-	dirs="proc usr lib bin dev ${RECOVERY_MEDIA#/}/${RECOVERY_SDCARD}p4"
-
-	for d in $dirs; do
-		m $d
-	done
-
-	RECOVERY_CHROOT=true chroot $imagedir "$@"
-	rc=$?
-
-	for d in $dirs; do
-		u $d
-	done
-
-	test $rc -eq 0 || exit $?
-
-}
 
 choose_script() {
 
@@ -993,7 +961,7 @@ factory_reset() {
 		if downloaded=$(download recovery-script) && test -f "$downloaded"; then
 			progress 1010 "Launching recovery script '$downloaded'..."
 			chmod ugo+x "$downloaded" &&
-			unpacked=$(run_on_large_device $downloaded unpack) &&
+			unpacked=$(with large-tmp $downloaded unpack) &&
 			recovery_script="$unpacked/bin/recovery.sh" &&
 			test -f "$recovery_script" &&
 			exec sh $(choose_script "$recovery_script") recovery-with-network
@@ -1006,6 +974,7 @@ factory_reset() {
 			tar="$mountpoint/$(url image)$(url suffix .tar)"
 			unpacked_script="${TMPDIR}/${script_file}"
 			unpacked_sha1="${TMPDIR}/${sha1_file}"
+
 			if test -f "$tar"; then
 				progress "1012" "Unpacking ${script_file} from $tar..." &&
 				tar -O -xf "$tar" "${script_file}" > "${unpacked_script}" &&
@@ -1429,6 +1398,20 @@ with() {
 				"$@"
 		) || exit $?
 	;;
+	large-tmp)
+		shift 1
+		if
+			imagedir=$(require image-mounted) &&
+			mkdir -p "${imagedir}/tmp" &&
+			mount -o bind "${imagedir}/tmp" /tmp; then
+			( "$@" )
+			rc=$?
+			umount /tmp || rc=$?
+			test $rc -eq 0 || exit $rc
+		else
+			die "ERR568: Cannot mount '${imagedir}/tmp' on /tmp."
+		fi
+	;;
 	*)
 		die "ERR407: usage: with block|large-tmp"
 	;;
@@ -1441,12 +1424,17 @@ repack() {
 	test -f "${TMPDIR}/repack.$$" && rm "${TMPDIR}/repack.$$"
 }
 
-# Search for a recovery tar on p4 and any available USB hard drive.
+discover_tar() {
+	discover_file $(url file .tar)
+}
+
+# Search for a recovery file on p4 and any available USB hard drive.
 # if one exists on both the SDCARD and the USB drive, then prefer
 # the version on the USB drive.
 #
 # Prefer higher number partitions over lower numbered partitions.
-discover_tar() {
+discover_file() {
+	name=$1
 	result=$(
 		(
 			echo /dev/${RECOVERY_SDCARD}p4 &&
@@ -1457,7 +1445,7 @@ discover_tar() {
 			echo $mp
 		done |
 		while read mp; do
-			find "$mp" -type f -maxdepth 1 -name "${RECOVERY_IMAGE}$(url suffix .tar)"
+			find "$mp" -type f -maxdepth 1 -name "$name"
 		done |
 		while read f; do
 				( check_file "$f" ) && echo $f
@@ -1493,7 +1481,7 @@ choose_latest() {
 	if root=$(require mounted $(sdcard)p2 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p2); then
 		if test -x $root/opt/ninjablocks/bin/recovery.sh; then
 			progress "0913" "Found executeable script in /opt/ninjablocks/bin of $(sdcard)p2"
-			found=$(run_on_large_device sh $root/opt/ninjablocks/bin/recovery.sh unpack)
+			found=$(with large-tmp sh $root/opt/ninjablocks/bin/recovery.sh unpack)
 			progress "0915" "Unpacked recovery script as '$found' ($(cat "$found/etc/timestamp"))."
 		else
 			progress "0912" "Could not find executeable script in /opt/ninjablocks/bin of $(sdcard)p2"
@@ -1503,18 +1491,33 @@ choose_latest() {
 	fi
 
 	progress "0920" "Checking recovery tars on image partition..."
-	find "$imagedir" -maxdepth 1 -name "*$(url suffix .tar)" | while read tar; do
-		progress "0923" "Extracting recovery script from '$tar'..."
-		image=$(gnu_basename "$tar" "$(url suffix .tar)")
-		script="${image}$(url suffix .sh)"
-		if tar -C ${TMPDIR} -xf "${tar}" "${script}" ; then
-			progress "0924" "Extraction of '$script' from '${tar}' was successful."
-			found=$(run_on_large_device "${TMPDIR}/${script}" unpack)
-			progress "0925" "Unpacked recovery script as '$found' ($(cat "$found/etc/timestamp"))."
+	if tar=$(discover_tar); then
+		image=$(gnu_basename "$tar" "$(url suffix .tar)") &&
+		script="${image}$(url suffix .sh)" &&
+		adjacent="$(dirname "$tar")/$script" &&
+		found="" &&
+		packed="" &&
+		if test -f "$adjacent" && (check_file "$adjacent"); then
+			progress "0923" "Found recovery script next to '$tar'..."
+			packed="$adjacent"
 		else
-			progress "0922" "Extraction of '${script}' from '${tar}' was unsuccessful."
-		fi
-	done
+			progress "0924" "Extracting recovery script from '$tar'..." &&
+			if tar -C ${TMPDIR} -xf "${tar}" "${script}" "${script}.sha1"; then
+				progress "0926" "Extraction of '$script' from '${tar}' was successful." &&
+				if (check_file "${TMPDIR}/${script}"); then
+					packed="${TMPDIR}/${script}"
+				else
+					false
+				fi
+			fi
+		fi &&
+		if test -n "$packed"; then
+			progress "0927" "Unpacking '${packed}'..." &&
+			found=$(with large-tmp "$packed" unpack) &&
+			progress "0928" "Unpacked recovery script as '$found' ($(cat "$found/etc/timestamp"))."
+		fi &&
+		test -n "$found" || progress "0928" "Unable to extract recovery script from next to or within '$tar'"
+	fi
 
 	latest="$(
 		find ${TMPDIR}/by-timestamp -maxdepth 1 -type l |
@@ -1525,11 +1528,11 @@ choose_latest() {
 		tail -1
 	)"
 	if test -n "$latest/bin/recovery.sh"; then
-		progress "0929" "Launching '$latest/bin/recovery.sh' ..."
+		progress "0949" "Launching '$latest/bin/recovery.sh' ..."
 		exec sh $(choose_script "$latest/bin/recovery.sh") "$@"
 	else
 		# this is best we can do, so use it
-		progress "0928" "Could not find any recovery scripts. Launching '$0'..."
+		progress "0948" "Could not find any recovery scripts. Launching '$0'..."
 		exec sh "$0" "$@"
 	fi
 }
@@ -1754,10 +1757,6 @@ main() {
 	resolve-delegation)
 		shift 1
 		resolve_delegation "$@"
-	;;
-	run-on-large-device)
-		shift 1
-		run_on_large_device "$@"
 	;;
 	discover-tar)
 		shift 1
