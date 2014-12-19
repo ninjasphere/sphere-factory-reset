@@ -100,17 +100,6 @@ usage() {
 
 # setup the recovery environment. look for an environment far on the image partition and use it, if it exists.
 setup() {
-	if mountpoint=$(require mounted "$(sdcard)p4" ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4); then
-		if test -f "$mountpoint/recovery.env.sh"; then
-			progress "0030" "Loading environment from '$mountpoint/recovery.env.sh'..."
-			. "$mountpoint/recovery.env.sh"
-		else
-			progress "0031" "No environment overrides found in '$mountpoint/recovery.env.sh'..."
-		fi
-	else
-		progress "0032" "Could not mount image device."
-	fi
-
 	if ${RECOVERY_ENABLE_SPHERE_IO:-false}; then
 		if test -x "${RECOVERY_FACTORY_TEST}/bin/reset-led-matrix"; then
 			"${RECOVERY_FACTORY_TEST}/bin/reset-led-matrix" 2>/dev/null
