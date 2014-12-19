@@ -1549,6 +1549,30 @@ with_rw() {
 	! test "$mode" = "ro" || mount -oremount,ro / && exit $rc
 }
 
+escape_subshell() {
+	echo $(printf "%q " "$@")\; 1>&3
+}
+
+expose_subshell() {
+	eval "$1" 3>${SHUNIT_TMPDIR}/expose.$$
+	rc=$?
+	eval "$(cat ${SHUNIT_TMPDIR}/expose.$$)"  || rc=$?
+	return $rc
+}
+
+intercept_io() {
+	"\$@"
+}
+
+unit_test_script() {
+
+cat <<EOF
+RECOVERY_IO_REDIRECT=intercept_io;
+. ${RECOVERY_FACTORY_RESET}/shunit2/src/shunit2;
+EOF
+
+}
+
 main() {
 
 	mkdir -p ${TMPDIR}
@@ -1762,10 +1786,16 @@ main() {
 		shift 1
 		discover_tar "$@"
 	;;
+	unit-test)
+		shift 1
+		unit_test "$@"
+	;;
 	*)
 		usage
 	;;
 	esac
 }
 
-main "$@"
+if test "${RECOVERY_LIBRARY}" != "true"; then
+	main "$@"
+fi
