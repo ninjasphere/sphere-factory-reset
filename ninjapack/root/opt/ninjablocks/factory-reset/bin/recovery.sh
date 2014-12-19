@@ -1441,6 +1441,32 @@ repack() {
 	test -f "${TMPDIR}/repack.$$" && rm "${TMPDIR}/repack.$$"
 }
 
+# Search for a recovery tar on p4 and any available USB hard drive.
+# if one exists on both the SDCARD and the USB drive, then prefer
+# the version on the USB drive.
+#
+# Prefer higher number partitions over lower numbered partitions.
+discover_tar() {
+	result=$(
+		(
+			echo /dev/${RECOVERY_SDCARD}p4 &&
+			find /dev -maxdepth 1 -type b -name '/dev/sda[0-9]*' || true
+		) |
+		while read dev; do
+			mp=$(require mounted "$dev" ${RECOVERY_MEDIA}/$(basename "$dev")) &&
+			echo $mp
+		done |
+		while read mp; do
+			find "$mp" -type f -maxdepth 1 -name "${RECOVERY_IMAGE}$(url suffix .tar)"
+		done |
+		while read f; do
+				( check_file "$f" ) && echo $f
+		done | tail -1
+	) &&
+	test -n "$result" &&
+	echo "$result"
+}
+
 #
 # Looks at all available recovery scripts, and chooses the youngest one.
 #
@@ -1732,6 +1758,10 @@ main() {
 	run-on-large-device)
 		shift 1
 		run_on_large_device "$@"
+	;;
+	discover-tar)
+		shift 1
+		discover_tar "$@"
 	;;
 	*)
 		usage
