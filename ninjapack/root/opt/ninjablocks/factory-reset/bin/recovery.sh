@@ -1563,7 +1563,12 @@ choose_latest() {
 		progress "0911" "Could not mount image partition..."
 	fi
 
-	( require media-updated ) # attempt to update media from the USB
+	if ( require media-updated ); then # attempt to update media from the USB
+		if test -f /etc/factory.env.sh; then
+			. /etc/factory.env.sh
+		fi
+	fi
+
 
 	progress "0920" "Looking for scripts on image partition..."
 	if imagedir="$(require mounted $(sdcard)p4)"; then
