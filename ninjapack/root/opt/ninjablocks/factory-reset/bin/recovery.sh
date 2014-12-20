@@ -1132,6 +1132,11 @@ require() {
 		echo "${imagedir}/tmp"
 		# if we get to here, we have a large tmp device, or at least one not on tmpfs
 	;;
+	media-updated)
+		update_from_usb $(url file .tar)
+		update_from_usb $(url file .sh)
+		update_from_usb factory.env.sh
+	;;
 	*)
 		die "ERR482: usage: require mounted {partition-device} [ {preferred-mount-point} ] | unmounted {partition-device} ."
 	;;
@@ -1395,6 +1400,51 @@ unpack() {
 	cd $(dirname $0)/..; pwd
 }
 
+# update a file on the p4 partition of the SDCARD from the USB, if it exists and
+# if the SDCARD does not already have it.
+update_from_usb() {
+	local file=$1
+	if imagedir=$(require mounted $(sdcard)p4); then
+		case "$file" in
+		factory.env.sh)
+			if usb=$(usb_file "$file"); then
+				with_rw cp "$usb" /etc
+			fi
+		;;
+		*)
+			if usb=$(usb_file "$file"); then
+				sha1=${usb}.sha1
+				if io test -f "$sha1"; then
+					progress "0970" "Copying '$sha1' to '$imagedir'..."
+					io cp "$sha1" $imagedir &&
+					progress "0971" "Copying '$sha1' to '$imagedir' has completed successfully." &&
+					if ! (check_file "${imagedir}/$(basename "$usb")"); then
+						progress "0972" "Copying '$usb' to '$imagedir'..." &&
+						if io cp "$usb" $imagedir; then
+							progress "0975" "Copying '$usb' to '$imagedir' has completed successfully."
+							return
+						else
+							progress "0974" "Copying '$usb' to '$imagedir' has failed."
+							false
+						fi
+					else
+						progress "0977" "'$imagedir' already has '$usb' @ '$sha1'"
+						true
+						return
+					fi
+				else
+					progress "0976" "Could not find '$sha1' file on USB."
+					false
+				fi
+			else
+				progress "0974" "Could not '$file' file in USB."
+				false
+			fi || progress "0916" "Failed to update from USB." && false
+		;;
+		esac
+	fi
+}
+
 with() {
 	case "$1" in
 	fixed-script-phases)
@@ -1514,6 +1564,8 @@ choose_latest() {
 	else
 		progress "0911" "Could not mount image partition..."
 	fi
+
+	( require media-updated ) # attempt to update media from the USB
 
 	progress "0920" "Looking for scripts on image partition..."
 	if imagedir="$(require mounted $(sdcard)p4)"; then
