@@ -338,7 +338,7 @@ untar() {
 
 	progress "0600" "Reimaging '$block_device$partition'..."
 	format_partitions "$block_device" "$partition"
-	mountpoint=$(require mounted $block_device$partition ${RECOVERY_MEDIA}/$(basename $block_device$partition)) || exit $?
+	mountpoint=$(require mounted $block_device$partition) || exit $?
 	progress "0602" "Extraction of tar '$tar' begins..."
 	if tar -O -xf "$tar" "$file" | gzip -dc | (cd $mountpoint; tar -xf -); then
 		progress "0607" "Extraction of tar '$tar' begins..."
@@ -387,7 +387,7 @@ recovery_without_network() {
 		untar "$tar" boot.tgz $(sdcard) p1
 		progress "9399" "Reimaging of boot partition ends."
 
-		if rootdir=$(require mounted $(sdcard)p2 ${RECOVERY_MEDIA}p2); then
+		if rootdir=$(require mounted $(sdcard)p2); then
 			 date -u +%Y%m%dT%H%M%S > $rootdir/etc/.recovered
 		fi
 		sync
@@ -398,7 +398,7 @@ recovery_without_network() {
 		require unmounted $(sdcard)p1
 
 		progress "8501" "Backing up boot partition"
-		if imagedir=$(require mounted $(sdcard)p4 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4); then
+		if imagedir=$(require mounted $(sdcard)p4); then
 			io dd if="$(sdcard)p1" of="${imagedir}/boot.img" bs=1M
 			size=$(cat "${imagedir}/boot.img" | wc -c)
 			! test -f "${imagedir}/boot.img.gz" || rm "${imagedir}/boot.img.gz"
@@ -511,7 +511,7 @@ check_file() {
 # this function recovers the boot partition from the recovery tar
 recover_boot() {
 	progress "9800" "Manual recovery of boot partition begins..."
-	imagemount=$(require mounted $(sdcard)p4 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4) || exit $?
+	imagemount=$(require mounted $(sdcard)p4) || exit $?
 	image=$(image_from_mount_point "${imagemount}")
 	tar="${imagemount}/${image}$(url suffix .tar)"
 	check_file "$tar"
@@ -533,7 +533,7 @@ recover_boot() {
 # this function recovers the boot partition from the recovery tar
 recover_data() {
 	progress "9700" "Manual recovery of data partition begins..."
-	imagemount=$(require mounted $(sdcard)p4 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4) || exit $?
+	imagemount=$(require mounted $(sdcard)p4) || exit $?
 	image=$(image_from_mount_point "${imagemount}")
 	tar="${imagemount}/${image}$(url suffix .tar)"
 	check_file "$tar"
@@ -569,7 +569,7 @@ force_partitioning() {
 	( check_partition_table $(sdcard) 1>/dev/null ) || die "ERR561: Failed to update partition table on '$(sdcard)'."
 
 	progress "8021" "Trying to remount image partition..."
-	if imagedir=$(require mounted $(sdcard)p4 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4); then
+	if imagedir=$(require mounted $(sdcard)p4); then
 		progress "8023" "Remounting of image partition was successful."
 	else
 		progress "8022" "Remounting of image partition failed. Trying to reformat it..."
@@ -595,11 +595,11 @@ recovery_with_network() {
 		fi
 	fi
 
-	if ! imagedir=$(require mounted $(sdcard)p4 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4); then
+	if ! imagedir=$(require mounted $(sdcard)p4); then
 		format_partitions $(sdcard) p4
 	fi
 
-	imagedir=$(require mounted $(sdcard)p4 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4) || exit $?
+	imagedir=$(require mounted $(sdcard)p4) || exit $?
 	imagetar="$imagedir/$(url image)$(url suffix .tar)"
 	imagesha1="${TMPDIR}/$(url image)$(url suffix .tar.sha1)"
 	imagesha1url=$(url url .tar.sha1)
@@ -954,8 +954,8 @@ factory_reset() {
 	if test "$mode" != "force"; then
 		progress "1001" "Checking boot partition..."
 		if
-			bootdir=$(require mounted "$(sdcard)p1" ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p1) &&
-			rootdir=$(require mounted "$(sdcard)p2" ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p2) &&
+			bootdir=$(require mounted "$(sdcard)p1") &&
+			rootdir=$(require mounted "$(sdcard)p2") &&
 			test -f $rootdir/etc/.recovered
 		then
 			progress "1002" "The boot partition is ok. Checking for user reset indication..."
@@ -978,7 +978,7 @@ factory_reset() {
 			exec sh $(choose_script "$recovery_script") recovery-with-network
 		else
 			progress 1011 "Failed to download recovery script."
-			mountpoint="$(require mounted "$(sdcard)p4" ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4)" || exit $?
+			mountpoint="$(require mounted "$(sdcard)p4")" || exit $?
 			RECOVERY_IMAGE=$(image_from_mount_point "$mountpoint")
 			script_file="$(url image)$(url suffix .sh)"
 			sha1_file="$(url image)$(url suffix .sh.sha1)"
@@ -1101,13 +1101,13 @@ require() {
 	;;
 	image-mounted)
 		# try really, really hard to mount the image partition.
-		if ! imagedir=$(require mounted "$(sdcard)p4" ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4); then
+		if ! imagedir=$(require mounted "$(sdcard)p4"); then
 			if (format_partitions $(sdcard) p4); then
-				imagedir=$(require mounted $(sdcard)p4 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4)
+				imagedir=$(require mounted $(sdcard)p4)
 			fi
 			if test -z "$imagedir"; then
 				force_partitioning
-				imagedir=$(require mounted $(sdcard)p4 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4)
+				imagedir=$(require mounted $(sdcard)p4)
 			fi
 		fi
 		# if we get to here then we successfully remounted the image partition. if we don't the SD card
@@ -1186,11 +1186,11 @@ _set() {
 
 	if test -n "$var"; then
 		progress "0501" "Mounting image partition."
-		if ! imagedir=$(require mounted "$(sdcard)p4" ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4); then
+		if ! imagedir=$(require mounted "$(sdcard)p4"); then
 			progress "0502" "Image partition "$(sdcard)p4" cannot be mounted. Reformatting..."
 			format_partitions $(sdcard) p4
 			progress "0503" "Image partition formatted. Remounting..."
-			imagedir=$(require mounted "$(sdcard)p4" ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p4) || exit $?
+			imagedir=$(require mounted "$(sdcard)p4") || exit $?
 			progress "0504" "Image mounted."
 		fi
 		test -f "${imagedir}/recovery.env.sh" || touch "${imagedir}/recovery.env.sh"
@@ -1452,7 +1452,7 @@ discover_file() {
 			find /dev -maxdepth 1 -type b -name '/dev/sda[0-9]*' || true
 		) |
 		while read dev; do
-			mp=$(require mounted "$dev" ${RECOVERY_MEDIA}/$(basename "$dev")) &&
+			mp=$(require mounted "$dev") &&
 			echo $mp
 		done |
 		while read mp; do
@@ -1489,7 +1489,7 @@ choose_latest() {
 	fi
 
 	progress "0910" "Checking for root partition..."
-	if root=$(require mounted $(sdcard)p2 ${RECOVERY_MEDIA}/${RECOVERY_SDCARD}p2); then
+	if root=$(require mounted $(sdcard)p2); then
 		if test -x $root/opt/ninjablocks/bin/recovery.sh; then
 			progress "0913" "Found executeable script in /opt/ninjablocks/bin of $(sdcard)p2"
 			found=$(with large-tmp sh $root/opt/ninjablocks/bin/recovery.sh unpack)
