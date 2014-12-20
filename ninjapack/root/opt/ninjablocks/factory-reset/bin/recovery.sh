@@ -1505,7 +1505,11 @@ usb_file() {
 			find "$mp" -type f -maxdepth 1 -name "$name"
 		done |
 		while read f; do
+			if test "$name" = "factory.env.sh"; then
+				echo "$f"
+			else
 				( check_file "$f" ) && echo $f
+			fi
 		done | tail -1
 	) &&
 	test -n "$result" &&
