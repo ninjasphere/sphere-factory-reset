@@ -1546,7 +1546,11 @@ choose_latest() {
 		progress "0903" "Found executeable script in /opt/ninjablocks/factory-reset/bin ($timestamp)."
 		# link the NAND image as the primordial tree.
 		mkdir -p "${TMPDIR}/by-timestamp"
-		ln -sf "/opt/ninjablocks/factory-reset" "${TMPDIR}/by-timestamp/${timestamp}"
+
+		if test -L "${TMPDIR}/by-timestamp/${timestamp}"; then
+			rm "${TMPDIR}/by-timestamp/${timestamp}"
+		fi &&
+		ln -s "/opt/ninjablocks/factory-reset" "${TMPDIR}/by-timestamp/${timestamp}"
 	else
 		# this could be bad.
 		progress "0902" "Could not find factory-reset tree in /opt/ninjablocks/factory-reset."
