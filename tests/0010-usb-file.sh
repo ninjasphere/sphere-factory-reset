@@ -59,7 +59,7 @@ check_file() {
 testDiscoverTarFoundOnUSB() {
 	FIXTURE_HAVE_USB=true
 	FIXTURE_FOUND_ON_USB=true
-	expose_subshell 'tar=$(discover_tar)'
+	expose_subshell 'tar=$(usb_file $(url file .tar))'
 	assertTrue $?
 	assertTrue 'test -n "$tar"'
 }
@@ -67,7 +67,7 @@ testDiscoverTarFoundOnUSB() {
 testDiscoverTarNotFoundOnUSB() {
 	FIXTURE_HAVE_USB=true
 	FIXTURE_FOUND_ON_USB=false
-	expose_subshell 'tar=$(discover_tar)'
+	expose_subshell 'tar=$(usb_file $(url file .tar))'
 	assertFalse $?
 	assertFalse 'test -n "$tar"'
 }
@@ -75,7 +75,7 @@ testDiscoverTarNotFoundOnUSB() {
 testDiscoverTarNotFoundNoUSB() {
 	FIXTURE_HAVE_USB=false
 	FIXTURE_FOUND_ON_USB=false
-	expose_subshell 'tar=$(discover_tar)'
+	expose_subshell 'tar=$(usb_file $(url file .tar))'
 	assertFalse $?
 	assertFalse 'test -n "$tar"'
 }

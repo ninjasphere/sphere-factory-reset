@@ -1435,16 +1435,12 @@ repack() {
 	test -f "${TMPDIR}/repack.$$" && rm "${TMPDIR}/repack.$$"
 }
 
-discover_tar() {
-	discover_file $(url file .tar)
-}
-
 # Search for a recovery file on p4 and any available USB hard drive.
 # if one exists on both the SDCARD and the USB drive, then prefer
 # the version on the USB drive.
 #
 # Prefer higher number partitions over lower numbered partitions.
-discover_file() {
+usb_file() {
 	name=$1
 	result=$(
 		(
@@ -1799,10 +1795,6 @@ main() {
 	resolve-delegation)
 		shift 1
 		resolve_delegation "$@"
-	;;
-	discover-tar)
-		shift 1
-		discover_tar "$@"
 	;;
 	unit-test)
 		shift 1
