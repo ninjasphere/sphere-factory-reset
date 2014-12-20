@@ -1386,7 +1386,7 @@ mkdir -p \${TMPDIR}/by-timestamp/
 cat <<EOF
 $(tar -C ${RECOVERY_FACTORY_RESET} -czf - . | openssl base64)
 EOF
-) | openssl base64 -d | tar -C \${TMPDIR}/tree/\${sha1} -zxf -
+) | openssl base64 -d | tar -C \${TMPDIR}/tree/\${sha1} -zxf - || exit $?
 ! test -e \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP || rm \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP
 ln -sf ../tree/\$sha1/ \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP
 export PATH=\${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP/bin:\$PATH;
