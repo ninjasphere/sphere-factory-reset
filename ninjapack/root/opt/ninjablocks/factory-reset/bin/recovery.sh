@@ -485,10 +485,13 @@ url() {
 		echo ${RECOVERY_IMAGE:-ubuntu_armhf_trusty_norelease_sphere-stable}
 	;;
 	suffix)
-		echo ${RECOVERY_SUFFIX:--recovery}$2
+		echo "${RECOVERY_SUFFIX:--recovery}$2"
+	;;
+	file)
+		echo "$(url image)$(url suffix "$2")"
 	;;
 	url)
-		echo $(url prefix)/$(url image)$(url suffix "$2")
+		echo $(url prefix)/$(url file "$2")
 	;;
 	esac
 }
