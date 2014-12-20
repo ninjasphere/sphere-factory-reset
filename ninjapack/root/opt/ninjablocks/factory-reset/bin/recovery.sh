@@ -1054,7 +1054,7 @@ require() {
 	mounted)
 		shift 1
 		device=$1
-		mountpoint=$2
+		mountpoint=${2:-${RECOVERY_MEDIA}/$(basename $device)}
 		test -n "$mountpoint" || die "ERR480: usage: require mounted {partition-device} {mountpoint}"
 		current=$(mount_point "$device")
 
