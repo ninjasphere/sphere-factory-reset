@@ -1860,6 +1860,18 @@ main() {
 		shift 1
 		on_sdcard "$@"
 	;;
+	update-from-usb)
+		shift 1
+		update_from_usb "$@"
+	;;
+	usb-file)
+		shift 1
+		usb_file "$@"
+	;;
+	checked-unpack-script)
+		shift 1
+		checked_unpack_script "$@"
+	;;
 	*)
 		usage
 	;;
