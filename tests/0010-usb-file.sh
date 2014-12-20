@@ -15,7 +15,7 @@ require() {
 
 find() {
 	case "$*" in
-	"/dev -maxdepth 1 -type b -name /dev/sda[0-9]*")
+	"/dev -maxdepth 1 -type b -name sda[0-9]*")
 if ${FIXTURE_HAVE_USB}; then
 		cat <<EOF
 /dev/sda1
@@ -24,6 +24,9 @@ if ${FIXTURE_HAVE_USB}; then
 /dev/sda4
 EOF
 fi
+	;;
+	"/dev -maxdepth 1 -type b -name sdb[0-9]*")
+		return 0
 	;;
 	"/var/volatile/run/media/mmcblk0p4 -type f -maxdepth 1 -name ubuntu_armhf_trusty_norelease_sphere-stable-recovery.tar")
 	;;

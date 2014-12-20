@@ -1494,7 +1494,8 @@ usb_file() {
 	name=$1
 	result=$(
 		(
-			find /dev -maxdepth 1 -type b -name '/dev/sda[0-9]*' || true
+			find /dev -maxdepth 1 -type b -name 'sda[0-9]*' || true
+			find /dev -maxdepth 1 -type b -name 'sdb[0-9]*' || true
 		) |
 		while read dev; do
 			mp=$(require mounted "$dev") &&
