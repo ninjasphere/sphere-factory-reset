@@ -1466,6 +1466,25 @@ discover_file() {
 	echo "$result"
 }
 
+checked_unpack_script() {
+	fq_script=$1
+	if $(check_file "${fq_script}"); then
+		progress "0921" "Unpacking '${fq_script}'..."
+		if unpacked=$(with large-tmp sh "${fq_script}" unpack); then
+			progress "0925" "Unpacking of '${fq_script}' to '$unpacked' has succeeded."
+			echo "$unpacked"
+			true
+		else
+			progress "0926" "Unpacking of '${fq_script}' has failed."
+			false
+		fi
+	else
+		progress "0922" "'${fq_script}' is not valid - removing."
+		test -f "${fq_script}" && rm "${fq_script}"
+		false
+	fi
+}
+
 #
 # Looks at all available recovery scripts, and chooses the youngest one.
 #
@@ -1488,7 +1507,7 @@ choose_latest() {
 		progress "0902" "Could not find factory-reset tree in /opt/ninjablocks/factory-reset."
 	fi
 
-	progress "0910" "Checking for root partition..."
+	progress "0910" "Looing for scripts on root partition..."
 	if root=$(require mounted $(sdcard)p2); then
 		if test -x $root/opt/ninjablocks/bin/recovery.sh; then
 			progress "0913" "Found executeable script in /opt/ninjablocks/bin of $(sdcard)p2"
@@ -1501,33 +1520,20 @@ choose_latest() {
 		progress "0911" "Could not mount image partition..."
 	fi
 
-	progress "0920" "Checking recovery tars on image partition..."
-	if tar=$(discover_tar); then
-		image=$(gnu_basename "$tar" "$(url suffix .tar)") &&
-		script="${image}$(url suffix .sh)" &&
-		adjacent="$(dirname "$tar")/$script" &&
-		found="" &&
-		packed="" &&
-		if test -f "$adjacent" && (check_file "$adjacent"); then
-			progress "0923" "Found recovery script next to '$tar'..."
-			packed="$adjacent"
-		else
-			progress "0924" "Extracting recovery script from '$tar'..." &&
+	progress "0920" "Looking for scripts on image partition..."
+	if imagedir="$(require mounted $(sdcard)p4)"; then
+
+		script=$(url file .sh) &&
+		unpacked=$(checked_unpack_script ${imagedir}/${script})
+
+		progress "0930" "Looking for scripts in archive on image partition..."
+
+		tar=${imagedir}/$(url file .tar) &&
+		if test -f "$tar"; then
 			if tar -C ${TMPDIR} -xf "${tar}" "${script}" "${script}.sha1"; then
-				progress "0926" "Extraction of '$script' from '${tar}' was successful." &&
-				if (check_file "${TMPDIR}/${script}"); then
-					packed="${TMPDIR}/${script}"
-				else
-					false
-				fi
+				unpacked=$(checked_unpack_script ${TMPDIR}/${script})
 			fi
-		fi &&
-		if test -n "$packed"; then
-			progress "0927" "Unpacking '${packed}'..." &&
-			found=$(with large-tmp "$packed" unpack) &&
-			progress "0928" "Unpacked recovery script as '$found' ($(cat "$found/etc/timestamp"))."
-		fi &&
-		test -n "$found" || progress "0928" "Unable to extract recovery script from next to or within '$tar'"
+		fi
 	fi
 
 	latest="$(
