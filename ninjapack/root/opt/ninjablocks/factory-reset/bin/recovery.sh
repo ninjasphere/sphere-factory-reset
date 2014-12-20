@@ -930,7 +930,8 @@ choose_script() {
 		else
 			progress "3609" "Delegating to alternative script '$script'."
 			selected="$script"
-		fi &&
+		fi
+
 		echo "$selected"
 	else
 		progress "3602" "Script phases are disabled by RECOVERY_ENABLE_SCRIPT_PHASES. Using '$0' instead of '$script'."
@@ -979,23 +980,11 @@ factory_reset() {
 		else
 			progress 1011 "Failed to download recovery script."
 			mountpoint="$(require mounted "$(sdcard)p4")" || exit $?
-			RECOVERY_IMAGE=$(image_from_mount_point "$mountpoint")
-			script_file="$(url image)$(url suffix .sh)"
-			sha1_file="$(url image)$(url suffix .sh.sha1)"
-			tar="$mountpoint/$(url image)$(url suffix .tar)"
-			unpacked_script="${TMPDIR}/${script_file}"
-			unpacked_sha1="${TMPDIR}/${sha1_file}"
-
-			if test -f "$tar"; then
-				progress "1012" "Unpacking ${script_file} from $tar..." &&
-				tar -O -xf "$tar" "${script_file}" > "${unpacked_script}" &&
-				progress "1015" "Unpacking ${sha1_file} from $tar..." &&
-				tar -O -xf "$tar" "${sha1_file}" > "${unpacked_sha1}" &&
-				check_file "${unpacked_script}" &&
-				progress 1019 "Launching ${unpacked_script} from $tar..." &&
-				exec sh $(choose_script "${unpacked_script}") recovery-without-network "$tar"
+			tar="$mountpoint/$(url file .tar)"
+			if (check_file "${tar}"); then
+				recovery_without_network "$tar"
 			else
-				progress 1014 "Failed to locate a recovery archive"
+				progress 1014 "Failed to locate a valid recovery archive."
 				if test -f "$tar"; then
 					progress "1016" "Removing corrupted tar '$tar'."
 					if ! rm "$tar"; then
