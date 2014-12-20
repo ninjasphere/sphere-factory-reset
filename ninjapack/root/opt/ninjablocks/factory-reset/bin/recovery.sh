@@ -1448,7 +1448,6 @@ discover_file() {
 	name=$1
 	result=$(
 		(
-			echo /dev/${RECOVERY_SDCARD}p4 &&
 			find /dev -maxdepth 1 -type b -name '/dev/sda[0-9]*' || true
 		) |
 		while read dev; do
