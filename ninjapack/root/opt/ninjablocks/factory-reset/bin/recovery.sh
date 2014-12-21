@@ -965,6 +965,7 @@ factory_reset() {
 		if
 			bootdir=$(require mounted "$(sdcard)p1") &&
 			rootdir=$(require mounted "$(sdcard)p2") &&
+			test -z "$(usb_file factory.env.sh)" &&
 			test -f $rootdir/etc/.recovered
 		then
 			progress "1002" "The boot partition is ok. Checking for user reset indication..."
