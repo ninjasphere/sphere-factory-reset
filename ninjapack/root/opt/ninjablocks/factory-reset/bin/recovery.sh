@@ -351,6 +351,11 @@ untar() {
 	progress "0699" "Reimaging of '$block_device$partition' has completed successfully."
 }
 
+post_reset_hook()
+{
+	:
+}
+
 # recover without network using the specified tar
 recovery_without_network() {
 
@@ -390,6 +395,9 @@ recovery_without_network() {
 		if rootdir=$(require mounted $(sdcard)p2); then
 			 date -u +%Y%m%dT%H%M%S > $rootdir/etc/.recovered
 		fi
+
+		post_reset_hook
+
 		sync
 
 		progress "9997" "Reimaging is complete."
