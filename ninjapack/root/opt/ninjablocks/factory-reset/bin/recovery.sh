@@ -1817,6 +1817,8 @@ main() {
 	;;
 	choose-latest)
 		shift 1
+		export RECOVERY_ENABLE_SPHERE_IO=${RECOVERY_ENABLE_SPHERE_IO_FACTORY_RESET}
+		setup
 		choose_latest "$@"
 	;;
 	choose-script)
