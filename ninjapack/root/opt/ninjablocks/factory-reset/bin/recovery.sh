@@ -24,7 +24,6 @@ export RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING=${RECOVERY_ENABLE_REBOOT_ON_REPA
 export RECOVERY_ARCHIVE_DELEGATION_RULE=${RECOVERY_ARCHIVE_DELEGATION_RULE:-more-recent}
 export RECOVERY_CHROOT=${RECOVERY_CHROOT:-false}
 export RECOVERY_SPHERE_IO_BAUD=${RECOVERY_SPHERE_IO_BAUD:-230400}
-export RECOVERY_EARLY_PHASE=${RECOVERY_EARLY_PHASE:-true}
 
 die() {
 	msg="$*"
@@ -40,7 +39,7 @@ die() {
 }
 
 sphere_io() {
-	if ${RECOVERY_ENABLE_SPHERE_IO:-false} && ! ${RECOVERY_EARLY_PHASE}; then
+	if ${RECOVERY_ENABLE_SPHERE_IO:-false}; then
 		(
 			# override to prevent recursion issues if tool_path dies
 			die() {
@@ -1475,7 +1474,6 @@ with() {
 	media-updated)
 		shift 1
 		(require media-updated)
-		export RECOVERY_EARLY_PHASE=false
 		exec "$0" "$@"
 	;;
 	*)
