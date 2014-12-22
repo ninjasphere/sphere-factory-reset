@@ -1,6 +1,15 @@
 RELEASE NOTES
 =============
 
+1.0.7.c46 - [c4699f2a0a3dac75d1f4f2c8b529ef113af72ed4](https://firmware.sphere.ninja/latest/nand-c4699f2a0a3dac75d1f4f2c8b529ef113af72ed4.tgz) - 2014/12/20)
+	* Updated kernel to support underlights
+	* Flash led matrix initialized during factory reset
+
+	See:
+		http://firmware.sphere.ninja/latest/factory-reset-for-3.12-spheres-v1.0-8dabf539.zip - USB image
+		https://gist.github.com/jonseymour/e6bbc4862a7527e5c45c - for process instructions
+
+
 1.0.6.f9e - [f9e0efb031bfb1e39cf20487e88168f604d3e671](https://firmware.sphere.ninja/latest/nand-f9e0efb031bfb1e39cf20487e88168f604d3e671.tgz) - 2014/12/20)
 	* On an SDCARD boot, if a USB disk is present and factory.env.sh exists, a factory reset will be forced.
 	* At the end of factory reset, a function called post_reset_hook will be called.
