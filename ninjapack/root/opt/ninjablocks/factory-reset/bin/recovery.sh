@@ -24,6 +24,7 @@ export RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING=${RECOVERY_ENABLE_REBOOT_ON_REPA
 export RECOVERY_ARCHIVE_DELEGATION_RULE=${RECOVERY_ARCHIVE_DELEGATION_RULE:-more-recent}
 export RECOVERY_CHROOT=${RECOVERY_CHROOT:-false}
 export RECOVERY_SPHERE_IO_BAUD=${RECOVERY_SPHERE_IO_BAUD:-230400}
+export RECOVERY_EARLY_PHASE=${RECOVERY_EARLY_PHASE:-true}
 
 die() {
 	msg="$*"
@@ -39,7 +40,7 @@ die() {
 }
 
 sphere_io() {
-	if ${RECOVERY_ENABLE_SPHERE_IO:-false}; then
+	if ${RECOVERY_ENABLE_SPHERE_IO:-false} && ! ${RECOVERY_EARLY_PHASE}; then
 		(
 			# override to prevent recursion issues if tool_path dies
 			die() {
@@ -1471,6 +1472,12 @@ with() {
 			die "ERR568: Cannot mount '${imagedir}/tmp' on /tmp."
 		fi
 	;;
+	media-updated)
+		shift 1
+		(require media-updated)
+		export RECOVERY_EARLY_PHASE=false
+		exec "$0" "$@"
+	;;
 	*)
 		die "ERR407: usage: with block|large-tmp"
 	;;
@@ -1571,13 +1578,6 @@ choose_latest() {
 	else
 		progress "0911" "Could not mount image partition..."
 	fi
-
-	if ( require media-updated ); then # attempt to update media from the USB
-		if test -f /etc/factory.env.sh; then
-			. /etc/factory.env.sh
-		fi
-	fi
-
 
 	progress "0920" "Looking for scripts on image partition..."
 	if imagedir="$(require mounted $(sdcard)p4)"; then
