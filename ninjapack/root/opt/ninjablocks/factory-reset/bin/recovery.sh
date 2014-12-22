@@ -1131,9 +1131,9 @@ require() {
 		# if we get to here, we have a large tmp device, or at least one not on tmpfs
 	;;
 	media-updated)
+		update_from_usb factory.env.sh
 		update_from_usb $(url file .tar)
 		update_from_usb $(url file .sh)
-		update_from_usb factory.env.sh
 	;;
 	*)
 		die "ERR482: usage: require mounted {partition-device} [ {preferred-mount-point} ] | unmounted {partition-device} ."
