@@ -261,4 +261,8 @@ Setup Steps
 	4. Connect the power cable to the sphere under test
 	5. Wait for the 10 symbol to appear
 	6. Perform tests 10, 20, 30, 40 and 50
-	7.
+
+REVISION HISTORY
+----------------
+1.0.1 - Updated process notes.
+1.0.0 - Initial release
