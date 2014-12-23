@@ -33,10 +33,11 @@ Process Requirements
 ------
 Requirements:
 	1. FTDI cable
-	2. OSX or Linux host with expect and picocom software installed
-	3. Micro SD Card (>1GB) with formatted boot partition.
-	4. NinjaSphere DevKit modified to boot to SDCARD
-	5. Supply of blank 512MB SOMs
+	2. FTDI device driver downloaded from here - http://www.ftdichip.com/Drivers/D2XX.htm
+	3. OSX or Linux host with expect and picocom software installed
+	4. Micro SD Card (>1GB) with formatted boot partition.
+	5. NinjaSphere DevKit modified to boot to SDCARD
+	6. Supply of blank 512MB SOMs
 
 02-NAND
 -------
