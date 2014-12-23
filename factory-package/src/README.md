@@ -1,7 +1,7 @@
 Ninja Sphere Factory Build Package
 ==================================
 
-This directory contains the media required to support the construction of Ninja Spheres by the Innocomm factory.
+This directory contains the media required to support the firmware flashing of Ninja Spheres by the Innocomm factory.
 
 A manifest of all files is found in the file called factory.manifest. This file contains the SHA1 hash of each file in the distribution and can be used to check that a complete set of files with known contents has been received.
 
@@ -25,9 +25,10 @@ The subdirectories are:
 -------
 	The files required to perform a factory test of a factory reset sphere.
 
+each subdirectory corresponds to a step of the flashing process that needs to be conducted for each sphere (or components of each sphere) in the order that the process must be executed within the construction life cycle of a single sphere.
 
-Process Requirements
-====================
+Hardware and Software Requirements
+==================================
 
 01-SOM
 ------
@@ -45,19 +46,19 @@ Requirements:
 	1. Mini-USB cable
 	2. OSX, Linux or Windows host with dfu-util 0.7 installed
 	3. Supply of 512MBs SOMs to which '01-SOM' process has been applied
+	4. NinjaSphere DevKit which has not been modified to boot to SDCARD
 
 03-SDCARD
 ---------
 Requirements:
 	1. Assembled Ninja Sphere with blank 4GB SDCards installed and SOMs to which '02-NAND' process has been applied.
-	2. USB thumbdrive with 1GB FAT partition containing the contents of the 03-SDCARD directory and all subdirectories
+	2. USB thumbdrive with 1GB FAT partition containing the contents of the 03-SDCARD directory and all subdirectories thereof.
 
 04-TEST
 -------
 Requirements:
-	1. Assembled NinjaSphere to which '03-SDCARD' has been applied
-	2. Windows Host with contents of ninjasphere-factory-test-windows-*.zip unpacked.
-
+	1. Assembled NinjaSphere to which the '03-SDCARD' process has been applied
+	2. A windows host with contents of ninjasphere-factory-test-windows-*.zip unpacked.
 
 Process Steps
 =============
@@ -75,7 +76,7 @@ Setup Steps
 
 	3. Connect an FTDI cable to the USB port on the host machine and the FTDI pins next to the NetVox chip on the devkit.
 
-		a. In defaul orientation, the FTDI cable should be connected to the 6-pin FTDI connector on the bottom of the board
+		a. In default orientation, the FTDI cable should be connected to the 6-pin FTDI connector on the bottom of the board
 		b. the (black) ground lead of the FTDI cable should be connected to the pin closest to the Netvox module
 
 	4. Use a Linux or OSX host to write an image directly onto a Micro SDCARD
@@ -102,57 +103,57 @@ Per Unit Steps
 	4. Power on the devkit
 	5. Wait for the expect script to finish with output like:
 
-U-Boot 2013.01.01 (Apr 03 2014 - 23:56:21)
+		U-Boot 2013.01.01 (Apr 03 2014 - 23:56:21)
 
-I2C:   ready
-DRAM:  256 MiB
-WARNING: Caches not enabled
-Variscite  AM33 SOM revision 1.3 detected
-NAND:  128 MiB
-MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
-*** Warning - bad CRC, using default environment
+		I2C:   ready
+		DRAM:  256 MiB
+		WARNING: Caches not enabled
+		Variscite  AM33 SOM revision 1.3 detected
+		NAND:  128 MiB
+		MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+		*** Warning - bad CRC, using default environment
 
-Net:   <ethaddr> not set. Validating first E-fuse MAC
-cpsw
-Hit any key to stop autoboot:  0
-VAR_AM335X# mmc rescan
-VAR_AM335X# nand erase 0x0 0x280000
+		Net:   <ethaddr> not set. Validating first E-fuse MAC
+		cpsw
+		Hit any key to stop autoboot:  0
+		VAR_AM335X# mmc rescan
+		VAR_AM335X# nand erase 0x0 0x280000
 
-NAND erase: device 0 offset 0x0, size 0x280000
-Erasing at 0x260000 -- 100% complete.
-OK
-VAR_AM335X# mmc rescan
-VAR_AM335X# set mmc_dev 0
-VAR_AM335X# fatload mmc ${mmc_dev} ${loadaddr} NAND-MLO
-reading NAND-MLO
-99928 bytes read in 20 ms (4.8 MiB/s)
-VAR_AM335X# nand write ${loadaddr} 0x0 0x20000
+		NAND erase: device 0 offset 0x0, size 0x280000
+		Erasing at 0x260000 -- 100% complete.
+		OK
+		VAR_AM335X# mmc rescan
+		VAR_AM335X# set mmc_dev 0
+		VAR_AM335X# fatload mmc ${mmc_dev} ${loadaddr} NAND-MLO
+		reading NAND-MLO
+		99928 bytes read in 20 ms (4.8 MiB/s)
+		VAR_AM335X# nand write ${loadaddr} 0x0 0x20000
 
-NAND write: device 0 offset 0x0, size 0x20000
- 131072 bytes written: OK
-VAR_AM335X# nand write ${loadaddr} 0x20000 0x20000
+		NAND write: device 0 offset 0x0, size 0x20000
+		 131072 bytes written: OK
+		VAR_AM335X# nand write ${loadaddr} 0x20000 0x20000
 
-NAND write: device 0 offset 0x20000, size 0x20000
- 131072 bytes written: OK
-VAR_AM335X# nand write ${loadaddr} 0x40000 0x20000
+		NAND write: device 0 offset 0x20000, size 0x20000
+		 131072 bytes written: OK
+		VAR_AM335X# nand write ${loadaddr} 0x40000 0x20000
 
-NAND write: device 0 offset 0x40000, size 0x20000
- 131072 bytes written: OK
-VAR_AM335X# nand write ${loadaddr} 0x60000 0x20000
+		NAND write: device 0 offset 0x40000, size 0x20000
+		 131072 bytes written: OK
+		VAR_AM335X# nand write ${loadaddr} 0x60000 0x20000
 
-NAND write: device 0 offset 0x60000, size 0x20000
- 131072 bytes written: OK
-VAR_AM335X# fatload mmc ${mmc_dev} ${loadaddr} NAND-u-boot.img
-reading NAND-u-boot.img
-376832 bytes read in 49 ms (7.3 MiB/s)
-VAR_AM335X# nand write ${loadaddr} 0xc0000 0x100000
+		NAND write: device 0 offset 0x60000, size 0x20000
+		 131072 bytes written: OK
+		VAR_AM335X# fatload mmc ${mmc_dev} ${loadaddr} NAND-u-boot.img
+		reading NAND-u-boot.img
+		376832 bytes read in 49 ms (7.3 MiB/s)
+		VAR_AM335X# nand write ${loadaddr} 0xc0000 0x100000
 
-NAND write: device 0 offset 0xc0000, size 0x100000
- 1048576 bytes written: OK
-VAR_AM335X#
+		NAND write: device 0 offset 0xc0000, size 0x100000
+		 1048576 bytes written: OK
+		VAR_AM335X#
 
 
- DONE. Flash OK
+		 DONE. Flash OK
 
 
 
@@ -250,7 +251,8 @@ Per Unit Steps
 -------
 Setup Steps
 -----------
-	1. Unpack zip files in the 04-TEST directory into directory on a Windows machine (e.g. c:\NinjaFactory\04-TEST)
+	1. Unpack the zip files in the 04-TEST directory into directory on a Windows machine (e.g. c:\NinjaFactory\04-TEST)
+
 	2. For each operator:
 
 		a. run the test_run.bat file
@@ -259,11 +261,18 @@ Setup Steps
 		d. scan the serial id of the first sphere
 
 	3. Connect the mini-USB cable to the sphere under test
+
 	4. Connect the power cable to the sphere under test
+
 	5. Wait for the 10 symbol to appear
+
 	6. Perform tests 10, 20, 30, 40 and 50
+
+	When the operator goes off shift, they should enter QUIT for the next serial number. This will cause the program to exit
+	and allow the next operator to scan their own barcode.
 
 REVISION HISTORY
 ----------------
+1.0.2 - Refinements to process notes.
 1.0.1 - Updated process notes.
 1.0.0 - Initial release
