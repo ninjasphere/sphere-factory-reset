@@ -3,9 +3,11 @@ RELEASE NOTES
 
 1.0.9.803 - [8031f9f703f92daf410be9e0c8ee3732cc0de493](https://firmware.sphere.ninja/latest/nand-8031f9f703f92daf410be9e0c8ee3732cc0de493.tgz) - 2014/12/23
 	* Flash led matrix in NAND boot before recovery starts [ version flashed in /etc/firmware-versions/ledmatrix.md5 ]
+	* DO NOT USE THIS VERSION - DOES NOT HANDLE REPARTITIONING OR BLANK NANDS
 
 1.0.8.9f9 - [9f951fcc3569013919e21dc9bb9934f9183cdd1b](https://firmware.sphere.ninja/latest/nand-9f951fcc3569013919e21dc9bb9934f9183cdd1b.tgz) - 2014/12/22
 	* Disable led matrix until we have a chance to flash it.
+	* DO NOT USE THIS VERSION - DOES NOT HANDLE REPARTITIONING OR BLANK NANDS
 
 1.0.7.c46 - [c4699f2a0a3dac75d1f4f2c8b529ef113af72ed4](https://firmware.sphere.ninja/latest/nand-c4699f2a0a3dac75d1f4f2c8b529ef113af72ed4.tgz) - 2014/12/22
 	* Updated kernel to support underlights
