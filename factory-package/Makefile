@@ -1,3 +1,4 @@
+DIST=~/Dropbox/ninja/factory-package
 
 diff: src/factory.manifest build/factory.manifest
 	diff -I ".* ./03-SDCARD/factory.env.sh" -u build/factory.manifest src/factory.manifest
@@ -18,3 +19,7 @@ inject-password:
 	cp src/03-SDCARD/factory.env.sh build/03-SDCARD
 	sed -i -e "s/export RECOVERY_FACTORY_TEST_PASSWORD=\"{factory-test-password}/export RECOVERY_FACTORY_TEST_PASSWORD=$(FACTORY_PASSWORD)/;" build/03-SDCARD/factory.env.sh
 
+publish: diff
+	git diff HEAD
+	git diff
+	rsync -rav build/ $(DIST)/
