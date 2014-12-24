@@ -1100,11 +1100,11 @@ require() {
 	image-mounted)
 		# try really, really hard to mount the image partition.
 		if ! imagedir=$(require mounted "$(sdcard)p4"); then
-			if (format_partitions $(sdcard) p4); then
+			if (format_partitions $(sdcard) p4 1>&2); then
 				imagedir=$(require mounted $(sdcard)p4)
 			fi
 			if test -z "$imagedir"; then
-				force_partitioning
+				force_partitioning 1>&2
 				imagedir=$(require mounted $(sdcard)p4)
 			fi
 		fi
