@@ -1,6 +1,6 @@
 19c878de8b183ebd6cd7130e530144588ceb6fd5  ./01-SOM/factory-sdcard-fcac57f828d87317fd71fb2c05d6cb910b2cf099.zip
 303351dfe7fe319e101309019cdc4e731896541f  ./03-SDCARD/factory-reset-packages/ninjasphere-factory-test_1.0.16~trustyspheramid-3_armhf.deb
-dac6061ad3e543297636ac08474fc7c4e7090f60  ./03-SDCARD/factory.env.sh
+61d4542020aa68d7a6674944a66177e30b30b36a  ./03-SDCARD/factory.env.sh
 abf1593e994dd13617a6b3e4c1a7f9d93fbfc015  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable-recovery.sh
 c55a1a855bd992c855612a427c757ace413b7dd2  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable-recovery.sh.sha1
 8ea87ca45cf751dedf354dba0f078e1d0aed6fa0  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable-recovery.tar
