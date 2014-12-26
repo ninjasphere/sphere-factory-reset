@@ -384,6 +384,11 @@ recovery_without_network() {
 			if test -f /etc/factory.env.sh; then
 				rm /etc/factory.env.sh;
 			fi
+
+			if root=$(require mounted $(sdcard)p2); then
+				find /etc/firmware-versions -type f -exec cp {} "${root}/etc/firmware-versions" \;
+			fi
+			sync
 		}
 		( with_rw block ) ; rc=$?
 		progress "9252" "Removing factory flash settings has completed - $rc."
