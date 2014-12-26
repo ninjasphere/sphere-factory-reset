@@ -1,7 +1,4 @@
-2ed2c6769df056ede493ad26795031addced49fb  ./01-SOM/factory-boot-som.img.gz
-1343d4650607ba91b4d14e6188094500132686a2  ./01-SOM/factory-nand.expect
-f7cef1ec4994db01e3b123c8c0bdfcbe55c62ebc  ./02-NAND/02-dfu.sh
-8031f9f703f92daf410be9e0c8ee3732cc0de493  ./02-NAND/nand-8031f9f703f92daf410be9e0c8ee3732cc0de493.tgz
+bce273ceb0e04e8eefbc9d0b0a0bf6c2d2ae57a2  ./01-SOM/factory-sdcard-445719ba071154a768fba1301b959dffa399ab96.zip
 303351dfe7fe319e101309019cdc4e731896541f  ./03-SDCARD/factory-reset-packages/ninjasphere-factory-test_1.0.16~trustyspheramid-3_armhf.deb
 dac6061ad3e543297636ac08474fc7c4e7090f60  ./03-SDCARD/factory.env.sh
 abf1593e994dd13617a6b3e4c1a7f9d93fbfc015  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable-recovery.sh
