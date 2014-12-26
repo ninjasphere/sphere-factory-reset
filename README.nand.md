@@ -2,17 +2,21 @@ RELEASE NOTES
 =============
 
 1.0.11.cac - [cac57f828d87317fd71fb2c05d6cb910b2cf099](https://firmware.sphere.ninja/latest/nand-cac57f828d87317fd71fb2c05d6cb910b2cf099.tgz) - 2014/12/27
+
 	* rebuilt with latest sphere-setup-assistant
 	* includes a copy of default configuration to support latest sphere-setup-assistant
 	* divert some output to stderr
 
 1.0.9.803 - [8031f9f703f92daf410be9e0c8ee3732cc0de493](https://firmware.sphere.ninja/latest/nand-8031f9f703f92daf410be9e0c8ee3732cc0de493.tgz) - 2014/12/23
+
 	* Flash led matrix in NAND boot before recovery starts [ version flashed in /etc/firmware-versions/ledmatrix.md5 ]
 
 1.0.8.9f9 - [9f951fcc3569013919e21dc9bb9934f9183cdd1b](https://firmware.sphere.ninja/latest/nand-9f951fcc3569013919e21dc9bb9934f9183cdd1b.tgz) - 2014/12/22
+
 	* Disable led matrix until we have a chance to flash it.
 
 1.0.7.c46 - [c4699f2a0a3dac75d1f4f2c8b529ef113af72ed4](https://firmware.sphere.ninja/latest/nand-c4699f2a0a3dac75d1f4f2c8b529ef113af72ed4.tgz) - 2014/12/22
+
 	* Updated kernel to support underlights
 	* Flash led matrix initialized during factory reset
 
@@ -22,6 +26,7 @@ RELEASE NOTES
 
 
 1.0.6.f9e - [f9e0efb031bfb1e39cf20487e88168f604d3e671](https://firmware.sphere.ninja/latest/nand-f9e0efb031bfb1e39cf20487e88168f604d3e671.tgz) - 2014/12/21
+
 	* On an SDCARD boot, if a USB disk is present and factory.env.sh exists, a factory reset will be forced.
 	* At the end of factory reset, a function called post_reset_hook will be called.
 
