@@ -9,7 +9,7 @@ build/factory.manifest: force-build
 force-build:
 
 update-src: build/factory.manifest
-	cp build/factory.manifest src/factory.manifest
+	cp build/factory.manifest src/tree/factory.manifest
 
 update-build:
 	rsync -rav src/tree/ build/ --exclude "factory.env.sh"
