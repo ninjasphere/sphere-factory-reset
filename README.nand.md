@@ -1,5 +1,8 @@
 RELEASE NOTES
 =============
+1.0.12.2cb - [2cb2e8d64a01d7d14e7aae94975ea3660e660b8e](https://firmware.sphere.ninja/latest/	nand-2cb2e8d64a01d7d14e7aae94975ea3660e660b8e.tgz) - 2014/12/27
+	* Copy factory-flashed NAND version into /etc/firmware-versions of NAND and thence to SDCARD
+	* Don't reflash ledmatrix during SDCARD boot if it was already flashed by NAND boot.
 
 1.0.11.cac - [cac57f828d87317fd71fb2c05d6cb910b2cf099](https://firmware.sphere.ninja/latest/nand-cac57f828d87317fd71fb2c05d6cb910b2cf099.tgz) - 2014/12/27
 
