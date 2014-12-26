@@ -13,8 +13,7 @@ The subdirectories are:
 
 02-NAND
 -------
-	The files required to load a recovery image into the system NAND using the DFU tool and process. These files
-	should be used with the dfu-util tool.
+	No longer used - all NAND flashing now done by 01-SOM.
 
 03-SDCARD
 ---------
@@ -33,20 +32,16 @@ Hardware and Software Requirements
 01-SOM
 ------
 Requirements:
-	1. FTDI cable
-	2. FTDI device driver downloaded from here - http://www.ftdichip.com/Drivers/D2XX.htm
-	3. OSX or Linux host with expect and picocom software installed
-	4. Micro SD Card (>1GB) with formatted boot partition.
+	1. FTDI cable (optional)
+	2. FTDI device driver downloaded from here - http://www.ftdichip.com/Drivers/D2XX.htm (optional)
+	3. A terminal program like PuTTY - http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
+	4. Micro SD Card (>1GB) with formatted FAT boot partition of 100MB in size
 	5. NinjaSphere DevKit modified to boot to SDCARD
 	6. Supply of blank 512MB SOMs
 
 02-NAND
 -------
-Requirements:
-	1. Mini-USB cable
-	2. OSX, Linux or Windows host with dfu-util 0.7 installed
-	3. Supply of 512MBs SOMs to which '01-SOM' process has been applied
-	4. NinjaSphere DevKit which has not been modified to boot to SDCARD
+	No longer used - all NAND flashing now done by 01-SOM.
 
 03-SDCARD
 ---------
@@ -74,150 +69,32 @@ Setup Steps
 
 		Orient the board so that the EtherNet jack is to the right, the SOM slot to the left, the power jack at the top
 
-	3. Connect an FTDI cable to the USB port on the host machine and the FTDI pins next to the NetVox chip on the devkit.
+	3. (Optionally) Connect an FTDI cable to the USB port on the host machine and the FTDI pins next to the NetVox chip on the devkit.
 
 		a. In default orientation, the FTDI cable should be connected to the 6-pin FTDI connector on the bottom of the board
-		b. the (black) ground lead of the FTDI cable should be connected to the pin closest to the Netvox module
+		b. The (black) ground lead of the FTDI cable should be connected to the pin closest to the Netvox module
+		c. Open PuTTY and create a serial connection to the FTDI device.
 
-	4. Use a Linux or OSX host to write an image directly onto a Micro SDCARD
-
-		Linux:
-
-		dd if=factory-boot-com.img.gz of=/dev/replace-me-with-the-correct-device bs=16M
-
-		OSX:
-
-		dd if=factory-boot-com.img.gz of=/dev/replace-me-with-the-correct-device bs=16m
+	4. Unpack the contents of the zip file in 01-SOM into the root partition of the SDCARD
 
 	5. Install the formatted SDCARD in the DevKit's Micro SDCARD slot
 
 Per Unit Steps
 --------------
 	1. Confirm that the devkit power is off
-
 	2. Insert blank SOM into slot
-	3. Start the expect script on the Linux host
-
-		expect factory-nand.expect --serial /dev/{name-of-your-FTDI-device}
-
-	4. Power on the devkit
-	5. Wait for the expect script to finish with output like:
-
-		U-Boot 2013.01.01 (Apr 03 2014 - 23:56:21)
-
-		I2C:   ready
-		DRAM:  256 MiB
-		WARNING: Caches not enabled
-		Variscite  AM33 SOM revision 1.3 detected
-		NAND:  128 MiB
-		MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
-		*** Warning - bad CRC, using default environment
-
-		Net:   <ethaddr> not set. Validating first E-fuse MAC
-		cpsw
-		Hit any key to stop autoboot:  0
-		VAR_AM335X# mmc rescan
-		VAR_AM335X# nand erase 0x0 0x280000
-
-		NAND erase: device 0 offset 0x0, size 0x280000
-		Erasing at 0x260000 -- 100% complete.
-		OK
-		VAR_AM335X# mmc rescan
-		VAR_AM335X# set mmc_dev 0
-		VAR_AM335X# fatload mmc ${mmc_dev} ${loadaddr} NAND-MLO
-		reading NAND-MLO
-		99928 bytes read in 20 ms (4.8 MiB/s)
-		VAR_AM335X# nand write ${loadaddr} 0x0 0x20000
-
-		NAND write: device 0 offset 0x0, size 0x20000
-		 131072 bytes written: OK
-		VAR_AM335X# nand write ${loadaddr} 0x20000 0x20000
-
-		NAND write: device 0 offset 0x20000, size 0x20000
-		 131072 bytes written: OK
-		VAR_AM335X# nand write ${loadaddr} 0x40000 0x20000
-
-		NAND write: device 0 offset 0x40000, size 0x20000
-		 131072 bytes written: OK
-		VAR_AM335X# nand write ${loadaddr} 0x60000 0x20000
-
-		NAND write: device 0 offset 0x60000, size 0x20000
-		 131072 bytes written: OK
-		VAR_AM335X# fatload mmc ${mmc_dev} ${loadaddr} NAND-u-boot.img
-		reading NAND-u-boot.img
-		376832 bytes read in 49 ms (7.3 MiB/s)
-		VAR_AM335X# nand write ${loadaddr} 0xc0000 0x100000
-
-		NAND write: device 0 offset 0xc0000, size 0x100000
-		 1048576 bytes written: OK
-		VAR_AM335X#
-
-
-		 DONE. Flash OK
-
-
-
-
+	3. Power on the devkit
+	4. Wait for 2 minutes
+	5. After 2 minutes the LEDs on the Devkit should turn solid green.
 	6. Power off the devkit
-	7. Remove the formatted SOM from the slot.
-	8. Repeat by going to step 2
+	7. Remove the formatted SOM from the slot
+	8. Repeat the process for a new blank SOM by going to step 1
+
+If the LEDs do not go green after 2 minutes, use PuTTY and the FTDI cable to review the output from the process.
 
 02-NAND
 -------
-
-Setup Steps
------------
-	1. Setup a Devkit which HAS NOT been modified to boot to the SDCARD
-
-	2. Remove any SDCARD from the devkit
-
-	3. Orient the board
-
-		Orient the board so that the EtherNet jack is to the right, the SOM slot to the left, the power jack at the top.
-
-		In this orientation, the reset button is the button closest to the top of the board (furthest away from the SDCARD).
-
-	4. Connect a mini-USB cable to the USB port on the Linux host machine to the mini-USB port on right hand side of the devkit
-
-Per Unit Steps
---------------
-	1. Confirm the devkit power is off
-
-	2. Insert a formatted SOM into slot
-	3. Press and hold down the reset button on the devkit
-	4. Turn the devkit power on
-	5. Release the reset buton on the devkit after 2 seconds.
-
-	6. On the Linux host, confirm that the device has appeared in the list of dfu devices (dfu-util -l)
-
-		greywedge2:02-NAND jonseymour (1)$ dfu-util -l
-
-		dfu-util 0.7
-
-		Copyright 2005-2008 Weston Schmidt, Harald Welte and OpenMoko Inc.
-		Copyright 2010-2012 Tormod Volden and Stefan Schmidt
-		This program is Free Software and has ABSOLUTELY NO WARRANTY
-		Please report bugs to dfu-util@lists.gnumonks.org
-
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=0, name="NAND.SPL"
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=1, name="NAND.SPL.backup1"
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=2, name="NAND.SPL.backup2"
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=3, name="NAND.SPL.backup3"
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=4, name="NAND.u-boot-spl-os"
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=5, name="NAND.u-boot"
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=6, name="NAND.u-boot-env"
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=7, name="NAND.u-boot-env.backup1"
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=8, name="NAND.kernel"
-		Found DFU: [0403:bd00] devnum=0, cfg=1, intf=0, alt=9, name="NAND.rootfs"
-
-	7. Run:
-
-		./02-dfu.sh flash 8031f9f703f92daf410be9e0c8ee3732cc0de493
-
-	When the flashing is complete....
-
-	8. Remove the NAND flashed SOM from the slot
-	9. Repeat by going to step 2.
+	No longer used - all NAND flashing now done by 01-SOM.
 
 03-SDCARD
 ---------
@@ -273,6 +150,7 @@ Setup Steps
 
 REVISION HISTORY
 ----------------
+1.0.11 - Refinements to process to use an SDCARD image which can flash the NAND from the factory jig.
 1.0.2 - Refinements to process notes.
 1.0.1 - Updated process notes.
 1.0.0 - Initial release
