@@ -1,6 +1,11 @@
 RELEASE NOTES
 =============
 
+1.0.11.cac - [cac57f828d87317fd71fb2c05d6cb910b2cf099](https://firmware.sphere.ninja/latest/nand-cac57f828d87317fd71fb2c05d6cb910b2cf099.tgz) - 2014/12/27
+	* rebuilt with latest sphere-setup-assistant
+	* includes a copy of default configuration to support latest sphere-setup-assistant
+	* divert some output to stderr
+
 1.0.9.803 - [8031f9f703f92daf410be9e0c8ee3732cc0de493](https://firmware.sphere.ninja/latest/nand-8031f9f703f92daf410be9e0c8ee3732cc0de493.tgz) - 2014/12/23
 	* Flash led matrix in NAND boot before recovery starts [ version flashed in /etc/firmware-versions/ledmatrix.md5 ]
 
