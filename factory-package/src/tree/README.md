@@ -150,6 +150,7 @@ Setup Steps
 
 REVISION HISTORY
 ----------------
+1.0.12 - Capture nand.sha1 in /etc/firmware-versions of NAND and SDCARD. Avoid reflashing ledmatrix firmware during SDCARD boot, if done during NAND boot.
 1.0.11 - Refinements to process to use an SDCARD image which can flash the NAND from the factory jig.
 1.0.2 - Refinements to process notes.
 1.0.1 - Updated process notes.
