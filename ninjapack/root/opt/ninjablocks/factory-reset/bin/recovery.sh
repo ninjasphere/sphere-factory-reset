@@ -386,6 +386,7 @@ recovery_without_network() {
 			fi
 
 			if root=$(require mounted $(sdcard)p2); then
+				mkdir -p "${root}/etc/firmware-versions" &&
 				find /etc/firmware-versions -type f -exec cp {} "${root}/etc/firmware-versions" \;
 			fi
 			sync
