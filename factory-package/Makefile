@@ -1,7 +1,7 @@
 DIST=~/Dropbox/ninja/factory-package
 
-diff: src/factory.manifest build/factory.manifest
-	diff -I ".* ./03-SDCARD/factory.env.sh" -u build/factory.manifest src/factory.manifest
+diff: src/tree/factory.manifest build/factory.manifest
+	diff -I ".* ./03-SDCARD/factory.env.sh" -u build/factory.manifest src/tree/factory.manifest
 
 build/factory.manifest: force-build
 	cd build && find . -type f -exec sha1sum {} \; | grep -v factory.manifest | sort -k3,3 -t' ' > factory.manifest
@@ -12,7 +12,7 @@ update-src: build/factory.manifest
 	cp build/factory.manifest src/factory.manifest
 
 update-build:
-	rsync -rav src/ build/ --exclude "./03-SDCARD/factory.env.sh"
+	rsync -rav src/tree/ build/ --exclude "factory.env.sh"
 
 inject-password:
 	test -n "$(FACTORY_PASSWORD)" || ( echo "You must define the password on the make command line." && false )
