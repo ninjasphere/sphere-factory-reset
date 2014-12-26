@@ -873,7 +873,7 @@ factory_setup_assistant() {
 
 	setup_assistant_path=$(setup_assistant_path) || exit $?
 
-	if PATH=${RECOVERY_FACTORY_RESET}/bin:$PATH sphere_installDirectory=/tmp "$setup_assistant_path" --factory-reset --images "${RECOVERY_SETUP_IMAGES}" "$@"; then
+	if PATH=${RECOVERY_FACTORY_RESET}/bin:$PATH sphere_installDirectory=${RECOVERY_FACTORY_RESET} "$setup_assistant_path" --factory-reset --images "${RECOVERY_SETUP_IMAGES}" "$@"; then
 		progress "3503" "Factory setup assistant has exited successfully."
 	else
 		progress "3502" "Factory setup assistant has failed -$?."

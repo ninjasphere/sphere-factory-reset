@@ -23,6 +23,7 @@ PRIVATE_PKG="
 	ninjasphere/sphere-factory-test
 	ninjablocks/sphere-utils
 	ninjasphere/sphere-client
+	ninjasphere/sphere-config
 "
 
 # remove working build
