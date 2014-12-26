@@ -22,4 +22,4 @@ inject-password:
 publish: diff
 	git diff HEAD
 	git diff
-	rsync -rav build/ $(DIST)/ --exclude "./99-OTHER/*"
+	rsync --delete -rav build/ $(DIST)/ --exclude "./99-OTHER/*"
