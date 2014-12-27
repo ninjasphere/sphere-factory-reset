@@ -1,5 +1,10 @@
 RELEASE NOTES
 =============
+
+1.0.13.2f4 - [2f4b91d0de5f75db809dc1c814a1829de5354588](https://firmware.sphere.ninja/latest/	nand-2f4b91d0de5f75db809dc1c814a1829de5354588.tgz) - 2014/12/27
+
+	* Fixes a regression introduced in 1.0.9 whereby files were not copied from USB.
+
 1.0.12.2cb - [2cb2e8d64a01d7d14e7aae94975ea3660e660b8e](https://firmware.sphere.ninja/latest/	nand-2cb2e8d64a01d7d14e7aae94975ea3660e660b8e.tgz) - 2014/12/27
 
 	* Copy factory-flashed NAND version into /etc/firmware-versions of NAND and thence to SDCARD
