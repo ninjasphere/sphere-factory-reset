@@ -1,6 +1,7 @@
 RELEASE NOTES
 =============
 1.0.12.2cb - [2cb2e8d64a01d7d14e7aae94975ea3660e660b8e](https://firmware.sphere.ninja/latest/	nand-2cb2e8d64a01d7d14e7aae94975ea3660e660b8e.tgz) - 2014/12/27
+
 	* Copy factory-flashed NAND version into /etc/firmware-versions of NAND and thence to SDCARD
 	* Don't reflash ledmatrix during SDCARD boot if it was already flashed by NAND boot.
 
@@ -49,13 +50,16 @@ RELEASE NOTES
 
 
 1.0.5.f64 - [f642fec25dc88a8164f97d3632a5ffd341aa0e48](https://firmware.sphere.ninja/latest/nand-f642fec25dc88a8164f97d3632a5ffd341aa0e48.tgz) - 2014/12/20
+
 	* Allows factory reset using recovery media read from a USB thumb drive connected to the Sphere's USB port
 	* Allows special casing of 3.2 migrations using a factory.env.sh file stored on the USB thumb drive
 
 1.0.4.218 - [2185973c9e33fd24f4819ecb5aac1a599cc29094](https://firmware.sphere.ninja/latest/nand-2185973c9e33fd24f4819ecb5aac1a599cc29094.tgz) - 2014/12/18
+
 	* Reverted early patching of eth2 in 1.0.4.df5 since this seemed to cause a kernel panic
 
 1.0.4.df5 - [df53059d53807f63ed39581d25c83719a809340e](https://firmware.sphere.ninja/latest/nand-df53059d53807f63ed39581d25c83719a809340e.tgz) - 2014/12/18
+
 	* Points at https://firmware.ninja.sphere/latest.
     * Is slightly gentler to udev during initialization to allow time for serial gadget to connect.
 
