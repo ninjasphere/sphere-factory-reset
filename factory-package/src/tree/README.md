@@ -150,7 +150,7 @@ Setup Steps
 
 REVISION HISTORY
 ----------------
-1.0.13 - New version of ninjasphere-factory-test (1.0.17). Add a memory test (0006). Fix /etc/init/sphere-usb-packages.conf so that packages listed in usb-packages.manifest are installed during boot. Updated NAND (2cb2e8d64a01d7d14e7aae94975ea3660e660b8e). Extract
+1.0.13 - New version of ninjasphere-factory-test (1.0.18). Add a memory test (0006). Fix /etc/init/sphere-usb-packages.conf so that packages listed in usb-packages.manifest are installed during boot. Updated NAND (2cb2e8d64a01d7d14e7aae94975ea3660e660b8e). Extract
 nand.
 1.0.12 - Capture nand.sha1 in /etc/firmware-versions of NAND and SDCARD. Avoid reflashing ledmatrix firmware during SDCARD boot, if done during NAND boot.
 1.0.11 - Refinements to process to use an SDCARD image which can flash the NAND from the factory jig.
