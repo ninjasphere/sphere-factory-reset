@@ -1412,7 +1412,7 @@ update_from_usb() {
 		case "$file" in
 		factory.env.sh)
 			if usb=$(usb_file "$file"); then
-				with_rw cp "$usb" /etc
+				(with_rw cp "$usb" /etc)
 			fi
 		;;
 		*)
