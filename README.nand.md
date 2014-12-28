@@ -1,6 +1,10 @@
 RELEASE NOTES
 =============
 
+1.0.13.4a2 [4a24ca739fdde433b259fbc7978115d29505b50b](https://firmware.sphere.ninja/latest/	nand-4a24ca739fdde433b259fbc7978115d29505b50b.tgz) - 2014/12/28
+
+	* Use a generated uEnv.txt to maximise chance of detecting issues during factory flashing process.
+
 1.0.13.2f4 - [2f4b91d0de5f75db809dc1c814a1829de5354588](https://firmware.sphere.ninja/latest/	nand-2f4b91d0de5f75db809dc1c814a1829de5354588.tgz) - 2014/12/27
 
 	* Fixes a regression introduced in 1.0.9 whereby files were not copied from USB.
