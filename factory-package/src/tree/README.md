@@ -186,7 +186,7 @@ REVISION HISTORY
 	Add a memory test (0006).
 	Fix /etc/init/sphere-usb-packages.conf so that packages listed in usb-packages.manifest are installed during boot.
 	Capture NAND SHA1 and kernel version string during test.
-	Updated NAND (2f4b91d0de5f75db809dc1c814a1829de5354588).
+	Updated NAND (4a24ca739fdde433b259fbc7978115d29505b50b).
 	NAND update fixes problem since v1.0.9 where files were not copied from USB.
 
 * 1.0.12
