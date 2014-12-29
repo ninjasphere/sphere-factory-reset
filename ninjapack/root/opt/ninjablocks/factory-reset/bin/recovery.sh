@@ -1653,6 +1653,41 @@ EOF
 
 }
 
+bash_echo() {
+	bash -c "echo $*"
+}
+
+make_recovery_usb() {
+	imagedir=$1
+	build=${2:-sphere-stable}
+
+	test -n "$imagedir"  && test -d "$imagedir" || die "ERR409: usage make-recovery-usb {dir} [sphere-stable|sphere-testing|sphere-unstable]"
+
+	cd "$imagedir" &&
+	prefix=${RECOVERY_PREFIX:-http://firmware.sphere.ninja/latest} &&
+	image=ubuntu_armhf_trusty_norelease_${build} &&
+	echo "fetching manifest..." 1>&2
+	curl -s -O ${prefix}/${image}.manifest &&
+	echo "manifest downloaded." &&
+	(
+		cat ${image}.manifest | grep "\\-recovery"
+	) | while read sha1 file; do
+		bash_echo -n "fetching ${prefix}/${file}..."
+		test -f "$file" &&
+		test "$(sha1sum < "${file}" | cut -f1 -d' ')" = "$sha1" &&
+		bash_echo -n "available - $(echo "$sha1" | cut -c1-8)" ||
+		if curl -s -O ${prefix}/${file} &&
+			bash_echo -n "downloaded..." &&
+			test "$(sha1 < "${file}" | cut -f1 -d' ')" = "$sha1"; then
+			echo "export RECOVERY_IMAGE=$image;" > factory.env.sh
+			echo "ok - $(echo $sha1 | cut -c1-8)"
+		else
+			echo "failed"
+		fi
+	done
+
+}
+
 main() {
 
 	mkdir -p ${TMPDIR}
@@ -1889,6 +1924,10 @@ main() {
 	checked-unpack-script)
 		shift 1
 		checked_unpack_script "$@"
+	;;
+	make-recovery-usb)
+		shift 1
+		make_recovery_usb "$@"
 	;;
 	*)
 		usage
