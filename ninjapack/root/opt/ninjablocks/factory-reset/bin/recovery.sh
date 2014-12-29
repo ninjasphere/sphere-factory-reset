@@ -1669,6 +1669,7 @@ make_recovery_usb() {
 	echo "fetching manifest..." 1>&2
 	curl -s -O ${prefix}/${image}.manifest &&
 	echo "manifest downloaded." &&
+	rc=0 &&
 	(
 		cat ${image}.manifest | grep "\\-recovery"
 	) | while read sha1 file; do
@@ -1683,8 +1684,10 @@ make_recovery_usb() {
 			echo "ok - $(echo $sha1 | cut -c1-8)"
 		else
 			echo "failed"
+			rc=1
 		fi
-	done
+		test $rc -eq 0
+	done || die "download failed because of problems reported above."
 
 }
 
