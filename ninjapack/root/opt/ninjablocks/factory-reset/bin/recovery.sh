@@ -1680,7 +1680,6 @@ make_recovery_usb() {
 		if curl -s -O ${prefix}/${file} &&
 			bash_echo -n "downloaded..." &&
 			test "$(sha1 < "${file}" | cut -f1 -d' ')" = "$sha1"; then
-			echo "export RECOVERY_IMAGE=$image;" > factory.env.sh
 			echo "ok - $(echo $sha1 | cut -c1-8)"
 		else
 			echo "failed"
@@ -1688,6 +1687,16 @@ make_recovery_usb() {
 		fi
 		test $rc -eq 0
 	done || die "download failed because of problems reported above."
+
+	cat > "$imagedir/factory.env.sh" <<EOF
+export RECOVERY_IMAGE=$image;
+if test "\${RECOVERY_FACTORY_ENV_INIT}" != "true"; then
+	export RECOVERY_FACTORY_ENV_INIT=true
+	if imagedir=\$(require image-mounted); then
+		rm -rf \$imagedir/ubuntu*
+	fi
+fi
+EOF
 
 }
 
