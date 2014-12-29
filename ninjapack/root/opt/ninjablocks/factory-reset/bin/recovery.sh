@@ -1676,7 +1676,7 @@ make_recovery_usb() {
 		bash_echo -n "fetching ${prefix}/${file}..."
 		test -f "$file" &&
 		test "$(sha1sum < "${file}" | cut -f1 -d' ')" = "$sha1" &&
-		bash_echo -n "available - $(echo "$sha1" | cut -c1-8)" ||
+		echo "available - $(echo "$sha1" | cut -c1-8)" ||
 		if curl -s -O ${prefix}/${file} &&
 			bash_echo -n "downloaded..." &&
 			test "$(sha1 < "${file}" | cut -f1 -d' ')" = "$sha1"; then
