@@ -1441,7 +1441,7 @@ update_from_usb() {
 					false
 				fi
 			else
-				progress "0974" "Could not '$file' file in USB."
+				progress "0978" "Could not find '$file' file in USB."
 				false
 			fi || progress "0916" "Failed to update from USB." && false
 		;;
