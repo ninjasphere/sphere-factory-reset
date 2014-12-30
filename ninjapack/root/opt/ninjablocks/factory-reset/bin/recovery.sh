@@ -1514,6 +1514,8 @@ with() {
 			else
 				die "ERR568: Cannot mount '${imagedir}/tmp' on /tmp."
 			fi
+		else
+			( "$@" ) || exit $rc
 		fi
 	;;
 	media-updated)
