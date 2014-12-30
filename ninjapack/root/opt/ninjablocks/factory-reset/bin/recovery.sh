@@ -1712,13 +1712,14 @@ make_recovery_usb() {
 
 	cat > "$imagedir/factory.env.sh" <<EOF
 export RECOVERY_IMAGE=$image;
-if test "\${RECOVERY_FACTORY_ENV_INIT}" != "true"; then
-	export RECOVERY_FACTORY_ENV_INIT=true
-	if imagedir=\$(require image-mounted); then
-		# ensure next SDCARD recovery uses same image for red button reset.
-		echo "export RECOVERY_IMAGE=$image;" >> \$imagedir/recovery.env.sh
+post_reset_hook() {
+	if imagedir=$(require mounted $(sdcard)p4); then
+		# ensure red button reset tries to reset with same image
+		touch $imagedir/recovery.env.sh
+		sed -i "" "/export RECOVERY_IMAGE=/d" $imagedir/recovery.env.sh
+		echo "export RECOVERY_IMAGE=${RECOVERY_IMAGE};" >> $imagedir/recovery.env.sh
 	fi
-fi
+}
 EOF
 
 }
