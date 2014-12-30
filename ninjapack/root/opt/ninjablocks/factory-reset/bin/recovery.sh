@@ -1017,6 +1017,7 @@ factory_reset() {
 	progress "2000" "First recovery attempt..."
 	count=1
 	while ! (attempt); do
+		sleep 5
 		progress "2997" "Recovery attempt failed."
 
 		if test -z "$(ifconfig eth2 | grep inet | sed "s/.*inet addr://;s/ .*//")"; then
