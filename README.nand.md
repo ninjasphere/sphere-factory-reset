@@ -1,5 +1,18 @@
 RELEASE NOTES
 =============
+1.0.15.369 [369f64ba2979ea863a19ddb1ca134967a636e095](https://firmware.sphere.ninja/latest/	nand-369f64ba2979ea863a19ddb1ca134967a636e095.tgz) - 2014/12/30
+
+	Additional fixes required to properly support factory resets of non-stable builds.
+
+    * Respect recovery.env.sh during factory resets.
+    * Force subsequent SDCARD resets from this image too.
+    * Add on_sphere guard
+    * Trace all rm calls.
+    * Make (require media-updated) directly responsible for making room, as required.
+    * Remove responsibility for cleaning up p4 from factory.env.sh
+    * Move resposibility for updating recovery.env.sh on p4 into post_reset_hook.
+    * Apply escaping rules required for generation
+
 1.0.14.659 [6597aaaa6bb37ba8a3e129ad5c097faa58fd5231](https://firmware.sphere.ninja/latest/	nand-6597aaaa6bb37ba8a3e129ad5c097faa58fd5231.tgz) - 2014/12/30
 
 	* Fixes issue w.r.t. USB recovery of non-stable releases by reading factory.env.sh as soon as we find it allowing factory.env.sh control other aspects
