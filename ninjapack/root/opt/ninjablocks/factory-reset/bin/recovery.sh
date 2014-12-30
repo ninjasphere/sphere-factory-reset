@@ -1483,7 +1483,12 @@ with() {
 	media-updated)
 		shift 1
 		(require media-updated)
-		exec "$0" "$@"
+		usb_factory_env=$(usb_file factory.env.sh)
+		if test -f "$usb_factory_env"; then
+			exec "$0" "$@" 2>&1 | tee -a "$(dirname "$usb_factory_env")"/factory-reset.log
+		else
+			exec "$0" "$@"
+		fi
 	;;
 	*)
 		die "ERR407: usage: with block|large-tmp"
