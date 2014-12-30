@@ -1621,6 +1621,27 @@ choose_latest() {
 		fi
 	fi
 
+	# copy files from /tmp/tree into ${TMPDIR}/tree
+	# this allows us to capture files that were unpacked when TMPDIR
+	# was pointing at /tmp
+	if test -d /tmp/tree && test "/tmp" != "${TMPDIR%/}"; then
+		if rsync="$(which rsync 2>/dev/null)"; then
+			$rsync -r /tmp/tree/ $TMPDIR/tree/
+			find /tmp/tree -mindepth 1 -maxdepth 1 -type d | while read d
+			do
+				if
+					test -f "$d/etc/timestamp" &&
+					timestamp="$(cat $d/etc/timestamp)" &&
+					test -n "$timestamp" &&
+					! test -e "${TMPDIR}/by-timestamp/${timestamp}" &&
+					test -d "${TMPDIR}/tree/$(basename "$d")"
+				then
+					ln -sf "../tree/$(basename $d)" "${TMPDIR}/by-timestamp/${timestamp}"
+				fi
+			done
+		fi
+	fi
+
 	latest="$(
 		find ${TMPDIR}/by-timestamp -maxdepth 1 -type l |
 		while read d; do
