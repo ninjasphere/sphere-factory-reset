@@ -1414,6 +1414,7 @@ update_from_usb() {
 		factory.env.sh)
 			if usb=$(usb_file "$file"); then
 				with_rw cp "$usb" /etc
+				. "$usb" # this should force the correct media to be selected.
 			fi
 		;;
 		*)
