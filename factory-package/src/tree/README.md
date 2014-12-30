@@ -180,10 +180,24 @@ Steps Per Sphere
 
 REVISION HISTORY
 ----------------
+
+* 1.0.16
+
+      New version of NAND - 23c5f11d40915f43233fa5ba2106016e827062f6
+      Make sure sdcard recovery script considers itself (unpacked into /tmp) when choosing the latest script to execute.
+      fix: on_sdcard implementation must return true when running on the sphere.
+      workaround for change in 3.12 WLAN behaviour.
+      Avoid unpacking over an existing unpack (we might delete ourselves!)
+      fix: text of message 0607.
+      Try 3 times to bring the wlan0 interface up.
+      Add some delays in attempt to workaround the unreliability of these calls.
+      Bring wlan0 down before bringing the supplicant down.
+      Only execute 'with large-tmp' on the NAND, otherwise we hide a script we are trying to execute.
+      fix: don't forget to execute the thing!
+
 * 1.0.15
 
-	New version of NAND - 08aeb8ae687cd6a119950f35199536702e276fd3
-
+    	New version of NAND - 08aeb8ae687cd6a119950f35199536702e276fd3
       Add support for recovery.sh make-recovery-usb /Volumes/USB sphere-testing.
       fix: make image download more reliable.
       Purge the image root directory of all existing media.
