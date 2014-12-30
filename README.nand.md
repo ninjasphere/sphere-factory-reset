@@ -1,5 +1,9 @@
 RELEASE NOTES
 =============
+1.0.14.659 [6597aaaa6bb37ba8a3e129ad5c097faa58fd5231](https://firmware.sphere.ninja/latest/	nand-6597aaaa6bb37ba8a3e129ad5c097faa58fd5231.tgz) - 2014/12/30
+
+	* Fixes issue w.r.t. USB recovery of non-stable releases by reading factory.env.sh as soon as we find it allowing factory.env.sh control other aspects
+	of recovery process, including the actual image to be loaded.
 
 1.0.13.4a2 [4a24ca739fdde433b259fbc7978115d29505b50b](https://firmware.sphere.ninja/latest/	nand-4a24ca739fdde433b259fbc7978115d29505b50b.tgz) - 2014/12/28
 
