@@ -1706,6 +1706,8 @@ if test "\${RECOVERY_FACTORY_ENV_INIT}" != "true"; then
 	export RECOVERY_FACTORY_ENV_INIT=true
 	if imagedir=\$(require image-mounted); then
 		rm -rf \$imagedir/ubuntu*
+		# ensure next SDCARD recovery uses same image for red button reset.
+		echo "export RECOVERY_IMAGE=$image;" >> \$imagedir/recovery.env.sh
 	fi
 fi
 EOF
