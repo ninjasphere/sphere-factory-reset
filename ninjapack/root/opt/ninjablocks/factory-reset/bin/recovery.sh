@@ -1786,6 +1786,11 @@ EOF
 
 }
 
+reboot_to_nand() {
+	fw_setenv 'bootcmd' 'env default bootcmd; saveenv; run nandboot'
+	reboot
+}
+
 main() {
 
 	mkdir -p ${TMPDIR}
@@ -2032,6 +2037,10 @@ main() {
 	is-unforced-reset-enabled)
 		shift 1
 		is_unforced_reset_enabled
+	;;
+	reboot-to-nand)
+		shift 1
+		reboot_to_nand "$@"
 	;;
 	*)
 		usage
