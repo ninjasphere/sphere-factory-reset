@@ -1407,16 +1407,17 @@ set -e
 sha1=\$(cat "\$0" | openssl sha1 | cut -f2 -d' ')
 export RECOVERY_SCRIPT_TIMESTAMP=$timestamp;
 export RECOVERY_PACKED_SCRIPT_SHA1=\$sha1;
-test -e \${TMPDIR}/tree/\${sha1} && rm -rf \${TMPDIR}/tree/\${sha1}
-mkdir -p \${TMPDIR}/tree/\${sha1}
-mkdir -p \${TMPDIR}/by-timestamp/
-(
+if ! test -d \${TMPDIR}/tree/\${sha1}; then
+	mkdir -p \${TMPDIR}/tree/\${sha1}
+	mkdir -p \${TMPDIR}/by-timestamp/
+	(
 cat <<EOF
 $(tar -C ${RECOVERY_FACTORY_RESET} -czf - . | openssl base64)
 EOF
-) | openssl base64 -d | tar -C \${TMPDIR}/tree/\${sha1} -zxf - || exit $?
-! test -e \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP || rm \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP
-ln -sf ../tree/\$sha1/ \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP
+	) | openssl base64 -d | tar -C \${TMPDIR}/tree/\${sha1} -zxf - || exit $?
+	! test -e \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP || rm \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP
+	ln -sf ../tree/\$sha1/ \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP
+fi
 export PATH=\${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP/bin:\$PATH;
 exec \${TMPDIR}/by-timestamp/\$RECOVERY_SCRIPT_TIMESTAMP/bin/recovery.sh "\$@"
 EOFP
@@ -1614,7 +1615,7 @@ choose_latest() {
 			progress "0912" "Could not find executeable script in /opt/ninjablocks/bin of $(sdcard)p2"
 		fi
 	else
-		progress "0911" "Could not mount image partition..."
+		progress "0911" "Could not mount root partition..."
 	fi
 
 	progress "0920" "Looking for scripts on image partition..."
