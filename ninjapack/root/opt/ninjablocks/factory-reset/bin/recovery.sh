@@ -176,7 +176,7 @@ on_nand() {
 }
 
 on_sdcard() {
-	if test "$(mount_point /dev/mmcblk0p2)" = "/"; then
+	if test "$(mount_point /dev/root)" = "/"; then
 		echo true;
 	else
 		echo false;
