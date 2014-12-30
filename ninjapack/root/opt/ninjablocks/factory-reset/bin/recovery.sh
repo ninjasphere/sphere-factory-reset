@@ -899,7 +899,16 @@ factory_setup_assistant() {
 		# this special case is only required for the sdcard - the NAND behaves
 		# sanely
 
+		progress "3515" "Waiting for wlan0 to settle..."
+
+		sleep 2
+
 		stop wpa_supplicant-wlan0
+
+		progress "3517" "Waiting for wlan0 to settle..."
+
+		sleep 2
+
 		start wpa_supplicant-wlan0
 
 		io ifdown wlan0
