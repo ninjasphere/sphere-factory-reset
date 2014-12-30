@@ -1172,14 +1172,10 @@ require() {
 	media-updated)
 		if imagedir=$(require image-mounted); then
 			update_from_usb factory.env.sh
-			if usb_tar="$(url file .tar)"; then
-				rm $imagedir/*$(url suffix .tar)*
-				update_from_usb "$usb_tar"
-			fi
-			if usb_sh="$(url file .sh)"; then
-				rm $imagedir/*$(url suffix .sh)*
-				update_from_usb "$usb_sh"
-			fi
+			usb_tar="$(url file .tar)"
+			update_from_usb "$usb_tar" "$(url suffix .tar)"
+			usb_sh="$(url file .sh)"
+			update_from_usb "$usb_sh" "$(url suffix .sh)"
 		else
 			die "ERR483: unable to mount image dir"
 		fi
@@ -1452,6 +1448,7 @@ unpack() {
 # if the SDCARD does not already have it.
 update_from_usb() {
 	local file=$1
+	local suffix=$2
 	if imagedir=$(require mounted $(sdcard)p4); then
 		case "$file" in
 		factory.env.sh)
@@ -1464,12 +1461,17 @@ update_from_usb() {
 			if usb=$(usb_file "$file"); then
 				sha1=${usb}.sha1
 				if io test -f "$sha1"; then
-					progress "0970" "Copying '$sha1' to '$imagedir'..."
+					progress "0965" "Copying '$sha1' to '$imagedir'..."
 					io cp "$sha1" $imagedir &&
-					progress "0971" "Copying '$sha1' to '$imagedir' has completed successfully." &&
+					progress "0966" "Copying '$sha1' to '$imagedir' has completed successfully." &&
 					if ! (check_file "${imagedir}/$(basename "$usb")"); then
+						if test -n "$suffix"; then
+							# make room by removing any file with a matching suffix.
+							progress "0969" "Erasing files with matching suffix '${suffix}'' from image directory..."
+							rm $imagedir/*${suffix}
+						fi
 						progress "0972" "Copying '$usb' to '$imagedir'..." &&
-						if io cp "$usb" $imagedir; then
+						if io cp "$usb" $imagedir && (check_file "${imagedir}/$(basename "$usb")"); then
 							progress "0975" "Copying '$usb' to '$imagedir' has completed successfully."
 							return
 						else
