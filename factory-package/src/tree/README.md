@@ -180,6 +180,27 @@ Steps Per Sphere
 
 REVISION HISTORY
 ----------------
+* 1.0.15
+
+	New version of NAND - 08aeb8ae687cd6a119950f35199536702e276fd3
+
+      Add support for recovery.sh make-recovery-usb /Volumes/USB sphere-testing.
+      fix: make image download more reliable.
+      Purge the image root directory of all existing media.
+      Remove duplicate message.
+      Improve formatting of fetch log messages.
+      with_rw: don't exit, just return - let caller deal with it as required.
+      This is required to ensure we use the write parameters when copying the remainder of the media.
+      Pause briefly to display the reason for exit.
+      If we have a USB drive, log to it. Copy existing log to USB first.
+      Respect recovery.env.sh during factory resets.
+      Force subsequent SDCARD resets from this image too.
+      Add on_sphere guard
+      Trace all rm calls.
+      Make (require media-updated) directly responsible for making room, as required.
+      Remove responsibility for cleaning up p4 from factory.env.sh
+      Move resposibility for updating recovery.env.sh on p4 into post_reset_hook.
+
 * 1.0.13
 
 	New version of ninjasphere-factory-test (1.0.18).
