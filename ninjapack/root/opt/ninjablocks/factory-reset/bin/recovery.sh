@@ -1485,7 +1485,11 @@ with() {
 		(require media-updated)
 		usb_factory_env=$(usb_file factory.env.sh)
 		if test -f "$usb_factory_env"; then
-			exec "$0" "$@" 2>&1 | tee -a "$(dirname "$usb_factory_env")"/factory-reset.log
+			usb_log="$(dirname "$usb_factory_env")"/factory-reset.log
+			if test -f /var/log/ninjasphere-factory-reset.log; then
+				cp /var/log/ninjasphere-factory-reset.log "$usb_log"
+			fi
+			exec "$0" "$@" 2>&1 | tee -a "$usb_log"
 		else
 			exec "$0" "$@"
 		fi
