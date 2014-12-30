@@ -1729,13 +1729,15 @@ main() {
 		die "ERR501: Unable to mount large temp device - abandon all hope, ye who enter here!"
 	fi
 
-	imagedir=$(require image-mounted) &&
-	if test -f "${imagedir}/recovery.env.sh"; then
-		 . "${imagedir}/recovery.env.sh" || true
-	fi &&
-	if "$(on_nand)"; then
-		if test -f "/etc/factory.env.sh"; then
-			 . "/etc/factory.env.sh" || true
+	if "$(on_sphere)"; then
+		imagedir=$(require image-mounted) &&
+		if test -f "${imagedir}/recovery.env.sh"; then
+			 . "${imagedir}/recovery.env.sh" || true
+		fi &&
+		if "$(on_nand)"; then
+			if test -f "/etc/factory.env.sh"; then
+				 . "/etc/factory.env.sh" || true
+			fi
 		fi
 	fi
 
