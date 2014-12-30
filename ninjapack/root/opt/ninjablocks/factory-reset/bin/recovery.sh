@@ -1499,16 +1499,21 @@ with() {
 	;;
 	large-tmp)
 		shift 1
-		if
-			imagedir=$(require image-mounted) &&
-			mkdir -p "${imagedir}/tmp" &&
-			mount -o bind "${imagedir}/tmp" /tmp; then
-			( "$@" )
-			rc=$?
-			umount /tmp || rc=$?
-			test $rc -eq 0 || exit $rc
-		else
-			die "ERR568: Cannot mount '${imagedir}/tmp' on /tmp."
+		if $(on_nand); then
+			# Only do this on the NAND since we only replace ${TMPDIR} on the NAND
+			# If we do it elsewhere on the SDCARD, then we end up hiding the
+			# script we just downloaded to /tmp which is not helpful.
+			if
+				imagedir=$(require image-mounted) &&
+				mkdir -p "${imagedir}/tmp" &&
+				mount -o bind "${imagedir}/tmp" /tmp; then
+				( "$@" )
+				rc=$?
+				umount /tmp || rc=$?
+				test $rc -eq 0 || exit $rc
+			else
+				die "ERR568: Cannot mount '${imagedir}/tmp' on /tmp."
+			fi
 		fi
 	;;
 	media-updated)
