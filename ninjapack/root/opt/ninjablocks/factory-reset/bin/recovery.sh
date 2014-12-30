@@ -1139,9 +1139,19 @@ require() {
 		# if we get to here, we have a large tmp device, or at least one not on tmpfs
 	;;
 	media-updated)
-		update_from_usb factory.env.sh
-		update_from_usb $(url file .tar)
-		update_from_usb $(url file .sh)
+		if imagedir=$(require image-mounted); then
+			update_from_usb factory.env.sh
+			if usb_tar="$(url file .tar)"; then
+				rm $imagedir/*$(url suffix .tar)*
+				update_from_usb "$usb_tar"
+			fi
+			if usb_sh="$(url file .sh)"; then
+				rm $imagedir/*$(url suffix .sh)*
+				update_from_usb "$usb_sh"
+			fi
+		else
+			die "ERR483: unable to mount image dir"
+		fi
 	;;
 	*)
 		die "ERR482: usage: require mounted {partition-device} [ {preferred-mount-point} ] | unmounted {partition-device} ."
