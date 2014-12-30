@@ -906,7 +906,7 @@ factory_setup_assistant() {
 	fi
 
 	progress 3521 "Bringing up ifup wlan0"
-	if io ifup wlan0; then
+	if retry 3 io ifup wlan0; then
 		progress "3523" "The command 'ifup wlan0' was successful."
 	else
 		progress "3512" "The command 'ifup wlan0' was not successful - $?."
