@@ -1,6 +1,6 @@
 RELEASE NOTES
 =============
-1.0.15.369 [369f64ba2979ea863a19ddb1ca134967a636e095](https://firmware.sphere.ninja/latest/	nand-369f64ba2979ea863a19ddb1ca134967a636e095.tgz) - 2014/12/30
+1.0.15.369 [369f64ba2979ea863a19ddb1ca134967a636e095](https://firmware.sphere.ninja/latest/nand-369f64ba2979ea863a19ddb1ca134967a636e095.tgz) - 2014/12/30
 
 	Additional fixes required to properly support factory resets of non-stable builds.
 
@@ -13,20 +13,20 @@ RELEASE NOTES
     * Move resposibility for updating recovery.env.sh on p4 into post_reset_hook.
     * Apply escaping rules required for generation
 
-1.0.14.659 [6597aaaa6bb37ba8a3e129ad5c097faa58fd5231](https://firmware.sphere.ninja/latest/	nand-6597aaaa6bb37ba8a3e129ad5c097faa58fd5231.tgz) - 2014/12/30
+1.0.14.659 [6597aaaa6bb37ba8a3e129ad5c097faa58fd5231](https://firmware.sphere.ninja/latest/nand-6597aaaa6bb37ba8a3e129ad5c097faa58fd5231.tgz) - 2014/12/30
 
 	* Fixes issue w.r.t. USB recovery of non-stable releases by reading factory.env.sh as soon as we find it allowing factory.env.sh control other aspects
 	of recovery process, including the actual image to be loaded.
 
-1.0.13.4a2 [4a24ca739fdde433b259fbc7978115d29505b50b](https://firmware.sphere.ninja/latest/	nand-4a24ca739fdde433b259fbc7978115d29505b50b.tgz) - 2014/12/28
+1.0.13.4a2 [4a24ca739fdde433b259fbc7978115d29505b50b](https://firmware.sphere.ninja/latest/nand-4a24ca739fdde433b259fbc7978115d29505b50b.tgz) - 2014/12/28
 
 	* Use a generated uEnv.txt to maximise chance of detecting issues during factory flashing process.
 
-1.0.13.2f4 - [2f4b91d0de5f75db809dc1c814a1829de5354588](https://firmware.sphere.ninja/latest/	nand-2f4b91d0de5f75db809dc1c814a1829de5354588.tgz) - 2014/12/27
+1.0.13.2f4 - [2f4b91d0de5f75db809dc1c814a1829de5354588](https://firmware.sphere.ninja/latest/nand-2f4b91d0de5f75db809dc1c814a1829de5354588.tgz) - 2014/12/27
 
 	* Fixes a regression introduced in 1.0.9 whereby files were not copied from USB.
 
-1.0.12.2cb - [2cb2e8d64a01d7d14e7aae94975ea3660e660b8e](https://firmware.sphere.ninja/latest/	nand-2cb2e8d64a01d7d14e7aae94975ea3660e660b8e.tgz) - 2014/12/27
+1.0.12.2cb - [2cb2e8d64a01d7d14e7aae94975ea3660e660b8e](https://firmware.sphere.ninja/latest/nand-2cb2e8d64a01d7d14e7aae94975ea3660e660b8e.tgz) - 2014/12/27
 
 	* Copy factory-flashed NAND version into /etc/firmware-versions of NAND and thence to SDCARD
 	* Don't reflash ledmatrix during SDCARD boot if it was already flashed by NAND boot.
