@@ -24,6 +24,7 @@ export RECOVERY_ENABLE_REBOOT_ON_REPARTITIONING=${RECOVERY_ENABLE_REBOOT_ON_REPA
 export RECOVERY_ARCHIVE_DELEGATION_RULE=${RECOVERY_ARCHIVE_DELEGATION_RULE:-more-recent}
 export RECOVERY_CHROOT=${RECOVERY_CHROOT:-false}
 export RECOVERY_SPHERE_IO_BAUD=${RECOVERY_SPHERE_IO_BAUD:-230400}
+export RECOVERY_DISABLE_UNFORCED_RESET=${RECOVERY_DISABLE_UNFORCED_RESET:-false}
 
 die() {
 	msg="$*"
@@ -975,6 +976,16 @@ choose_script() {
 	fi
 }
 
+is_unforced_reset_enabled() {
+	if test "${RECOVERY_DISABLE_UNFORCED_RESET}" = "true"; then
+		echo false
+		false
+	else
+		echo true
+		true
+	fi
+}
+
 # initiate the factory reset
 factory_reset() {
 
@@ -996,10 +1007,10 @@ factory_reset() {
 			test -f $rootdir/etc/.recovered
 		then
 			progress "1002" "The boot partition is ok. Checking for user reset indication..."
-			if sphere_io --baud ${RECOVERY_SPHERE_IO_BAUD} --test="zap" --color=red --ok=TapCenter --timeout=5; then
-				progress "1003" "The user has requested a reset."
+			if $(is_unforced_reset_enabled); then
+				progress "1003" "The user has not disabled reset - reset continues."
 			else
-				progress "1999" "The user has not requested a reset. Aborting reset."
+				progress "1999" "Unforced reset is disabled."
 				exit 0
 			fi
 		fi
@@ -2015,6 +2026,10 @@ main() {
 	make-recovery-usb)
 		shift 1
 		make_recovery_usb "$@"
+	;;
+	is-unforced-reset-enabled)
+		shift 1
+		is_unforced_reset_enabled
 	;;
 	*)
 		usage
