@@ -580,6 +580,7 @@ force_partitioning() {
 
 	write_partition_table $(sdcard)
 	progress "8018" "Checking partition table..."
+
 	( check_partition_table $(sdcard) 1>/dev/null ) || die "ERR561: Failed to update partition table on '$(sdcard)'."
 
 	progress "8021" "Trying to remount image partition..."
@@ -1412,7 +1413,7 @@ update_from_usb() {
 		case "$file" in
 		factory.env.sh)
 			if usb=$(usb_file "$file"); then
-				(with_rw cp "$usb" /etc)
+				with_rw cp "$usb" /etc
 			fi
 		;;
 		*)
@@ -1626,7 +1627,7 @@ with_rw() {
 	mode=$(cat /proc/self/mounts | egrep "^(/dev/root|ubi0:rootfs)" | cut -f4 -d' ' | cut -f1 -d,) &&
 	test "$mode" = "rw" || mount -oremount,rw / &&
 	"$@" || rc=$?
-	! test "$mode" = "ro" || mount -oremount,ro / && exit $rc
+	! test "$mode" = "ro" || mount -oremount,ro / && return $rc
 }
 
 escape_subshell() {
