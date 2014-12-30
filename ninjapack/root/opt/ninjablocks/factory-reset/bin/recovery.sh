@@ -382,7 +382,7 @@ recovery_without_network() {
 		progress "9251" "Removing factory flash settings..."
 		block() {
 			if test -f /etc/factory.env.sh; then
-				rm /etc/factory.env.sh;
+				io rm /etc/factory.env.sh;
 			fi
 
 			if root=$(require mounted $(sdcard)p2); then
@@ -415,7 +415,7 @@ recovery_without_network() {
 		if imagedir=$(require mounted $(sdcard)p4); then
 			io dd if="$(sdcard)p1" of="${imagedir}/boot.img" bs=1M
 			size=$(cat "${imagedir}/boot.img" | wc -c)
-			! test -f "${imagedir}/boot.img.gz" || rm "${imagedir}/boot.img.gz"
+			! test -f "${imagedir}/boot.img.gz" || io rm "${imagedir}/boot.img.gz"
 			gzip "${imagedir}/boot.img"
 			size=$(expr $size / 1024 / 1024)
 		else
@@ -441,8 +441,8 @@ download() {
 		sha1name=${TMPDIR}/$(url image)$(url suffix .sh.sha1)
 		shname=${TMPDIR}/$(url image)$(url suffix .sh)
 
-		! test -f "$sha1name" || rm "$sha1name" || die "ERR535: Unable to delete existing file: '$sha1name'."
-		! test -f "$shname" || rm "$shname" || die "ERR536: Unable to delete existing file: '$shname'."
+		! test -f "$sha1name" || io rm "$sha1name" || die "ERR535: Unable to delete existing file: '$sha1name'."
+		! test -f "$shname" || io rm "$shname" || die "ERR536: Unable to delete existing file: '$shname'."
 
 		sha1url="$(url url .sh.sha1)"
 		shurl="$(url url .sh)"
@@ -625,13 +625,13 @@ recovery_with_network() {
 		progress "8031" "Checking '${imagetar}'..."
 		if ! ( check_file "$imagetar" ); then
 			progress "8032" "Validation of '${imagetar}' failed."
-			! test -f "$imagetar" || rm -f "$imagetar"
+			! test -f "$imagetar" || io rm -f "$imagetar"
 		fi
 
 		progress "8033" "Downloading '${imageurl}' to '${imagetar}'..."
 		if ! (cd "${imagedir}" && retry 3 io curl_continue -O -s "$imageurl"); then
 			progress "8034" "Download from '${imageurl}' to '${imagetar}' failed."
-			rm "$imagetar"
+			io rm "$imagetar"
 			die "ERR310: Failed to download '${imageurl}' to '${imagetar}'."
 		else
 			if ! ( check_file "$imagetar" ); then
@@ -1003,7 +1003,7 @@ factory_reset() {
 				progress 1014 "Failed to locate a valid recovery archive."
 				if test -f "$tar"; then
 					progress "1016" "Removing corrupted tar '$tar'."
-					if ! rm "$tar"; then
+					if ! io rm "$tar"; then
 						progress "1018" "Failed to remove corrupted '$tar'."
 					fi
 				fi
@@ -1129,7 +1129,7 @@ require() {
 				physical=$(gnu_readlink -f "${RECOVERY_FACTORY_RESET}") &&
 				find "${imagedir}/tmp" -type f |
 				grep -v "^$physical" | while read f; do
-					${RECOVERY_ENABLE_TMP_CLEANUP:-false} && rm "$f"
+					${RECOVERY_ENABLE_TMP_CLEANUP:-false} && io rm "$f"
 				done || true
 			) ||
 			# io mount -o bind "${imagedir}/tmp" /tmp &&
@@ -1551,7 +1551,7 @@ checked_unpack_script() {
 		fi
 	else
 		progress "0922" "'${fq_script}' is not valid - removing."
-		test -f "${fq_script}" && rm "${fq_script}"
+		test -f "${fq_script}" && io rm "${fq_script}"
 		false
 	fi
 }
@@ -1574,7 +1574,7 @@ choose_latest() {
 		mkdir -p "${TMPDIR}/by-timestamp"
 
 		if test -L "${TMPDIR}/by-timestamp/${timestamp}"; then
-			rm "${TMPDIR}/by-timestamp/${timestamp}"
+			io rm "${TMPDIR}/by-timestamp/${timestamp}"
 		fi &&
 		ln -s "/opt/ninjablocks/factory-reset" "${TMPDIR}/by-timestamp/${timestamp}"
 	else
@@ -1705,7 +1705,7 @@ export RECOVERY_IMAGE=$image;
 if test "\${RECOVERY_FACTORY_ENV_INIT}" != "true"; then
 	export RECOVERY_FACTORY_ENV_INIT=true
 	if imagedir=\$(require image-mounted); then
-		rm -rf \$imagedir/ubuntu*
+		io rm -rf \$imagedir/ubuntu*
 		# ensure next SDCARD recovery uses same image for red button reset.
 		echo "export RECOVERY_IMAGE=$image;" >> \$imagedir/recovery.env.sh
 	fi
