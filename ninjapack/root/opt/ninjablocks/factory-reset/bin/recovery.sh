@@ -893,6 +893,18 @@ factory_setup_assistant() {
 		progress "3512" "WPA configuration was not successful - $?."
 	fi
 
+	if $(on_sdcard); then
+		# if we don't do this, wlam0 won't recovery itself
+
+		# this special case is only required for the sdcard - the NAND behaves
+		# sanely
+
+		stop wpa_supplicant-wlan0
+		start wpa_supplicant-wlan0
+
+		io ifdown wlan0
+	fi
+
 	progress 3521 "Bringing up ifup wlan0"
 	if io ifup wlan0; then
 		progress "3523" "The command 'ifup wlan0' was successful."
