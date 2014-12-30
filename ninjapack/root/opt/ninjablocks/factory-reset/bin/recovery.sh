@@ -1136,6 +1136,11 @@ require() {
 			die "ERR593: This command must only be run when mounted on the NAND"
 		fi
 	;;
+	sphere)
+		if ! $(on_sphere); then
+			die "ERR594: This command must only be run when running on a sphere."
+		fi
+	;;
 	image-mounted)
 		# try really, really hard to mount the image partition.
 		if ! imagedir=$(require mounted "$(sdcard)p4"); then
@@ -1322,7 +1327,7 @@ EOF
 		fi
 	;;
 	eth2)
-		if (require nand); then
+		if (require sphere); then
 			if ! grep "^iface eth2 inet dhcp" /etc/network/interfaces &>/dev/null; then
 				progress "0101" "Patching eth2."
 				cat >> /etc/network/interfaces <<EOF
