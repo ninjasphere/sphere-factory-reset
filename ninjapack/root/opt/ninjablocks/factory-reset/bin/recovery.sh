@@ -894,10 +894,15 @@ factory_setup_assistant() {
 	fi
 
 	if $(on_sdcard); then
+
 		# if we don't do this, wlam0 won't recovery itself
 
 		# this special case is only required for the sdcard - the NAND behaves
 		# sanely
+
+		progress "3514" "Bring wlan0 down (ifdown) ..."
+
+		retry 3 io ifdown wlan0
 
 		progress "3515" "Waiting for wlan0 to settle..."
 
@@ -909,23 +914,17 @@ factory_setup_assistant() {
 
 		sleep 2
 
-		start wpa_supplicant-wlan0
-
-		io ifdown wlan0
+		retry 3 start wpa_supplicant-wlan0
 	fi
 
 	progress 3521 "Bringing up ifup wlan0"
+
 	if retry 3 io ifup wlan0; then
 		progress "3523" "The command 'ifup wlan0' was successful."
 	else
 		progress "3512" "The command 'ifup wlan0' was not successful - $?."
 	fi
 
-	# progress "3504" "Cycliing interfaces"
-	# interfaces cycle
-
-	progress "3597" "Waiting for wlan0 to settle..."
-	sleep 10
 	progress "3599" "Resuming recovery..."
 }
 
