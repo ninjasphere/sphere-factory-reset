@@ -341,7 +341,7 @@ untar() {
 	mountpoint=$(require mounted $block_device$partition) || exit $?
 	progress "0602" "Extraction of tar '$tar' begins..."
 	if tar -O -xf "$tar" "$file" | gzip -dc | (cd $mountpoint; tar -xf -); then
-		progress "0607" "Extraction of tar '$tar' begins..."
+		progress "0607" "Extraction of tar '$tar' has completed successfully."
 	else
 		progress "0606" "Extraction of tar '$tar' failed."
 	 	die "ERR532: Failed to extract '$tar' to '$block_device$partition'."
