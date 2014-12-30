@@ -1,5 +1,9 @@
 RELEASE NOTES
 =============
+1.0.15.08a [08aeb8ae687cd6a119950f35199536702e276fd3](https://firmware.sphere.ninja/latest/nand-369f64ba2979ea863a19ddb1ca134967a636e095.tgz) - 2014/12/30
+
+    * Apply escaping rules required for generation.
+
 1.0.15.369 [369f64ba2979ea863a19ddb1ca134967a636e095](https://firmware.sphere.ninja/latest/nand-369f64ba2979ea863a19ddb1ca134967a636e095.tgz) - 2014/12/30
 
 	Additional fixes required to properly support factory resets of non-stable builds.
