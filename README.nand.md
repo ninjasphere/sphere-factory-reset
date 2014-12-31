@@ -1,6 +1,13 @@
 RELEASE NOTES
 =============
 
+1.0.17.1fc - [1fc302821e7ca96a15cf8a851529211cfc9781ea](https://firmware.sphere.ninja/latest/nand-1fc302821e7ca96a15cf8a851529211cfc9781ea.tgz) - 2014/12/31
+
+     * NAND boots will always reset unless explicitly disabled by RECOVERY_DISABLE_UNFORCED_RESET
+     * Only do the erase if we need to do the copy.
+     * Add support for a 'reboot-to-nand' command.
+     * Relax requirement for ethernet check so that it can also be run on an SDCARD boot.
+
 1.0.16.23c - [23c5f11d40915f43233fa5ba2106016e827062f6](https://firmware.sphere.ninja/latest/nand-23c5f11d40915f43233fa5ba2106016e827062f6.tgz) - 2014/12/31
 
 This version fixes regressions with download via network support and reset initiation from SDCARD introduced in v1.0.5.

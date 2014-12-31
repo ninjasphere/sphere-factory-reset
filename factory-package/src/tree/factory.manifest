@@ -1,5 +1,5 @@
-a3416ae4aec7bb0822386c063193a1d07e649c96  ./01-SOM/factory-sdcard-23c5f11d40915f43233fa5ba2106016e827062f6.img.gz
-b36a134064b9847f8981718be7f39922bd7e5ff5  ./01-SOM/factory-sdcard-23c5f11d40915f43233fa5ba2106016e827062f6.zip
+a5e033395acee3e6c091785b20f8ab0d64faa080  ./01-SOM/factory-sdcard-1fc302821e7ca96a15cf8a851529211cfc9781ea.img.gz
+1ba74278a480b1adc1d94b97b55c5775405a632a  ./01-SOM/factory-sdcard-1fc302821e7ca96a15cf8a851529211cfc9781ea.zip
 01239e46ce2f903303a67fbe2d0d5f1cfcac54c1  ./03-SDCARD/factory-reset-packages/ninjasphere-factory-reset_1.0.16~trustyspheramid-10_armhf.deb
 4810dff0c9c0b210722eadcc963733cb822502b6  ./03-SDCARD/factory-reset-packages/ninjasphere-factory-test_1.0.18~trustyspheramid-3_armhf.deb
 61d4542020aa68d7a6674944a66177e30b30b36a  ./03-SDCARD/factory.env.sh
@@ -9,4 +9,4 @@ c55a1a855bd992c855612a427c757ace413b7dd2  ./03-SDCARD/ubuntu_armhf_trusty_norele
 9d08a74ac1d32647a2909bc924e2260c7ac9e0d4  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable-recovery.tar.sha1
 941c511d81005ce4284b6a08f6f2652b9874cfc4  ./04-TEST/ninjasphere-factory-test-passwords.zip
 514d5e8226418476243b84d6ceb5d5f4f0028faa  ./04-TEST/ninjasphere-factory-test-windows-1.0.17.zip
-3af3b059a794a224cd661fc3a3a093de22b4561b  ./README.md
+059d3f9fb9f5c9ea72013e5aaab668f02baf110c  ./README.md

@@ -180,6 +180,12 @@ Steps Per Sphere
 
 REVISION HISTORY
 ----------------
+* 1.0.17
+
+      New version of NAND - 1fc302821e7ca96a15cf8a851529211cfc9781ea
+
+      This version causes NAND boots to initiate factory reset unless explicitly disabled by a variable, RECOVERY_DISABLE_UNFORCED_RESET=true
+      set in either/var/volatile/run/media/mmcblk0p4/recovery.env.sh or factory.env.sh on a USB thumb drive.
 
 * 1.0.16
 
