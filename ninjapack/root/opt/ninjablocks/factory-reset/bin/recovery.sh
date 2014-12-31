@@ -1783,7 +1783,7 @@ post_reset_hook() {
 	if imagedir=\$(require mounted \$(sdcard)p4); then
 		# ensure red button reset tries to reset with same image
 		touch \$imagedir/recovery.env.sh
-		sed -i "" "/export RECOVERY_IMAGE=/d" \$imagedir/recovery.env.sh
+		sed -i"" "/export RECOVERY_IMAGE=/d" \$imagedir/recovery.env.sh
 		echo "export RECOVERY_IMAGE=\${RECOVERY_IMAGE};" >> \$imagedir/recovery.env.sh
 	fi
 }
