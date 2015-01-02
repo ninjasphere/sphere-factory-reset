@@ -7,6 +7,8 @@ Each subdirectory corresponds to a step of the flashing process that needs to be
 
 A manifest of all files is found in the file called factory.manifest. This file contains the SHA1 hash of each file in the distribution and can be used to check that a complete set of files with known contents has been received.
 
+The verifier-osx or verfier-win32.exe tools can be used to verify that you have received the correct versions of each file. Run the tools with an argument of --sha1-manifest=factory.manifest.
+
 The subdirectories are:
 
 01-SOM

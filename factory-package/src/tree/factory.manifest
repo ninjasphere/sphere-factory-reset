@@ -9,6 +9,6 @@ a5e033395acee3e6c091785b20f8ab0d64faa080  ./01-SOM/factory-sdcard-1fc302821e7ca9
 1ef15a40d952947b30612e63c0e886cc655f1636  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable.manifest
 941c511d81005ce4284b6a08f6f2652b9874cfc4  ./04-TEST/ninjasphere-factory-test-passwords.zip
 514d5e8226418476243b84d6ceb5d5f4f0028faa  ./04-TEST/ninjasphere-factory-test-windows-1.0.17.zip
-059d3f9fb9f5c9ea72013e5aaab668f02baf110c  ./README.md
+e80962c7ac985b7731be5c80699a0ff130ae4e9f  ./README.md
 4570f40e6624664c7ff64286201b40e7c8fbb0db  ./verifier-osx
 b144a25b0d3e068599c3315187cf58f907ee74b5  ./verifier-win32.exe
