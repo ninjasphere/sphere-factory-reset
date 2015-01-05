@@ -182,6 +182,9 @@ Steps Per Sphere
 
 REVISION HISTORY
 ----------------
+* 1.0.17a
+      Updated ninjasphere-factory-test (1.0.19) with improved support for detecting faulty antennas (test 0010)
+
 * 1.0.17
 
       New version of NAND - 1fc302821e7ca96a15cf8a851529211cfc9781ea
