@@ -182,6 +182,16 @@ Steps Per Sphere
 
 REVISION HISTORY
 ----------------
+* 1.0.17b
+      Updated ninjasphere-factory-test (1.0.21) with modified test 0010.
+
+      This test now requires the operator to wipe their hand over the sphere, as if wiping it, until the LED matrix turns
+      from red to green. If it does not turn green after persistent swiping then there is likely a broken antenna and
+      the test should be failed by tapping the sphere once or waiting for the test to timeout.
+
+      This version of the test controller software used in the 04-TEST process now reports captured serial identifiers and
+      MAC addresses to the MES program using cmd id 6.
+
 * 1.0.17a
       Updated ninjasphere-factory-test (1.0.19) with improved support for detecting faulty antennas (test 0010)
 
