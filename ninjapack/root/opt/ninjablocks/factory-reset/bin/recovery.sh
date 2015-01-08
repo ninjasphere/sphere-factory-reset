@@ -627,19 +627,20 @@ recovery_with_network() {
 		if ! ( check_file "$imagetar" ); then
 			progress "8032" "Validation of '${imagetar}' failed."
 			! test -f "$imagetar" || io rm -f "$imagetar"
+
+			progress "8033" "Downloading '${imageurl}' to '${imagetar}'..."
+			if ! (cd "${imagedir}" && retry 3 io curl_continue -O -s "$imageurl"); then
+				progress "8034" "Download from '${imageurl}' to '${imagetar}' failed."
+				io rm "$imagetar"
+				die "ERR310: Failed to download '${imageurl}' to '${imagetar}'."
+			else
+				if ! ( check_file "$imagetar" ); then
+					progress "8035" "Validation of '${imagetar}' failed."
+				fi
+				progress "8039" "Download of '${imageurl}' to '${imagetar}' is complete."
+			fi
 		fi
 
-		progress "8033" "Downloading '${imageurl}' to '${imagetar}'..."
-		if ! (cd "${imagedir}" && retry 3 io curl_continue -O -s "$imageurl"); then
-			progress "8034" "Download from '${imageurl}' to '${imagetar}' failed."
-			io rm "$imagetar"
-			die "ERR310: Failed to download '${imageurl}' to '${imagetar}'."
-		else
-			if ! ( check_file "$imagetar" ); then
-				progress "8035" "Validation of '${imagetar}' failed."
-			fi
-			progress "8039" "Download of '${imageurl}' to '${imagetar}' is complete."
-		fi
 	else
 		progress "8038" "Download from '${imagesha1url}' to '${imagesha1}' failed."
 	fi
