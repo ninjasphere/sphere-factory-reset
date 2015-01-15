@@ -268,7 +268,7 @@ format_partitions() {
 			mke2fs -j -L "Ninja" "${partition_device}" || die "ERR522: Failed to format '${partition_device}'."
 		;;
 		p3)
-			mke2fs -j -L "UserData" "${partition_device}" || die "ERR523: Failed to format '${partition_device}'."
+			mkfs.f2fs -l "UserData" "${partition_device}" || die "ERR523: Failed to format '${partition_device}'."
 		;;
 		p4)
 			mkfs.f2fs -l "Image" "${partition_device}" || die "ERR524: Failed to format '${partition_device}'."
