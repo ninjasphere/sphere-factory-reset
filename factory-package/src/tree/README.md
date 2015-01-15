@@ -182,6 +182,12 @@ Steps Per Sphere
 
 REVISION HISTORY
 ----------------
+* 1.0.17c
+	  Updated ninjasphere-factory-reset (1.0.22) with fixes for:
+	  	* id nand - was blank
+	  	* ensure test 0010 always paints green on success
+	  	* change order of MES commands from 1,2,3,5,6 to 1,2,5,6,3
+
 * 1.0.17b
       Updated ninjasphere-factory-test (1.0.21) with modified test 0010.
 

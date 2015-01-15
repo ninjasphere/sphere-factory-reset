@@ -21,15 +21,15 @@ post_reset_hook() {
 
 	if test -e "$USB_FILE"; then
 		USB_DIR=$(dirname "$USB_FILE")
+		root=$(require mounted /dev/mmcblk0p2) &&
+		data=$(require mounted /dev/mmcblk0p3) &&
+		mount -o bind $data $root/data &&
 		find "${USB_DIR}/factory-reset-packages" -maxdepth 1 -type f -name '*.deb' | while read deb; do
-			root=$(require mounted /dev/mmcblk0p2) &&
-			data=$(require mounted /dev/mmcblk0p3) &&
-			mount -o bind $data $root/data &&
-			cp "$deb" $root/tmp &&
-			chroot $root bash -c '
+			cp "$deb" $root/tmp
+		done
+		chroot $root bash -c '
 dpkg -i /tmp/*.deb && rm /tmp/*.deb;
 echo factory:${RECOVERY_FACTORY_TEST_PASSWORD} | chpasswd;
 '
-		done
 	fi
 }
