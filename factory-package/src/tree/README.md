@@ -182,6 +182,13 @@ Steps Per Sphere
 
 REVISION HISTORY
 ----------------
+* 1.0.17d
+		* Updated 01-SOM with new revB of SOM flashing media, specifically:
+
+			factory-sdcard-1fc302821e7ca96a15cf8a851529211cfc9781ea-revB.zip
+
+		* Only writes to extent of source image, tolerates small number of block errors in NAND during rootfs write.
+
 * 1.0.17c
 	  Updated ninjasphere-factory-reset (1.0.22) with fixes for:
 	  	* id nand - was blank
