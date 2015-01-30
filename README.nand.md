@@ -1,6 +1,10 @@
 RELEASE NOTES
 =============
 
+1.0.19.e05 - [e0530dcf1638904cd0c7135352ea1293b5f09b9a](https://firmware.sphere.ninja/latest/nand-e0530dcf1638904cd0c7135352ea1293b5f09b9a.tgz) - 2015/01/30
+
+    * Ensure some failures always paint the devkit LEDs red.
+
 1.0.18.b80 - [b800a427e68fc1574221221d868dd2809575a79e](https://firmware.sphere.ninja/latest/nand-b800a427e68fc1574221221d868dd2809575a79e.tgz) - 2015/01/30
 
     * Update injected factory reset to 1.0.17

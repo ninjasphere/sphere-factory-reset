@@ -1,5 +1,5 @@
-339aaac3b133ea12653925f9452b0aefcdde7cb9  ./01-SOM/factory-sdcard-b800a427e68fc1574221221d868dd2809575a79e.img.gz
-0c175e42e7e6a2248d8c2f871b4701bf7efceb0c  ./01-SOM/factory-sdcard-b800a427e68fc1574221221d868dd2809575a79e.zip
+5c804101d3c29be27d878b37b613fcb7b26e67f8  ./01-SOM/factory-sdcard-e0530dcf1638904cd0c7135352ea1293b5f09b9a.img.gz
+15b1a08192b31bcf4c5782b50b27164200d4e2de  ./01-SOM/factory-sdcard-e0530dcf1638904cd0c7135352ea1293b5f09b9a.zip
 30277f49efa11e7d7c254037cf758c410999ab91  ./03-SDCARD/03-SDCARD.sha1.manifest
 93efb1c091779886bd3802eaee8b8ad72100d4c5  ./03-SDCARD/factory-reset-packages/ninjasphere-factory-test_1.0.22~trustyspheramid-2_armhf.deb
 7c7ff1903a015449625d52d9c750a81dd31d9bed  ./03-SDCARD/factory-reset-packages/sphere-system-tweaks_1.0~trustyspheramid-9_armhf.deb
