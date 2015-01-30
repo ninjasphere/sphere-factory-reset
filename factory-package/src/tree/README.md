@@ -182,6 +182,10 @@ Steps Per Sphere
 
 REVISION HISTORY
 ----------------
+* 1.0.18
+		* Updated NAND to b800a427e68fc1574221221d868dd2809575a79e
+		* First boot following factory NAND flash checks for block errors outside UBI controlled areas of NAND.
+
 * 1.0.17d
 		* Updated 01-SOM with new revB of SOM flashing media, specifically:
 
