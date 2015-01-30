@@ -1,6 +1,23 @@
 RELEASE NOTES
 =============
 
+1.0.18.b80 - [b800a427e68fc1574221221d868dd2809575a79e](https://firmware.sphere.ninja/latest/nand-b800a427e68fc1574221221d868dd2809575a79e.tgz) - 2015/01/30
+    * Update injected factory reset to 1.0.17
+    * fix: use Linux sed conventions, not OSX.
+    * Updated with fresh stable build -  2014-12-31_0732
+    * Add verifier utilities to check allow verification of the sha1 manifest.
+    * Update the README.
+    * Updated factory test with version 1.0.19-7.
+    * Bumped test version to 1.0.21.
+    * fix: pixel error.
+    * Avoid an unnecessary download in the case we already have the media.
+    * Update test version to 1.0.22. Add sphere-system-tweaks. Updated factory.env.sh
+    * Use sha1, rather than sha1sum.
+    * Re-release 01-SOM to cope with occasional NAND errors.
+    * Updated README
+    * Add a script that enables detection of bad block errors outside the UBI controller parts of the NAND.
+    * Updated NAND to b800a427e68fc1574221221d868dd2809575a79e
+
 1.0.17.1fc - [1fc302821e7ca96a15cf8a851529211cfc9781ea](https://firmware.sphere.ninja/latest/nand-1fc302821e7ca96a15cf8a851529211cfc9781ea.tgz) - 2014/12/31
 
      * NAND boots will always reset unless explicitly disabled by RECOVERY_DISABLE_UNFORCED_RESET
