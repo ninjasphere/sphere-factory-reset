@@ -3,7 +3,7 @@ These instructions document how to reset a Ninja Sphere devkit with the latest d
 
 #Steps
 
-1. Download the [Ninja Sphere devkit factory image](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_sphere-stable.img.gz). The expected sha1 of the file is listed in the [manifest](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_sphere-stable.manifest).
+1. Download the [Ninja Sphere devkit factory image](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.img.gz). The expected sha1 of the file is listed in the [manifest](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.manifest).
 2. Using the image, re-image a micro SD CARD that has at least 3GB of capacity using the steps in /howtos/burning\_an\_image
 3. Remove the power cable from the devkit
 4. Install the micro SD card into the micro SD card reader on the devkit
