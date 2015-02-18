@@ -4,12 +4,12 @@ These instructions document how to reset a Ninja Sphere devkit with the latest d
 #Steps
 
 1. Download the [Ninja Sphere devkit factory image](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.img.gz). The expected sha1 of the file is listed in the [manifest](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.manifest).
-2. Using the image, re-image a micro SD CARD that has at least 3GB of capacity using the steps in /howtos/burning\_an\_image
+2. Using the image, re-image a micro SD CARD that has at least 3GB of capacity using the steps in ["Burning an Image"](https://developers.ninja/misc/howtos/burning_an_image.html)
 3. Remove the power cable from the devkit
 4. Install the micro SD card into the micro SD card reader on the devkit
 5. Reconnect the power cable to the devkit
 
-At this point the devkit should boot with an adhoc wirless network called NinjaSphere-xxxxxxxx where xxxxxxxx is a pseudo-random string of hexadecimal digits.
+At this point the devkit should boot with an adhoc WiFi network called NinjaSphere-xxxxxxxx where xxxxxxxx is a pseudo-random string of hexadecimal digits.
 
 6. Start the Ninja Sphere phone app and ensure that the phone app is signed in with a valid Ninja Blocks account
 7. In the phone app, click "Add things" and select "Spheramid" from the list of options to advance to the "WELCOME - Tap the sphere below to begin setup" screen
