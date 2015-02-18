@@ -26,9 +26,8 @@ If the devkit is the only 'sphere' connected to the your Ninja Block account (e.
 
 If the devkit fails to pair for some reason, or if the devkit loses connectivity to the Internet, then the devkit LED will continue to flash red. If the pairing process does not complete successfully or you want to re-pair the devkit to a different Ninja Blocks account, then logon to the devkit across a serial connection to its mini-USB port using a PC terminal console program like PuTTY (Windows) or screen (Linux and OSX).
 
-Once you have logged in to the ninja account, type the following commands:
+Once you have logged in to the ninja account, type the following command:
 
-	sudo with-rw sphere-reset --reset-setup &&
-	sudo reboot
+	sudo with-rw /opt/ninjablocks/bin/sphere-reset --reset-setup &&	sudo reboot
 
-These commands will reset your devkit into an unpaired state, allowing you to repeat the pairing process again.
+This command will reset your devkit into an unpaired state, allowing you to repeat the pairing process again.
