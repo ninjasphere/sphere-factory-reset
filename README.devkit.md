@@ -22,7 +22,10 @@ This step only needs to be done the first time you are resetting the devkit with
 4. Install the micro SD card into the micro SD card reader on the Ninja Sphere Devkit
 5. Reconnect the power cable to the Ninja Sphere Devkit
 6. Wait for 3-4 minutes until the Ninja Sphere Devkit LEDs display green or red. If the Ninja Sphere Devkit LED displays red, contact Ninja Blocks support.
-7. Remove the power cable from the Ninja Sphere Devkit
+7. Remove the power cable from the Ninja Sphere Devkit.
+8. Remove the micro SD card from the SD card reader on the Ninja Sphere Devkit. This step is necessary to prevent the reflashing process from automatically starting again if you accidentally reapply power to the devkit.
+
+Assuming that the devkit LEDs displayed green at step 6, the NAND has now been successfully reflashed with a bootloader that is compatible with the current 3.12 kernels.
 
 ##Reimage the Ninja Sphere Devkit SD card
 
