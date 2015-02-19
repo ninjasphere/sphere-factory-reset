@@ -1,40 +1,42 @@
-#Resetting a devkit
-These instructions document how to reset a Ninja Sphere devkit with the latest devkit factory image.
+#Resetting a Ninja Sphere Devkit
+These instructions document how to reset a Ninja Sphere devkit with the latest factory image.
 
 There are three major steps that need to be performed.
 
-* reflash the devkit NAND
-* reimage the devkit SDCARD
-* pair the devkit to your Ninja Blocks user account.
+* Reflash the NAND
+* Reimage the Ninja Sphere Devkit SD card
+* Pair the Ninja Sphere Devkit to your Ninja Blocks user account.
 
 
-##Reflash the devkit NAND
+##Reflash the NAND
 
-The current version of the devkit runtime uses a 3.12 kernel. Earlier versions of the bootloader stored in the devkit NAND cannot load 3.12 kernels. For this reason, before updating the devkit SDCARD with the current version of the devkit runtime, it is first necessary to update the devkit NAND with a new bootloader.
+The current version of the Ninja Sphere Devkit runtime uses a 3.12 kernel. Earlier versions of the bootloader stored in the Ninja Sphere Devkit NAND cannot load 3.12 kernels. For this reason, before updating the SD card with the current version of the Ninja Sphere Devkit runtime, it is first necessary to update the devkit NAND with a bootloader which is compatible with a 3.12 kernel.
 
-###Steps
-
-1. Download the [Ninja Sphere devkit NAND image](https://firmware.sphere.ninja/latest/ninja-var-am335x-v1.0.19-e0530dcf.img.gz). The expected sha1 of the file is listed in the associated [SHA1 file](https://firmware.sphere.ninja/latest/ninja-var-am335x-v1.0.19-e0530dcf.img.gz.sha1).
-2. Using the image, re-image a micro SD CARD that has at least 3GB of capacity using the steps in ["Burning an Image"](https://developers.ninja/misc/howtos/burning_an_image.html). If you like, you can use the same SD CARD that will eventually be used to store the devkit runtime.
-3. Remove the power cable from the devkit
-4. Install the micro SD card into the micro SD card reader on the devkit
-5. Reconnect the power cable to the devkit
-6. Wait for 3-4 minutes until the devkit LEDs display green or red. If the devkit LED displays red, contact Ninja Blocks support.
-7. Remove the power cable from the devkit
-
-##Reimage the devkit SDCARD
-
-These steps will re-image your SDCARD with a new version of the Ninja Sphere devkit runtime. If you like, you can re-use the SDCARD that you used for the "Reflash the devkit NAND" step.
+This step only needs to be done the first time you are resetting the devkit with a 3.12 runtime. Once this step has been successfully completed once, it does not need to be repeated again unless otherwise advised by Ninja Blocks support staff.
 
 ###Steps
 
-1. Download the [Ninja Sphere devkit factory image](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.img.gz). The expected sha1 of the file is listed in the [manifest](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.manifest).
-2. Using the image, re-image a micro SD CARD that has at least 3GB of capacity using the steps in ["Burning an Image"](https://developers.ninja/misc/howtos/burning_an_image.html)
+1. Download the [Ninja Sphere NAND image](https://firmware.sphere.ninja/latest/ninja-var-am335x-v1.0.19-e0530dcf.img.gz). The expected sha1 of the file is listed in the associated [SHA1 file](https://firmware.sphere.ninja/latest/ninja-var-am335x-v1.0.19-e0530dcf.img.gz.sha1).
+2. Using the image, re-image a micro SD card that has at least 3GB of capacity using the steps in ["Burning an Image"](https://developers.ninja/misc/howtos/burning_an_image.html). If you like, you can use the same SD card that will eventually be used to store the Ninja Sphere Devkit runtime.
+3. Remove the power cable from the Ninja Sphere Devkit
+4. Install the micro SD card into the micro SD card reader on the Ninja Sphere Devkit
+5. Reconnect the power cable to the Ninja Sphere Devkit
+6. Wait for 3-4 minutes until the Ninja Sphere Devkit LEDs display green or red. If the Ninja Sphere Devkit LED displays red, contact Ninja Blocks support.
+7. Remove the power cable from the Ninja Sphere Devkit
+
+##Reimage the Ninja Sphere Devkit SD card
+
+These steps will re-image your SD card with a new version of the Ninja Sphere Devkit runtime. If you like, you can re-use the SD card that you used for the "Reflash the devkit NAND" step.
+
+###Steps
+
+1. Download the [Ninja Sphere Devkit factory image](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.img.gz). The expected sha1 of the file is listed in the [manifest](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.manifest).
+2. Using the image, re-image a micro SD card that has at least 3GB of capacity using the steps in ["Burning an Image"](https://developers.ninja/misc/howtos/burning_an_image.html)
 3. Remove the power cable from the devkit
 4. Install the micro SD card into the micro SD card reader on the devkit
 5. Reconnect the power cable to the devkit
 
-##Pair the devkit to your Ninja Blocks user account
+##Pair the Ninja Sphere Devkit to your Ninja Blocks user account
 
 At this point the devkit should boot with an adhoc WiFi network called NinjaSphere-xxxxxxxx where xxxxxxxx is a pseudo-random string of hexadecimal digits.
 
