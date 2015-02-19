@@ -1,7 +1,32 @@
 #Resetting a devkit
 These instructions document how to reset a Ninja Sphere devkit with the latest devkit factory image.
 
-#Steps
+There are three major steps that need to be performed.
+
+* reflash the devkit NAND
+* reimage the devkit SDCARD
+* pair the devkit to your Ninja Blocks user account.
+
+
+##Reflash the devkit NAND
+
+The current version of the devkit runtime uses a 3.12 kernel. Earlier versions of the bootloader stored in the devkit NAND cannot load 3.12 kernels. For this reason, before updating the devkit SDCARD with the current version of the devkit runtime, it is first necessary to update the devkit NAND with a new bootloader.
+
+###Steps
+
+1. Download the [Ninja Sphere devkit NAND image](https://firmware.sphere.ninja/latest/ninja-var-am335x-v1.0.19-e0530dcf.img.gz). The expected sha1 of the file is listed in the associated [SHA1 file](https://firmware.sphere.ninja/latest/ninja-var-am335x-v1.0.19-e0530dcf.img.gz.sha1).
+2. Using the image, re-image a micro SD CARD that has at least 3GB of capacity using the steps in ["Burning an Image"](https://developers.ninja/misc/howtos/burning_an_image.html). If you like, you can use the same SD CARD that will eventually be used to store the devkit runtime.
+3. Remove the power cable from the devkit
+4. Install the micro SD card into the micro SD card reader on the devkit
+5. Reconnect the power cable to the devkit
+6. Wait for 3-4 minutes until the devkit LEDs display green or red. If the devkit LED displays red, contact Ninja Blocks support.
+7. Remove the power cable from the devkit
+
+##Reimage the devkit SDCARD
+
+These steps will re-image your SDCARD with a new version of the Ninja Sphere devkit runtime. If you like, you can re-use the SDCARD that you used for the "Reflash the devkit NAND" step.
+
+###Steps
 
 1. Download the [Ninja Sphere devkit factory image](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.img.gz). The expected sha1 of the file is listed in the [manifest](https://firmware.sphere.ninja/latest/ubuntu_armhf_trusty_norelease_devkit-stable.manifest).
 2. Using the image, re-image a micro SD CARD that has at least 3GB of capacity using the steps in ["Burning an Image"](https://developers.ninja/misc/howtos/burning_an_image.html)
@@ -9,14 +34,18 @@ These instructions document how to reset a Ninja Sphere devkit with the latest d
 4. Install the micro SD card into the micro SD card reader on the devkit
 5. Reconnect the power cable to the devkit
 
+##Pair the devkit to your Ninja Blocks user account
+
 At this point the devkit should boot with an adhoc WiFi network called NinjaSphere-xxxxxxxx where xxxxxxxx is a pseudo-random string of hexadecimal digits.
 
-6. Start the Ninja Sphere phone app and ensure that the phone app is signed in with a valid Ninja Blocks account
-7. In the phone app, click "Add things" and select "Spheramid" from the list of options to advance to the "WELCOME - Tap the sphere below to begin setup" screen
-8. Tap the sphere in the center of the screen to advance to the "SPHERAMID - We're looking for your spheramid" screen
-9. Tap the sphere in the center of the screen 8 times until the "ADHOC PAIRING" button appears at the bottom of the screen.
-10. Select the "ADHOC PAIRING" button to advance to the next screen. Follow the instructions displayed on that screen.
-11. Resume the phone application and select "Continue" from the "SPHERAMID SETUP" screen
+###Steps
+
+1. Start the Ninja Sphere phone app and ensure that the phone app is signed in with a valid Ninja Blocks account
+2. In the phone app, click "Add things" and select "Spheramid" from the list of options to advance to the "WELCOME - Tap the sphere below to begin setup" screen
+3. Tap the sphere in the center of the screen to advance to the "SPHERAMID - We're looking for your spheramid" screen
+4. Tap the sphere in the center of the screen 8 times until the "ADHOC PAIRING" button appears at the bottom of the screen.
+5. Select the "ADHOC PAIRING" button to advance to the next screen. Follow the instructions displayed on that screen.
+6. Resume the phone application and select "Continue" from the "SPHERAMID SETUP" screen
 
 The devkit will eventually prompt for the WiFi credentials of your main WiFi network. Once these credentials are entered, the devkit will download necessary updates from the Internet. This process may take up to 15 minutes at which point the devkit will be paired with your Ninja Blocks account.
 
