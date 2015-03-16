@@ -28,7 +28,7 @@ The zip archive contains 3 files:
 	README-{SHA1}.md
 
 	# The Sphere Wireless configuration changes to disable scans of 5GHz networks
-	sphere-wireless-conf_0.2~trustyspheramid-4_armhf.deb
+	sphere-wireless-conf_0.2~trustyspheramid-5_armhf.deb
 
 	# The Ninja Blocks support agent
 	ninja-scriptrock_0.1~trustyspheramid-23_armhf.deb

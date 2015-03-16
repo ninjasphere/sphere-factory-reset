@@ -1,5 +1,5 @@
 SCRIPTROCK=ninja-scriptrock_0.1~trustyspheramid-23_armhf.deb
-WIRELESS_CONF=sphere-wireless-conf_0.2~trustyspheramid-4_armhf.deb
+WIRELESS_CONF=sphere-wireless-conf_0.2~trustyspheramid-5_armhf.deb
 
 FILES=$(SCRIPTROCK) $(WIRELESS_CONF)
 
