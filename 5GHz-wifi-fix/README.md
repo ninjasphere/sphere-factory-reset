@@ -11,7 +11,7 @@ More information about the underlying problem can be found in [Theo Julienne's p
 
 Do I need to install this fix?
 ==============================
-It might be advisable to install this fix if you are having trouble setting up your Ninja Sphere particularly if the network discovery or software update phases seem particularly slow or unreliable. Ninja Spheres that have already been paired should automatically receive this fix themselves, but if you are not sure whether you have the fix, there is no harm installing it using the procedure below. Note that this package does not fix every problem with the pairing process - Ninja Sphere owners should also ensure that their phone is running the latest version of the phone app for your platform.
+It might be advisable to install this fix if you know you have a Dual Band WiFi router or if you are having trouble setting up your Ninja Sphere particularly if the network discovery or software update phases seem particularly slow or unreliable. Ninja Spheres that have already been paired should automatically receive this fix themselves, but if you are not sure whether you have the fix, there is no harm installing it using the procedure below. Note that this package does not fix every problem with the pairing process - Ninja Sphere owners should also ensure that their phone is running the latest version of the phone app for your platform.
 
 What does this fix do?
 ======================
