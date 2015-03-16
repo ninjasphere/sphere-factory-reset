@@ -1,7 +1,8 @@
 SCRIPTROCK=ninja-scriptrock_0.1~trustyspheramid-23_armhf.deb
 WIRELESS_CONF=sphere-wireless-conf_0.2~trustyspheramid-5_armhf.deb
+FACTORY_TEST=ninjasphere-factory-test_1.0.22~trustyspheramid-4_armhf.deb
 
-FILES=$(SCRIPTROCK) $(WIRELESS_CONF)
+FILES=$(SCRIPTROCK) $(WIRELESS_CONF) $(FACTORY_TEST)
 
 all: clean ubuntu_armhf_trusty_norelease_sphere-stable-usb-packages.zip
 
@@ -29,10 +30,13 @@ clean:
 	-rm ubuntu_armhf_trusty_norelease_sphere-stable-usb-packages.zip || true
 
 clean-cache:
-	-rm $(SCRIPTROCK) $(WIRELESS_CONF)
+	-rm $(SCRIPTROCK) $(WIRELESS_CONF) $(FACTORY_TEST)
 
 $(SCRIPTROCK):
 	test -f $(SCRIPTROCK) || curl -O https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/n/ninja-scriptrock/$(SCRIPTROCK)
+
+$(FACTORY_TEST):
+	test -f $(FACTORY_TEST) || curl -O https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/n/ninjasphere-factory-test/$(FACTORY_TEST)
 
 $(WIRELESS_CONF):
 	test -f $(WIRELESS_CONF) || curl -O https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-wireless-conf/$(WIRELESS_CONF)

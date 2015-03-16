@@ -22,7 +22,7 @@ The fix also installs a support agent that allows Ninja Blocks support staff to 
 What files are in the fix?
 ==========================
 
-The zip archive contains 3 files:
+The zip archive contains 5 files:
 
 	# This file.
 	README-{SHA1}.md
@@ -32,6 +32,9 @@ The zip archive contains 3 files:
 
 	# The Ninja Blocks support agent
 	ninja-scriptrock_0.1~trustyspheramid-23_armhf.deb
+
+	# A factory test suite which also includes a component required to update the other packages.
+	ninjasphere-factory-test_1.0.22.deb
 
 	# A manifest containing the sha1 sums of the other files.
 	usb-packages.manifest
