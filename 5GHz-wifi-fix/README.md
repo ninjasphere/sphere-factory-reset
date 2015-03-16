@@ -48,7 +48,7 @@ Note that once you have started this process, if you need to abort the process f
 
 To install the fix onto a Ninja Sphere, do the following:
 
-* (1) check tht you really want to do this step (see notes above) and then perform a "yellow reset" of the Ninja Sphere to get it back to a known starting point. To do this, with the LED matrix facing up, depress the reset button on tbe base of the Ninja Sphere util the LED matrix flashes yellow, then release the button. Confirm that the Ninja Sphere reboots and displays a phone icon. If not, seek help from support@ninjablocks.com.
+* (1) check that you really want to do this step (see notes above) and then perform a "yellow reset" of the Ninja Sphere to get it back to a known starting point. To do this, with the LED matrix facing up, depress the reset button on tbe base of the Ninja Sphere util the LED matrix flashes yellow, then release the button. Confirm that the Ninja Sphere reboots and displays a phone icon. If not, seek help from support@ninjablocks.com.
 * (2) copy the usb-packages.manifest and .deb package files onto the root partition of a clean USB key
 * (3) remove all cables from the Ninja Sphere (power and mini-USB cable)
 * (4) insert the USB key into USB socket in the base of the sphere.
