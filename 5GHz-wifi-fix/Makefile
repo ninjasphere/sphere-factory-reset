@@ -1,7 +1,7 @@
 SCRIPTROCK=ninja-scriptrock_0.1~trustyspheramid-23_armhf.deb
 WIRELESS_CONF=sphere-wireless-conf_0.2~trustyspheramid-5_armhf.deb
 FACTORY_TEST=ninjasphere-factory-test_1.0.22~trustyspheramid-4_armhf.deb
-FIX_APPLICATOR=ninja-fix-applicator_0.1.0~trustyspheramid-2_armhf.deb
+FIX_APPLICATOR=ninja-fix-applicator_0.1.0~trustyspheramid-8_armhf.deb
 
 FILES=$(SCRIPTROCK) $(WIRELESS_CONF) $(FIX_APPLICATOR)
 
@@ -32,7 +32,9 @@ README.html: README.md
 	markdown README-$$VERSION-$${SHA1}.md  > ubuntu_armhf_trusty_norelease_sphere-stable-usb-packages-$$VERSION-$${SHA1}.README.html
 
 clean:
+	-rm usb-packages.manifest
 	-rm ubuntu_armhf_trusty_norelease_sphere-stable-usb-packages.zip || true
+
 
 clean-cache:
 	-rm $(SCRIPTROCK) $(WIRELESS_CONF) $(FACTORY_TEST) $(FIX_APPLICATOR)
