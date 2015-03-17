@@ -35,7 +35,6 @@ It might be advisable to install this fix if you know you have a Dual Band WiFi 
 
 How do I install the fix?
 =========================
-Note that once you have started this process, if you need to abort the process for any reason, you MUST do the green reset at step 7 or else you may need to perform a full factory reset at some later time.
 
 To install the fix onto a Ninja Sphere, do the following:
 
