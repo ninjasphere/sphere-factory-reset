@@ -100,3 +100,7 @@ Configure the name of the recovery image:
 RESERVED NAMESPACE
 ==================
 This package reserves /opt/ninjablocks/factory-reset for its own purposes both in the NAND and SDCARD images.
+
+# Licensing
+
+sphere-factory-reset is licensed under the MIT License. See LICENSE for the full license text.
