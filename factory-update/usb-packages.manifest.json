@@ -37,14 +37,24 @@
       "sha1": "61d90e46d182dd32081ee587fd0bc2edf9121981"
     },
     {
-      "file": "sphere-ui_1.0.0~trustyspheramid-38_armhf.deb",
+      "file": "sphere-ui_1.0.0~trustyspheramid-27_armhf.deb",
       "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-ui",
-      "sha1": "445be832e2566e57b256c82b4dab71e8fdf93ec9"
+      "sha1": "a4cbe0c621fa099a378a6fbf8caa72708e73c979"
     },
     {
       "file": "sphere-support-agent_1.0.1~trustyspheramid-20_armhf.deb",
       "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-support-agent",
       "sha1": "edd8e1afcac193f54cbc98dde1f4e9a3b7561bae"
+    },
+    {
+      "file": "sphere-schemas_1.0.8~trustyspheramid-18_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-schemas",
+      "sha1": "e7ca486033add51fa19e8c835504aa0836e09954"
+    },
+    {
+      "file": "sphere-setup-assistant_1.0.3~trustyspheramid-66_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-setup-assistant",
+      "sha1": "7931c8b97c3a748b016a4f9cbc19527e777c2940"
     }
   ]
 }
