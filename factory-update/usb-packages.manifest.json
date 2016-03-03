@@ -1,0 +1,25 @@
+{
+  "version": "1.0.5",
+  "packages": [
+    {
+      "file": "ninja-scriptrock_0.1~trustyspheramid-23_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/n/ninja-scriptrock",
+      "sha1": "89dd7039d39d29ea14fdedb63eee1a678674f16a"
+    },
+    {
+      "file": "sphere-wireless-conf_0.2~trustyspheramid-5_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-wireless-conf",
+      "sha1": "7672a7cc3d0d641707c659fae0b000aa5174d0c4"
+    },
+    {
+      "file": "ninja-fix-applicator_0.1.0~trustyspheramid-8_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/n/ninja-fix-applicator",
+      "sha1": "6eb1899abef8de238580dc80dfd444557754c2f5"
+    },
+    {
+      "file": "ninjasphere-factory-test_1.0.22~trustyspheramid-4_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/n/ninjasphere-factory-test",
+      "sha1": "e7423a57334e6eb04757b347b906c3edaca7a22c"
+    }
+  ]
+}
