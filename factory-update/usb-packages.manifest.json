@@ -1,5 +1,5 @@
 {
-  "version": "1.0.5",
+  "version": "1.0.6",
   "packages": [
     {
       "file": "ninja-scriptrock_0.1~trustyspheramid-23_armhf.deb",
@@ -17,9 +17,34 @@
       "sha1": "6eb1899abef8de238580dc80dfd444557754c2f5"
     },
     {
-      "file": "ninjasphere-factory-test_1.0.22~trustyspheramid-4_armhf.deb",
+      "file": "ninjasphere-factory-test_1.0.22~trustyspheramid-9_armhf.deb",
       "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/n/ninjasphere-factory-test",
-      "sha1": "e7423a57334e6eb04757b347b906c3edaca7a22c"
+      "sha1": "9cd96c548138c0c6a86c8c962c4f88eac4bbec32"
+    },
+    {
+      "file": "ninja-go-zigbee_0.1.6~trustyspheramid-11_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/n/ninja-go-zigbee",
+      "sha1": "4eb6d67543434a9e536ab6d08f6ed85f47340e8a"
+    },
+    {
+      "file": "sphere-disable-zigbee_1.0~trustyspheramid-2_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-disable-zigbee",
+      "sha1": "d466d6a9692e821fe7184573d7daa77bae56bd53"
+    },
+    {
+      "file": "zigbee-zstack-gateway_0.1.0~trustyspheramid-11_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/z/zigbee-zstack-gateway",
+      "sha1": "61d90e46d182dd32081ee587fd0bc2edf9121981"
+    },
+    {
+      "file": "sphere-ui_1.0.0~trustyspheramid-38_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-ui",
+      "sha1": "445be832e2566e57b256c82b4dab71e8fdf93ec9"
+    },
+    {
+      "file": "sphere-support-agent_1.0.1~trustyspheramid-20_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-support-agent",
+      "sha1": "edd8e1afcac193f54cbc98dde1f4e9a3b7561bae"
     }
   ]
 }

@@ -8,7 +8,7 @@ die() {
 download() {
 	rc=0
 	mkdir -p .cache
-	cat usb-packages.manifest.json | jq -r '.packages[]|.file+" "+.sha1+" "+.["url-prefix"]' | while read file sha1 urlPrefix; do
+	cat usb-packages.manifest.json | jq -r '.packages[]|.file+" "+.["url-prefix"]+" "+.sha1' | while read file urlPrefix sha1; do
 		(
 			if test -f ".cache/$file"; then
 				if test "$(openssl sha1 < ".cache/$file")" != "$sha1"; then
@@ -16,10 +16,11 @@ download() {
 				fi
 			fi
 			if ! test -f ".cache/$file"; then
-				curl -s -o ".cache/$file" "$urlPrefix/$file" || die "failed to download: $file"
+				curl ${CURL_OPTS} -s -o ".cache/$file" "$urlPrefix/$file" || die "failed to download: $file"
 			fi
-			test "$(openssl sha1 < ".cache/$file")" = "$sha1" || die "failed to verify downloaded file: $file $sha1"
+			test "$(openssl sha1 < ".cache/$file")" = "$sha1" || die "failed to verify downloaded file: $file: actual $(openssl sha1 < ".cache/$file") not equal to expected $sha1"
 		) || rc=1
+		test $rc -eq 0
 	done || die "failed"
 }
 
