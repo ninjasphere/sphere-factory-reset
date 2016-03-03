@@ -4,6 +4,10 @@ FILES := $(shell jq -r '.packages[].file' usb-packages.manifest.json)
 
 all: clean build/ubuntu_armhf_trusty_norelease_sphere-stable-usb-packages.zip
 
+dist: all
+	SHA1=$$(sha1sum build/usb-packages.manifest | cut -c1-8) && \
+	cp build/*$${VERSION}-$${SHA1}* dist
+
 build/ubuntu_armhf_trusty_norelease_sphere-stable-usb-packages.zip: files build/usb-packages.manifest README.md
 	SHA1=$$(sha1sum build/usb-packages.manifest | cut -c1-8) && \
 	sed "s/{SHA1}/$${SHA1}/g;s/{VERSION}/$${VERSION}/g;" < README.md > build/README-$(VERSION)-$${SHA1}.md && \
