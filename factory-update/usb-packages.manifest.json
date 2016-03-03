@@ -55,6 +55,11 @@
       "file": "sphere-setup-assistant_1.0.3~trustyspheramid-66_armhf.deb",
       "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-setup-assistant",
       "sha1": "7931c8b97c3a748b016a4f9cbc19527e777c2940"
+    },
+    {
+    	"file": "sphere-go-led-controller_2.0.2~trustyspheramid-45_armhf.deb",
+   		"url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-go-led-controller",
+   		"sha1": "052d53cc69c2d334500e2327e1a5f262ad70c476"
     }
   ]
 }
