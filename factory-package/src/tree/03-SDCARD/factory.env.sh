@@ -28,7 +28,7 @@ post_reset_hook() {
 			cp "$deb" $root/tmp
 		done
 		chroot $root bash -c '
-dpkg -i /tmp/*.deb && rm /tmp/*.deb;
+dpkg --force-confnew -i /tmp/*.deb && rm /tmp/*.deb;
 echo factory:${RECOVERY_FACTORY_TEST_PASSWORD} | chpasswd;
 '
 	fi
