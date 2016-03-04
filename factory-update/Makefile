@@ -38,6 +38,9 @@ clean:
 	rm -rf build
 	mkdir -p build
 
+dist-clean:
+	rm dist/*-$(VERSION)-*
+
 clean-cache:
 	-rm -rf .cache
 
