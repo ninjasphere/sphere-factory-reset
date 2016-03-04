@@ -1,4 +1,4 @@
-DIST=~/Dropbox/ninja/factory-package
+DIST=~/Dropbox/ninja/factory-package-v2
 
 diff: src/tree/factory.manifest build/factory.manifest
 	diff -I ".* ./03-SDCARD/factory.env.sh" -u build/factory.manifest src/tree/factory.manifest
