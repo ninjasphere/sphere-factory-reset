@@ -12,7 +12,7 @@ download() {
 		(
 			if test -f ".cache/$file"; then
 				if test "$(openssl sha1 < ".cache/$file")" != "$sha1"; then
-					rm -f "$file" || die "failed to remove corrupt file: $file"
+					rm -f ".cache/$file" || die "failed to remove corrupt file: $file"
 				fi
 			fi
 			if ! test -f ".cache/$file"; then
