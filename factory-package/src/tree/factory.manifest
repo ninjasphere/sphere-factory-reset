@@ -17,7 +17,7 @@ a4cbe0c621fa099a378a6fbf8caa72708e73c979  ./03-SDCARD/factory-reset-packages/sph
 7672a7cc3d0d641707c659fae0b000aa5174d0c4  ./03-SDCARD/factory-reset-packages/sphere-wireless-conf_0.2~trustyspheramid-5_armhf.deb
 fe734b6494abd98fc200b71a6e5433914d744c5a  ./03-SDCARD/factory-reset-packages/usb-packages.manifest
 61d90e46d182dd32081ee587fd0bc2edf9121981  ./03-SDCARD/factory-reset-packages/zigbee-zstack-gateway_0.1.0~trustyspheramid-11_armhf.deb
-9073f22e6c5703f2d8337de8781be10a78bb7b45  ./03-SDCARD/factory.env.sh
+532a15cb9ec25bdac5035cd86d43b58368402d04  ./03-SDCARD/factory.env.sh
 2b1b3aeb9a6469303d8125dbe53fca62133822f8  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable-recovery.sh
 46e28356568e7a5b295cf08a856c3ffdfc64cefa  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable-recovery.sh.sha1
 53595a29a8d4e3985a533734f2c3d48699a10fa8  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable-recovery.tar

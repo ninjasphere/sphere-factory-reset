@@ -16,8 +16,9 @@ update-build:
 
 inject-password:
 	test -n "$(FACTORY_PASSWORD)" || ( echo "You must define the password on the make command line." && false )
-	cp src/03-SDCARD/factory.env.sh build/03-SDCARD
-	sed -i -e "s/export RECOVERY_FACTORY_TEST_PASSWORD=\"{factory-test-password}/export RECOVERY_FACTORY_TEST_PASSWORD=$(FACTORY_PASSWORD)/;" build/03-SDCARD/factory.env.sh
+	cp src/tree/03-SDCARD/factory.env.sh build/03-SDCARD
+	sed -i.bak -e "s/export RECOVERY_FACTORY_TEST_PASSWORD=\"{factory-test-password}\"/export RECOVERY_FACTORY_TEST_PASSWORD=\"$(FACTORY_PASSWORD)\"/;" build/03-SDCARD/factory.env.sh
+	rm build/03-SDCARD/factory.env.sh.bak
 
 publish: diff
 	git diff HEAD
