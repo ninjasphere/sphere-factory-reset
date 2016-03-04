@@ -24,6 +24,18 @@ download() {
 	done || die "failed"
 }
 
+filter-packages() {
+	local pattern=${1:-.}
+	sed -n "s/^Filename: //p;s/^SHA1: //p" | while read f; do
+		read sha1
+		echo $f $sha1
+	done | grep "$pattern" | while read f sha1; do
+		b=$(basename "$f")
+		d=$(dirname "$f")
+		echo "{\"file\": \"$b\", \"url-prefix\": \"https://s3.amazonaws.com/ninjablocks-apt-repo/$d\", \"sha1\": \"$sha1\"}"
+	done | jq .
+}
+
 main() {
 	"$@"
 }
