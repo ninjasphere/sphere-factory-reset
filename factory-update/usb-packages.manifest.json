@@ -60,6 +60,11 @@
     	"file": "sphere-go-led-controller_2.0.2~trustyspheramid-45_armhf.deb",
    		"url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-go-led-controller",
    		"sha1": "052d53cc69c2d334500e2327e1a5f262ad70c476"
-    }
+    },
+	{
+	  "file": "sphere-config_0.2~trustyspheramid-30_armhf.deb",
+	  "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-config",
+	  "sha1": "63d5066b0c60eeff5b87b02a000a417b2da08b31"
+	}
   ]
 }
