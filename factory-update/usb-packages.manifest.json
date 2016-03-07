@@ -65,6 +65,11 @@
       "file": "sphere-config_0.2~trustyspheramid-30_armhf.deb",
       "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-config",
       "sha1": "63d5066b0c60eeff5b87b02a000a417b2da08b31"
+    },
+    {
+	  "file": "sphere-utils_0.1.1~trustyspheramid-18_armhf.deb",
+      "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/s/sphere-utils",
+      "sha1": "930bd9c0294eac2d73b7a2ea6a6f51e59e1431d2"
     }
   ]
 }
