@@ -1,10 +1,8 @@
 5c804101d3c29be27d878b37b613fcb7b26e67f8  ./01-SOM/factory-sdcard-e0530dcf1638904cd0c7135352ea1293b5f09b9a.img.gz
 15b1a08192b31bcf4c5782b50b27164200d4e2de  ./01-SOM/factory-sdcard-e0530dcf1638904cd0c7135352ea1293b5f09b9a.zip
-a156aff0922a6706bd9a139b4a1627fb021bf451  ./03-SDCARD/factory-reset-packages/README-1.0.6-fe734b64.md
 6eb1899abef8de238580dc80dfd444557754c2f5  ./03-SDCARD/factory-reset-packages/ninja-fix-applicator_0.1.0~trustyspheramid-8_armhf.deb
 4eb6d67543434a9e536ab6d08f6ed85f47340e8a  ./03-SDCARD/factory-reset-packages/ninja-go-zigbee_0.1.6~trustyspheramid-11_armhf.deb
 89dd7039d39d29ea14fdedb63eee1a678674f16a  ./03-SDCARD/factory-reset-packages/ninja-scriptrock_0.1~trustyspheramid-23_armhf.deb
-93efb1c091779886bd3802eaee8b8ad72100d4c5  ./03-SDCARD/factory-reset-packages/ninjasphere-factory-test_1.0.22~trustyspheramid-2_armhf.deb
 9cd96c548138c0c6a86c8c962c4f88eac4bbec32  ./03-SDCARD/factory-reset-packages/ninjasphere-factory-test_1.0.22~trustyspheramid-9_armhf.deb
 63d5066b0c60eeff5b87b02a000a417b2da08b31  ./03-SDCARD/factory-reset-packages/sphere-config_0.2~trustyspheramid-30_armhf.deb
 d466d6a9692e821fe7184573d7daa77bae56bd53  ./03-SDCARD/factory-reset-packages/sphere-disable-zigbee_1.0~trustyspheramid-2_armhf.deb
@@ -15,7 +13,7 @@ edd8e1afcac193f54cbc98dde1f4e9a3b7561bae  ./03-SDCARD/factory-reset-packages/sph
 7c7ff1903a015449625d52d9c750a81dd31d9bed  ./03-SDCARD/factory-reset-packages/sphere-system-tweaks_1.0~trustyspheramid-9_armhf.deb
 a4cbe0c621fa099a378a6fbf8caa72708e73c979  ./03-SDCARD/factory-reset-packages/sphere-ui_1.0.0~trustyspheramid-27_armhf.deb
 7672a7cc3d0d641707c659fae0b000aa5174d0c4  ./03-SDCARD/factory-reset-packages/sphere-wireless-conf_0.2~trustyspheramid-5_armhf.deb
-fe734b6494abd98fc200b71a6e5433914d744c5a  ./03-SDCARD/factory-reset-packages/usb-packages.manifest
+44aa224daa832b3ca24ba565306f038542bfedbd  ./03-SDCARD/factory-reset-packages/usb-packages.manifest
 61d90e46d182dd32081ee587fd0bc2edf9121981  ./03-SDCARD/factory-reset-packages/zigbee-zstack-gateway_0.1.0~trustyspheramid-11_armhf.deb
 532a15cb9ec25bdac5035cd86d43b58368402d04  ./03-SDCARD/factory.env.sh
 2b1b3aeb9a6469303d8125dbe53fca62133822f8  ./03-SDCARD/ubuntu_armhf_trusty_norelease_sphere-stable-recovery.sh
