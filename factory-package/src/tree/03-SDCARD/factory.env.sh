@@ -1,5 +1,5 @@
 #export RECOVERY_SPHERE_IO_BAUD=115200;
-
+export RECOVERY_IMAGE=ubuntu_armhf_trusty_norelease_sphere-stable
 export RECOVERY_FACTORY_TEST_PASSWORD="{factory-test-password}"
 if test "${RECOVERY_FACTORY_TEST_PASSWORD}" = "{factory-test-password}"; then
 	die "ERR509" "factory.env.sh must be edited before use to configure a password that is shared with the factory."

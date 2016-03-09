@@ -110,10 +110,14 @@ This process is no longer used since all NAND flashing now done by the '01-SOM' 
 
 03-SDCARD
 ---------
-This process performs a factory reset of the device using recovery media read from a USB key. This process requires a working
-SOM that has been provisioned with a boot loader and recovery operating system as produced by the '01-SOM' process described
-above. At the end of the process, the sphere's SDCARD will be formatted with a copy of the runtime operating system and all
-firmware will have been flashed.
+This process performs a factory reset of the device using recovery media read from a USB key. This process requires a working SOM that has been provisioned with a boot loader and recovery operating system as produced by the '01-SOM' process described above. At the end of the process, the sphere's SDCARD will be formatted with a copy of the runtime operating system and all firmware will have been flashed.
+
+On factory images without zigbee radio's installed, the file:
+
+	factory-reset-packages/sphere-disable-zigbee_1.0~trustyspheramid-2_armhf.deb
+
+should be present on the USB during the 03-SDCARD phase of the flashing. All parts of the test
+process relating to the testing of the Zigbee radio will be disabled.
 
 Setup Steps
 -----------
@@ -182,6 +186,13 @@ Steps Per Sphere
 
 REVISION HISTORY
 ----------------
+* 1.0.21
+		* Updated recovery image to reflect March 9, 2016 build
+		* Included sphere-disable-zigbee package for factory installs.
+
+* 1.0.19
+		* Updated NAND to e0530dcf1638904cd0c7135352ea1293b5f09b9a
+
 * 1.0.18
 		* Updated NAND to b800a427e68fc1574221221d868dd2809575a79e
 		* First boot following factory NAND flash checks for block errors outside UBI controlled areas of NAND.
