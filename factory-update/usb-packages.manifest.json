@@ -17,9 +17,9 @@
       "sha1": "6eb1899abef8de238580dc80dfd444557754c2f5"
     },
     {
-      "file": "ninjasphere-factory-test_1.0.22~trustyspheramid-9_armhf.deb",
+      "file": "ninjasphere-factory-test_1.0.22~trustyspheramid-10_armhf.deb",
       "url-prefix": "https://s3.amazonaws.com/ninjablocks-apt-repo/pool/main/n/ninjasphere-factory-test",
-      "sha1": "9cd96c548138c0c6a86c8c962c4f88eac4bbec32"
+      "sha1": "a8d6b13553dbdc72e01daebbc130da4fc6a9cf50"
     },
     {
       "file": "ninja-go-zigbee_0.1.6~trustyspheramid-11_armhf.deb",
